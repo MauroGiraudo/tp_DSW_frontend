@@ -1,17 +1,6 @@
-<header>
-  <a routerLink="/home"><span class="titulo">{{title}}</span></a>
-</header>
-  <nav>
-    <ul>
-      <li><a>Carta</a></li>
-      <li><a>Pedidos</a></li>
-      <li><a>¿Quiénes somos?</a></li>
-      <li *ngIf="cliente === true"><a routerLink="/login" class="iniSesion">Iniciar Sesión</a></li>
-      <li *ngIf="cliente !== true"><a routerLink="/cliente" class="miCuenta">Mi Cuenta</a></li>
-    </ul>
-  </nav>
-<main>
-  <button type="button" (click)="change()">InicioSesion | MiCuenta</button>
-  <router-outlet></router-outlet>
-</main>
+<app-side-nav (onToggleSideNav)="onToggleSideNav($event)"></app-side-nav>
+<app-main 
+  [collapsed]="isSideNavCollapsed" 
+  [screenWidth]="screenWidth"
+></app-main>
 <footer></footer>

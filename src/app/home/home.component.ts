@@ -6,28 +6,12 @@ import { HttpClientModule } from '@angular/common/http';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, HttpClientModule],
+  imports: [],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
   
-  constructor(private platoService: PlatoService) {}
+  constructor() {}
 
-  platos: any = {
-    message: "",
-    data: []
-  };
-  
-
-  ngOnInit(): void {
-    this.getPlatos()
-  }
-
-  getPlatos() {
-    this.platoService.getPlatos().subscribe((data) => {
-      this.platos = data;
-      console.log(this.platos)
-    })
-  }
 }

@@ -1,0 +1,9 @@
+<div>
+  <h2>Platos</h2>
+  <p>{{platos.message}}</p>
+  <ul>
+    <li *ngFor="let item of platos.data">
+      <span class="descPlato">{{item.descripcion}}</span> | <span class="descTPlato">{{item.tipoPlato.descTPlato}}</span>
+    </li>
+  </ul>
+</div>
