@@ -21,5 +21,12 @@ export const navDataImport: navData[] = [
     routeLink: "pedido",
     icon: "fa-regular fa-bookmark",
     label: "Pedidos"
+  },
+
+  {
+    routeLink: "cliente",
+    icon: "fa-solid fa-user",
+    label: "Cuenta"
   }
+
 ];
