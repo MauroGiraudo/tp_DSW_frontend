@@ -1,9 +1,48 @@
-<div>
-  <h2>Platos</h2>
-  <p>{{platos.message}}</p>
-  <ul>
-    <li *ngFor="let item of platos.data">
-      <span class="descPlato">{{item.descripcion}}</span> | <span class="descTPlato">{{item.tipoPlato.descTPlato}}</span>
-    </li>
-  </ul>
+<h1>Carta</h1>
+
+<!-- Search box -->
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por nombre de plato"
+    class="search-box" type="text">
+  <button (click)="onSearch()" class="search-button">
+    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png" alt="Buscar">
+  </button>
 </div>
+
+<!-- Tags para filtrar por tipo de plato -->
+<div class="tags-container">
+  <button (click)="resetFilter()" class="tag reset">Todos</button>
+  <button (click)="filterByType('Entrada')" class="tag">Entrada</button>
+  <button (click)="filterByType('Plato Principal')" class="tag">Plato principal</button>
+  <button (click)="filterByType('Postre')" class="tag">Postre</button>
+</div>
+
+<!-- Platos filtrados -->
+<div class="platos-container">
+  <div *ngFor="let plato of filteredPlatos" class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img *ngIf="plato.imagen" [src]="plato.imagen" alt="{{ plato.descripcion }}">
+        <h2>{{ plato.descripcion }}</h2>
+      </div>
+      <div class="flip-card-back">
+        <h3>Detalles</h3>
+        <p>Tiempo de preparación: {{ plato.tiempo }} min</p>
+        <p>Precio: ${{ plato.precio }}</p>
+        <p>Apto celíacos: {{ plato.aptoCeliacos ? 'Sí' : 'No' }}</p>
+        <p>Apto vegetarianos: {{ plato.aptoVegetarianos ? 'Sí' : 'No' }}</p>
+        <p>Apto veganos: {{ plato.aptoVeganos ? 'Sí' : 'No' }}</p>
+        <p>Tipo de plato: {{ plato.tipoPlato.descTPlato }}</p>
+        <button (click)="agregarAlPedido(plato)" class="agregar">Agregar al pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
