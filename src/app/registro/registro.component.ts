@@ -17,15 +17,16 @@ import { DefaultButtonComponent } from "../default-button/default-button.compone
 })
 export class RegistroComponent implements OnInit {
 
+  usuarioCreado: any
+
   constructor(private registroService: RegistroService, 
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute,
     private router: Router
   ) { }
 
   formularioRegistro!: FormGroup;
   enviado: boolean = false;
-  devolverURL = '';
+  devolverURL = '/home';
 
   private validarContrasenia = validarContrasenias
 
@@ -36,12 +37,11 @@ export class RegistroComponent implements OnInit {
       email: ['', Validators.required],
       contrasenia: ['', Validators.required],
       confirmarContrasenia: ['', Validators.required],
-      telefono: ['', Validators.required]
+      telefono: ['', Validators.required],
+      tipoUsuario: ['', Validators.required]
     } ,{
       validators: this.validarContrasenia('contrasenia', 'confirmarContrasenia')
     })
-
-    this.devolverURL = this.activatedRoute.snapshot.queryParams['devolverURL']
   }
 
   get fc() {
@@ -58,9 +58,13 @@ export class RegistroComponent implements OnInit {
       apellido: formValues.apellido,
       email: formValues.email,
       contrasenia: formValues.contrasenia,
-      telefono: formValues.telefono
+      telefono: formValues.telefono,
+      tipoUsuario: formValues.tipoUsuario
     }
-    this.registroService.registrarUsuario(usuario).subscribe(_ => {
+    this.registroService.registrarUsuario(usuario)
+    .subscribe((response) => {
+      this.usuarioCreado = response
+      alert(this.usuarioCreado.message)
       this.router.navigateByUrl(this.devolverURL)
     })
   }

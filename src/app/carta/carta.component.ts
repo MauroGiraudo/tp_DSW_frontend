@@ -26,7 +26,6 @@ export class CartaComponent implements OnInit{
   getPlatos() {
     this.platoService.getPlatos().subscribe((data) => {
       this.platos = data;
-      console.log(this.platos)
     })
   }
 

@@ -4,4 +4,5 @@ export interface UsuarioRegistro {
   email: string,
   contrasenia: string,
   telefono: string | undefined,
+  tipoUsuario: string
 }

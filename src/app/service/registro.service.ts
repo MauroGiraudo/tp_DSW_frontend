@@ -12,7 +12,8 @@ export class RegistroService {
 
   private urlRegistro = 'http://localhost:3000/api/usuarios/registro'
 
-  public registrarUsuario(usuario: UsuarioRegistro): Observable<UsuarioRegistro> {
-    return this.http.post<UsuarioRegistro>(this.urlRegistro, usuario)
+  public registrarUsuario(usuario: UsuarioRegistro) {
+    console.log(usuario)
+    return this.http.post(this.urlRegistro, usuario)
   }
 }
