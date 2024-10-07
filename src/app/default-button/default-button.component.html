@@ -1,0 +1,13 @@
+<div class="contenedor">
+  <button [ngStyle]="{
+    'background-color': bgColor,
+    'color': color,
+    'font-size.rem': fontSizeRem,
+    'width.rem': widthRem
+  }"
+  [type]="type"
+  (click)="onClick.emit()"
+  >
+  {{texto}}
+  </button>
+</div>

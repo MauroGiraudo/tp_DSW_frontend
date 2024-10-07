@@ -4,6 +4,7 @@ import { LoginComponent } from './login/login.component.js';
 import { ClienteComponent } from './cliente/cliente.component.js';
 import { CartaComponent } from './carta/carta.component.js';
 import { PedidoComponent } from './pedido/pedido.component.js';
+import { RegistroComponent } from './registro/registro.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -11,5 +12,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'cliente', component: ClienteComponent },
   { path: 'carta', component: CartaComponent },
-  { path: 'pedido', component: PedidoComponent }
+  { path: 'pedido', component: PedidoComponent },
+  { path: 'registro', component: RegistroComponent }
 ];
