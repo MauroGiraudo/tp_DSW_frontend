@@ -3,7 +3,8 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { AbstractControl } from '@angular/forms';
 
 const MENSAJES_VALIDACION: any = {
-  requerido: 'Este campo es requerido',
+  email: 'El email no es válido',
+  required: 'Este campo es requerido',
   noCoincide: 'Las contraseñas no coinciden'
 }
 
@@ -44,7 +45,6 @@ export class InputValidationComponent implements OnChanges, OnInit {
     }
     const errorKeys = Object.keys(errors)
     this.mensajesError = errorKeys.map((key) => MENSAJES_VALIDACION[key])
-
   } 
 
 }
