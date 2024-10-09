@@ -9,8 +9,9 @@
 .contenedor {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: start;
   height: 100%;
+  padding-top: 3rem;
 }
 
 .detalles {

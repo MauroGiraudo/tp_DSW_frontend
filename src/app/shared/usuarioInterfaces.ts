@@ -18,3 +18,7 @@ export interface UsuarioResponse {
   message: string
   data: Usuario
 }
+
+export interface UsuarioLogOut {
+  message: string
+}

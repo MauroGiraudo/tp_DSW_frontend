@@ -6,6 +6,8 @@ import { TextInputComponent } from "../text-input/text-input.component";
 import { DefaultButtonComponent } from "../default-button/default-button.component";
 import { UsuarioService } from '../service/usuario.service.js';
 import { UsuarioLogIn } from '../shared/usuarioInterfaces.js';
+import { Usuario } from '../shared/usuario.entity.js';
+import { AlmacenamientoService } from '../service/almacenamiento.service.js';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +18,7 @@ import { UsuarioLogIn } from '../shared/usuarioInterfaces.js';
 })
 export class LoginComponent implements OnInit{
 
-  usuarioLogueado: any
+  usuarioLogueado: Usuario | undefined
 
   loginForm!: FormGroup
   enviado: boolean = false
@@ -24,10 +26,16 @@ export class LoginComponent implements OnInit{
   
   constructor (private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    private almacenamientoService: AlmacenamientoService
   ) {}
 
   ngOnInit(): void {
+    const redirigirAHome = this.almacenamientoService.getItem('redirigirAHome')
+    if(redirigirAHome === 'true') {
+      this.almacenamientoService.removeItem('redirigirAHome')
+      this.router.navigateByUrl(this.homeURL)
+    }
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required, Validators.email],
       contrasenia: ['', Validators.required]
@@ -48,10 +56,10 @@ export class LoginComponent implements OnInit{
       contrasenia: formValues.contrasenia
     } 
     this.usuarioService.loginUsuario(usuario).subscribe((response) => {
-      this.usuarioLogueado = response
-      console.log(this.usuarioLogueado.message)
-      this.usuarioLogueado = this.usuarioLogueado.data
-      this.router.navigateByUrl(this.homeURL)
+      this.usuarioLogueado = response.data
+      console.log(response.message)
+      this.almacenamientoService.setItem('redirigirAHome', 'true')
+      window.location.reload()
     })
   }
 }

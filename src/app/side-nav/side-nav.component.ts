@@ -1,9 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, HostListener, OnInit, Output } from '@angular/core';
-import { navDataImport } from './navData.js';
-import { RouterModule } from '@angular/router';
-import { animate, style, transition, trigger } from '@angular/animations';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import { UsuarioService } from '../service/usuario.service.js';
+import { navData } from './navData.js';
+import { SideNavService } from '../service/side-nav.service.js';
+import { AlmacenamientoService } from '../service/almacenamiento.service.js';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -16,26 +17,19 @@ interface SideNavToggle {
   imports: [CommonModule, RouterModule],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',
-  animations: [
-    trigger('fadeInOut', [
-      transition(':enter', [
-        style({opacity: 0}),
-        animate('350ms', style({opacity: 1}))
-      ]),
-      transition(':leave', [
-        style({opacity: 1}),
-        animate('350ms', style({opacity: 0}))
-      ])
-    ])
-  ]
 })
 export class SideNavComponent implements OnInit{
 
+  constructor(private usuarioService: UsuarioService,
+    private sideNavService: SideNavService,
+    private almacenamientoService: AlmacenamientoService,
+    private router: Router
+  ) {}
+
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
+  
   collapsed: boolean = false;
   screenWidth: number = 0;
-
-  navData = navDataImport;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -43,12 +37,6 @@ export class SideNavComponent implements OnInit{
     if(this.screenWidth <= 768) {
       this.collapsed = false;
       this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
-    }
-  }
-
-  ngOnInit(): void {
-    if (typeof window !== 'undefined') {
-      this.screenWidth = window.innerWidth;
     }
   }
 
@@ -61,4 +49,27 @@ export class SideNavComponent implements OnInit{
     this.collapsed = false
     this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth})
   }
+
+
+  
+  navData: navData[] = []
+
+  updateNavData(): void {
+    this.navData = this.sideNavService.getNavData()
+  }
+
+  ngOnInit(): void {
+    this.sideNavService.filtrarFunciones(this.usuarioService.showTipoUsuario())
+    this.updateNavData()
+    if (typeof window !== 'undefined') {
+      this.screenWidth = window.innerWidth;
+    }
+    const redirigirAHome = this.almacenamientoService.getItem('redirigirAHome')
+    if(redirigirAHome === 'true') {
+      this.almacenamientoService.removeItem('redirigirAHome')
+      this.router.navigateByUrl('/home')
+    }
+  }
+
+
 }
