@@ -1,0 +1,77 @@
+.pedidos-container {
+  display: block;
+  margin: 5px;
+}
+
+.plato-item {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  padding: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.plato-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.plato-imagen {
+  width: 50px;
+  height: auto;
+}
+
+.precio-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px; // Espacio entre el precio y los botones de cantidad
+}
+
+.cantidad-container {
+  display: flex;
+  align-items: center;
+  gap: 5px; // Ajusta el espacio entre los botones de cantidad
+}
+
+button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background-color: #9ecde5;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+.btn-reducir,
+.btn-aumentar {
+  padding: 5px 10px;
+  border-radius: 20px;
+  background-color: #9ecde5;
+  border: 1px solid #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-reducir:hover,
+.btn-aumentar:hover {
+  background-color: #e0e0e0;
+}

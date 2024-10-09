@@ -1,1 +1,23 @@
-<p>pedido works!</p>
+<h2>Tu Pedido</h2>
+
+<!-- Contenedor para los platos -->
+<div class="pedidos-container">
+  <div *ngFor="let plato of pedido" class="plato-item">
+    <div class="card">
+      <img *ngIf="plato.imagen" [src]="plato.imagen" alt="{{ plato.descripcion }}" class="plato-imagen">
+      <div class="plato-info">
+        <span>{{ plato.descripcion }}</span>
+        <div class="precio-cantidad">
+          <span> {{ plato.precio | currency }} </span>
+          <div class="cantidad-container">
+            <button class="btn-reducir" (click)="reducirCantidad(plato)">-</button>
+            <span> {{ plato.cantidad }} </span>
+            <button class="btn-aumentar" (click)="aumentarCantidad(plato)">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<h3>Total: {{ calcularTotal() | currency }}</h3>
