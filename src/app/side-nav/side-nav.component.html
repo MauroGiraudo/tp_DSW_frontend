@@ -1,7 +1,7 @@
 <header class="sidenav" [ngClass]="collapsed ? 'sidenav-collapsed' : ''">
   <div class="logo-container">
-    <button class="logo" (click)="desplegarMenu()">A</button>
-    <div class="logo-text" @fadeInOut *ngIf="collapsed">Angular<a routerLink="/home"></a></div>
+    <button class="logo" (click)="desplegarMenu()">AC</button>
+    <div class="logo-text" *ngIf="collapsed">Alma Criolla<a routerLink="/home"></a></div>
     <button class="close-menu" *ngIf="collapsed" (click)="cerrarMenu()">
       <i class="fal fa-times close-icon"></i>
     </button>
@@ -13,7 +13,7 @@
         [routerLinkActiveOptions]="{exact: true}"
       >
         <i class="sidenav-link-icon" [class]="data.icon"></i>
-        <span *ngIf="collapsed" @fadeInOut class="sidenav-link-text">{{data.label}}</span>
+        <span *ngIf="collapsed" class="sidenav-link-text">{{data.label}}</span>
       </a>
     </li>
   </ul>

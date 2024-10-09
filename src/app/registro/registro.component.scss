@@ -1,0 +1,25 @@
+.titulo {
+  color: black;
+  font-size: 1.8rem;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  padding-left: 3.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.register_box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 3rem;
+}
+
+.register {
+  width: 25rem;
+}
+
+.login {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

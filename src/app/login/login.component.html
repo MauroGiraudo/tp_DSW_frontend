@@ -1,1 +1,22 @@
-<p>login works!</p>
+
+<div class="contenedor">
+  <div class="detalles">
+    <p class="titulo">Inicio de Sesión</p>
+    <form [formGroup]="loginForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['email']" [mostrarErrores]="enviado" label="Email">
+      </text-input>
+
+      <text-input [control]="fc['contrasenia']" [mostrarErrores]="enviado" label="Contraseña">
+      </text-input>
+
+      <default-button texto="Iniciar Sesión"></default-button>
+
+      <div class="registro">
+        <p>¿Aún no se ha registrado?</p> &nbsp;
+        <a routerLink="/registro">
+          Regístrese aquí
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
