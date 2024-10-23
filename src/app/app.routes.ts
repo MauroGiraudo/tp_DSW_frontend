@@ -6,6 +6,7 @@ import { CartaComponent } from './carta/carta.component.js';
 import { PedidoComponent } from './pedido/pedido.component.js';
 import { RegistroComponent } from './registro/registro.component.js';
 import { ProveedorComponent } from './proveedor/proveedor.component.js';
+import { MesasComponent } from './mesas/mesas.component.js';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'carta', component: CartaComponent },
   { path: 'pedido', component: PedidoComponent },
   { path: 'registro', component: RegistroComponent },
-  { path: 'proveedor', component: ProveedorComponent }
+  { path: 'proveedor', component: ProveedorComponent },
+  { path: 'mesa', component: MesasComponent}
 ];

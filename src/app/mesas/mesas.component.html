@@ -1,0 +1,10 @@
+<div class="mesas-container">
+  <h2>Mesas</h2>
+  <div class="mesas-grid">
+    <div *ngFor="let mesa of mesas" class="mesa"
+      [ngClass]="{'disponible': mesa.estado === 'Disponible', 'ocupada': mesa.estado === 'Ocupada'}"
+      (click)="cambiarEstadoMesa(mesa)">
+      <span class="mesa-number">{{ mesa.nroMesa }}</span>
+    </div>
+  </div>
+</div>

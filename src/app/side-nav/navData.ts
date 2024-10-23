@@ -51,6 +51,13 @@ export const navDataImport: navData[] = [
     tipoUsuario: ['empleado', 'cliente'],
     logueado: 'true'
   },
+  {
+    routeLink: "mesa",
+    icon: "fa-solid fa-chair",
+    label: "Mesas",
+    tipoUsuario: ['empleado'],
+    logueado: 'true'
+  },
 
   {
     routeLink: "login",
