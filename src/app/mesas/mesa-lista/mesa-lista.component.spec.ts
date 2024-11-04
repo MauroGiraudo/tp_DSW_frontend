@@ -1,25 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { MesasComponent } from './mesas.component';
-import { MesaService } from '../service/mesa.service.js';
+import { MesaListaComponent } from './mesa-lista.component.js';
+import { MesaService } from '../../service/mesa.service.js';
 import { of, throwError } from 'rxjs';
-import { ResponseMesas } from '../models/mesa.models.js';
+import { ResponseMesas } from '../../models/mesa.models.js';
 
-describe('MesasComponent', () => {
-  let component: MesasComponent;
-  let fixture: ComponentFixture<MesasComponent>;
+describe('MesaListaComponent', () => {
+  let component: MesaListaComponent;
+  let fixture: ComponentFixture<MesaListaComponent>;
   let mesaService: jasmine.SpyObj<MesaService>;
 
   beforeEach(async () => {
     const mesaServiceSpy = jasmine.createSpyObj('MesaService', ['getMesas', 'actualizarEstadoMesa']);
 
     await TestBed.configureTestingModule({
-      declarations: [MesasComponent],
+      declarations: [MesaListaComponent],
       providers: [
         { provide: MesaService, useValue: mesaServiceSpy }
       ]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MesasComponent);
+    fixture = TestBed.createComponent(MesaListaComponent);
     component = fixture.componentInstance;
     mesaService = TestBed.inject(MesaService) as jasmine.SpyObj<MesaService>;
   });

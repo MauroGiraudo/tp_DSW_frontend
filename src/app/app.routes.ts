@@ -20,6 +20,7 @@ export const routes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'proveedor', 
     loadChildren: () => import('./proveedor/proveedor.module.js').then(m => m.ProveedorModule) },
-  { path: 'mesa', component: MesasComponent},
+  { path: 'mesa',
+    loadChildren: () => import('./mesas/mesa.module.js').then(m => m.MesaModule)},
   { path: 'cartaBebida', component: CartaBebidaComponent}
 ];

@@ -1,0 +1,66 @@
+.titulo {
+  color: black;
+  font-size: 1.8rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center; // Centramos el texto del título
+  margin-bottom: 1.2rem;
+}
+
+.register_box {
+  display: flex;
+  flex-direction: column; // Cambiado para alinear verticalmente
+  justify-content: flex-start; // Alinear al inicio verticalmente
+  align-items: center; // Centrar horizontalmente
+  height: 100vh; // Altura completa de la ventana
+  padding-top: 2rem; // Espacio desde la parte superior
+}
+
+.register {
+  width: 25rem; // Ajustar para mantener la consistencia visual
+  padding: 20px; // Espaciado interno del formulario
+  background-color: #fff; // Color de fondo del formulario
+  border-radius: 8px; // Bordes redondeados
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); // Sombra para el formulario
+  display: flex; // Cambiado para permitir el uso de flexbox
+  flex-direction: column; // Alinear elementos en columna
+  align-items: center; // Centrar todos los elementos dentro
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%; // Asegura que el formulario use todo el ancho disponible
+}
+
+.form-control {
+  margin-bottom: 1rem; // Asegura que haya espacio entre los campos
+}
+
+.mensaje {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.exito {
+  color: green;
+  background-color: #e7f9e7;
+  border: 1px solid green;
+}
+
+.error {
+  color: red;
+  background-color: #f9e7e7;
+  border: 1px solid red;
+}
+
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; // Cambiado a flex-start para alinear al inicio
+  height: 100vh; // Cambiado para ocupar toda la altura de la ventana
+  padding-top: 3rem; // Espaciado desde la parte superior
+}

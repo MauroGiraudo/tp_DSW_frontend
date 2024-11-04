@@ -1,0 +1,39 @@
+.mesas-container {
+  text-align: center;
+  margin: 0 auto; // Centra el contenedor de mesas
+  width: 80%; // Ajusta el ancho del contenedor
+}
+
+.mesas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); // Hace que las mesas se adapten al tamaño del contenedor
+  justify-content: center; // Centra el contenido en el eje horizontal
+  align-items: center; // Centra el contenido en el eje vertical
+  gap: 20px; // Espaciado entre las mesas
+  margin: 20px 0;
+}
+
+.mesa {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  border: 2px solid black; // Añade un borde negro
+  font-size: 1.5em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.mesa-number {
+  color: black;
+}
+
+.disponible {
+  background-color: green;
+}
+
+.ocupada {
+  background-color: red;
+}

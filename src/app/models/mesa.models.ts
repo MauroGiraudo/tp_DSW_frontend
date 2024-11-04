@@ -1,9 +1,14 @@
 export interface Mesa {
-  nro_mesa: number;
+  nro_mesa: number; // o number, dependiendo de tu implementación
   cant_personas_max: number;
   estado: string;
-  codigo: string;
 }
+
+export interface ResponseMesas {
+  message: string; // Mensaje de respuesta del backend
+  data: Mesa[]; // Arreglo de mesas
+}
+
 
 export interface ResponseMesas {
   message: string;
