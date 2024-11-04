@@ -1,0 +1,37 @@
+<h1>Carta de bebidas</h1>
+
+<!-- Search box -->
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por nombre de bebida" class="search-box"
+    type="text">
+  <button (click)="onSearch()" class="search-button">
+    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png"
+      alt="Buscar">
+  </button>
+</div>
+
+<!-- Tags para filtrar por alcohol -->
+<div class="tags-container">
+  <button (click)="resetFilter()" class="tag reset">Todas</button>
+  <button (click)="filterByType('sin alcohol')" class="tag">Sin alcohol</button>
+  <button (click)="filterByType('con alcohol')" class="tag">Con alcohol</button>
+</div>
+
+<!-- Bebidas filtrados -->
+<div class="bebidas-container">
+  <div *ngFor="let bebida of filteredBebidas" class="flip-card">
+    <div class="flip-card-inner">
+      <div class="flip-card-front">
+        <img *ngIf="bebida.imagen" [src]="bebida.imagen" alt="{{ bebida.descripcion }}">
+        <h2>{{ bebida.descripcion }}</h2>
+      </div>
+      <div class="flip-card-back">
+        <h3>Detalles</h3>
+        <p>Contenido: {{ bebida.contenido }} {{ bebida.unidadMedida }}</p>
+        <p>Precio: ${{ bebida.precio }}</p>
+        <p>Alcohol: {{ bebida.alcohol }}</p>
+        <button (click)="agregarAlPedido(bebida)" class="agregar">Agregar al pedido</button>
+      </div>
+    </div>
+  </div>
+</div>
