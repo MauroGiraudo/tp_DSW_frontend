@@ -74,6 +74,35 @@ export const navDataImport: navData[] = [
   },
 
 
+    {
+    routeLink: "mesa",
+    icon: "fa-solid fa-chair",
+    label: "Mesa",
+    tipoUsuario: ['empleado'],
+    logueado: 'true',
+     items: [
+      {
+        routeLink: "mesa/Lista",
+        label: "Lista de mesas",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "mesa/Crear",
+        label: "Agregar mesa",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "mesa/Modificar",
+        label: "Modificar mesa",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "mesa/Eliminar",
+        label: "Eliminar mesa",
+        tipoUsuario: ['empleado'],
+      }
+    ]
+  },
 
   {
     routeLink: "cliente",

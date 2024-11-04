@@ -1,0 +1,21 @@
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Crear Mesa</p>
+
+    <!-- Muestra el mensaje aquí -->
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="mesaForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['nro_mesa']" [mostrarErrores]="enviado" label="Número de Mesa">
+      </text-input>
+
+      <text-input [control]="fc['cant_personas_max']" [mostrarErrores]="enviado" label="Cantidad Máxima de Personas">
+      </text-input>
+
+      <default-button texto="Crear Mesa"></default-button>
+    </form>
+  </div>
+</div>

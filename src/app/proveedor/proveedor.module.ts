@@ -6,7 +6,7 @@ import { ProveedorComponent } from './proveedor.component.js';
 
 @NgModule({
   declarations: [
-    ProveedorComponent
+  ProveedorComponent
   ],
   imports: [
     CommonModule,
