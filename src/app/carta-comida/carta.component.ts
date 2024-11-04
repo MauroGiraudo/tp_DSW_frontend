@@ -7,14 +7,14 @@ import { PedidoService } from '../service/pedido.service.js';
 
 
 @Component({
-  selector: 'app-carta',
+  selector: 'app-carta-comida',
   standalone: true,
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './carta.component.html',
   styleUrls: ['./carta.component.scss'] // Corregido a 'styleUrls' (no 'styleUrl')
 })
 
-export class CartaComponent implements OnInit {
+export class CartaComidaComponents implements OnInit {
   
   platos: any[] = [];
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda

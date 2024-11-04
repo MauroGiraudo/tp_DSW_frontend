@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
       this.router.navigateByUrl(this.homeURL)
     }
     this.loginForm = this.formBuilder.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]], // Cambiado aquí
       contrasenia: ['', Validators.required]
     })
   }
@@ -47,19 +47,27 @@ export class LoginComponent implements OnInit{
   }
 
   enviar() {
-    this.enviado = true
-    if(this.loginForm.invalid) return
+  this.enviado = true;
+  if (this.loginForm.invalid) return;
 
-    const formValues = this.loginForm.value
-    const usuario: UsuarioLogIn = {
-      email: formValues.email,
-      contrasenia: formValues.contrasenia
-    } 
-    this.usuarioService.loginUsuario(usuario).subscribe((response) => {
-      this.usuarioLogueado = response.data
-      console.log(response.message)
-      this.almacenamientoService.setItem('redirigirAHome', 'true')
-      window.location.reload()
-    })
-  }
+  const formValues = this.loginForm.value;
+  const usuario: UsuarioLogIn = {
+    email: formValues.email,
+    contrasenia: formValues.contrasenia
+  };
+
+  this.usuarioService.loginUsuario(usuario).subscribe(
+    (response) => {
+      this.usuarioLogueado = response.data;
+      console.log(response.message);
+      this.almacenamientoService.setItem('redirigirAHome', 'true');
+      window.location.reload();
+    },
+    (error) => {
+      console.error(error);
+      const errorMessage = error.error?.message || 'Error desconocido al iniciar sesión.';
+      alert('Error al iniciar sesión: ' + errorMessage);
+    }
+  );
+}
 }

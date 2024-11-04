@@ -1,8 +1,10 @@
 export type navData = {
   routeLink: string;
-  icon: string;
+  icon?: string;
   label: string;
+  expanded?:boolean;
   tipoUsuario: string[];
+  items?: navData[];
   logueado?: string;
 }
 
@@ -20,9 +22,16 @@ export const navDataImport: navData[] = [
   },
 
   {
-    routeLink: "carta",
+    routeLink: "cartaComida",
     icon: "fa-solid fa-utensils",
-    label: "Carta",
+    label: "Carta de comidas",
+    tipoUsuario: ['']
+  },
+
+    {
+    routeLink: "cartaBebida",
+    icon: "fa-solid fa-beer",
+    label: "Carta de bebidas",
     tipoUsuario: ['']
   },
 
@@ -39,7 +48,29 @@ export const navDataImport: navData[] = [
     routeLink: "proveedor",
     icon: "fa-solid fa-truck-field",
     label: "Proveedores",
-    tipoUsuario: ['empleado']
+    tipoUsuario: ['empleado'],
+    items: [
+      {
+        routeLink: "proveedor/Lista",
+        label: "Lista de proveedores",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "proveedor/Crear",
+        label: "Agregar proveedor",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "proveedor/Modificar",
+        label: "Modificar proveedor",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "proveedor/Eliminar",
+        label: "Eliminar proveedor",
+        tipoUsuario: ['empleado'],
+      }
+    ]
   },
 
 
@@ -51,13 +82,7 @@ export const navDataImport: navData[] = [
     tipoUsuario: ['empleado', 'cliente'],
     logueado: 'true'
   },
-  {
-    routeLink: "mesa",
-    icon: "fa-solid fa-chair",
-    label: "Mesas",
-    tipoUsuario: ['empleado'],
-    logueado: 'true'
-  },
+
 
   {
     routeLink: "login",
@@ -66,5 +91,7 @@ export const navDataImport: navData[] = [
     tipoUsuario: [''],
     logueado: 'false'
   }
+
+
 
 ];

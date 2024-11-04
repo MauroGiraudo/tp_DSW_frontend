@@ -5,6 +5,7 @@ import { UsuarioService } from '../service/usuario.service.js';
 import { navData } from './navData.js';
 import { SideNavService } from '../service/side-nav.service.js';
 import { AlmacenamientoService } from '../service/almacenamiento.service.js';
+import { SublevelMenuComponent } from "./sublevel-menu.component";
 
 interface SideNavToggle {
   screenWidth: number;
@@ -14,7 +15,7 @@ interface SideNavToggle {
 @Component({
   selector: 'app-side-nav',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, SublevelMenuComponent],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',
 })
@@ -23,13 +24,14 @@ export class SideNavComponent implements OnInit{
   constructor(private usuarioService: UsuarioService,
     private sideNavService: SideNavService,
     private almacenamientoService: AlmacenamientoService,
-    private router: Router
+    public router: Router
   ) {}
 
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
   
   collapsed: boolean = false;
   screenWidth: number = 0;
+  multiple: boolean = false;
 
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
@@ -39,6 +41,7 @@ export class SideNavComponent implements OnInit{
       this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
     }
   }
+
 
   desplegarMenu(): void {
     this.collapsed = !this.collapsed
@@ -71,5 +74,22 @@ export class SideNavComponent implements OnInit{
     }
   }
 
+  handleClick(item: navData): void{
+    this.shrinkItems(item);
+    item.expanded = !item.expanded
+  }
 
+  getActiveClass(data:navData):string{
+    return this.router.url.includes(data.routeLink) ? 'active':'';
+  }
+
+  shrinkItems(item:navData):void{
+    if (!this.multiple){
+      for(let modelItem of this.navData){
+        if (item !== modelItem && modelItem.expanded){
+          modelItem.expanded = false;
+        }
+      }
+    }
+  }
 }
