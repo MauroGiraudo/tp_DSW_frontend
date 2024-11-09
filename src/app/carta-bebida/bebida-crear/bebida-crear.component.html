@@ -11,6 +11,8 @@
     <form [formGroup]="bebidaForm" (ngSubmit)="enviar()">
       <text-input [control]="fc['descripcion']" [mostrarErrores]="enviado" label="Descripción"></text-input>
 
+      <text-input [control]="fc['stock']" [mostrarErrores]="enviado" label="Stock"></text-input>
+
       <text-input [control]="fc['unidadMedida']" [mostrarErrores]="enviado" label="Unidad de Medida"></text-input>
 
       <text-input [control]="fc['contenido']" [mostrarErrores]="enviado" label="Contenido"></text-input>

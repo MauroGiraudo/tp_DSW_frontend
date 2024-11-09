@@ -30,6 +30,7 @@ export interface ResponseProveedores {
 export interface Bebida{
   codBebida: number;
   descripcion: string;
+  stock: number;
   unidadMedida: string;
   contenido: number;
   precio: number;

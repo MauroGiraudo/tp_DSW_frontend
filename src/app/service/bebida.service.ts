@@ -15,6 +15,7 @@ export class BebidaService {
   public crearBebida(bebida: Bebida): Observable<Bebida> {
     return this.http.post<Bebida>(this.apiUrl, {
       descripcion: bebida.descripcion,
+      stock:bebida.stock,
       unidadMedida: bebida.unidadMedida,
       contenido: bebida.contenido,
       precio: bebida.precio,
