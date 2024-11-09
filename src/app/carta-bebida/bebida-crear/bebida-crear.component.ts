@@ -26,7 +26,8 @@ export class BebidaCrearComponent implements OnInit {
   ) {
     // Configuración del formulario para crear una bebida
     this.bebidaForm = this.fb.group({
-      descripcion: ['', [Validators.required]], 
+      descripcion: ['', [Validators.required]],
+      stock: [null, [Validators.required, Validators.min(0)]],
       unidadMedida: ['', [Validators.required]],
       contenido: [null, [Validators.required, Validators.min(1)]],
       precio: [null, [Validators.required, Validators.min(0)]],
@@ -47,6 +48,7 @@ export class BebidaCrearComponent implements OnInit {
       const nuevaBebida: Bebida = {
         codBebida: this.bebidaForm.value.codBebida,
         descripcion: this.bebidaForm.value.descripcion,
+        stock: parseFloat(this.bebidaForm.value.stock), // Acceder correctamente a stock
         unidadMedida: this.bebidaForm.value.unidadMedida,
         contenido: parseFloat(this.bebidaForm.value.contenido), // Convertir a número
         precio: parseFloat(this.bebidaForm.value.precio), // Convertir a número

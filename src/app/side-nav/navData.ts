@@ -143,6 +143,4 @@ export const navDataImport: navData[] = [
     logueado: 'false'
   }
 
-
-
 ];

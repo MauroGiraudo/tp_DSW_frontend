@@ -27,7 +27,8 @@ export class BebidaModificarComponent implements OnInit {
   ) {
     this.bebidaForm = this.fb.group({
       codBebida: ['', [Validators.required]],  
-      descripcion: ['', [this.whitespaceValidator()]],  
+      descripcion: ['', [this.whitespaceValidator()]],
+      stock:   ['', [this.numberOrWhitespaceValidator()]],
       unidadMedida: ['', [this.whitespaceValidator()]],  
       contenido: ['', [this.numberOrWhitespaceValidator()]],  
       precio: ['', [this.numberOrWhitespaceValidator()]],  
@@ -89,6 +90,7 @@ export class BebidaModificarComponent implements OnInit {
         this.bebidaForm.patchValue({
           codBebida: bebida.codBebida,
           descripcion: bebida.descripcion,
+          stock: bebida.stock,
           unidadMedida: bebida.unidadMedida,
           contenido: bebida.contenido,
           precio: bebida.precio,
@@ -113,16 +115,18 @@ export class BebidaModificarComponent implements OnInit {
         return; // Detiene la función si el número es inválido
       }
 
-      const bebidaActualizada: Partial<Bebida> = {
-        codBebida,  
-        descripcion: this.bebidaForm.value.descripcion || this.bebidaActual?.descripcion,  
-        unidadMedida: this.bebidaForm.value.unidadMedida || this.bebidaActual?.unidadMedida,  
-        contenido: this.bebidaForm.value.contenido ? parseInt(this.bebidaForm.value.contenido, 10) : this.bebidaActual?.contenido,  
-        precio: this.bebidaForm.value.precio ? parseFloat(this.bebidaForm.value.precio) : this.bebidaActual?.precio,  
-        alcohol: this.bebidaForm.value.alcohol || this.bebidaActual?.alcohol, 
-        imagen: this.bebidaForm.value.imagen || this.bebidaActual?.imagen,  
-        proveedor: this.bebidaForm.value.proveedor || this.bebidaActual?.proveedor,  
-      };
+    const bebidaActualizada: Partial<Bebida> = {
+      codBebida,
+      descripcion: this.bebidaForm.value.descripcion || this.bebidaActual?.descripcion,
+      stock: this.bebidaForm.value.stock ? parseInt(this.bebidaForm.value.stock, 10) : this.bebidaActual?.stock,
+      unidadMedida: this.bebidaForm.value.unidadMedida || this.bebidaActual?.unidadMedida,
+      contenido: this.bebidaForm.value.contenido ? parseInt(this.bebidaForm.value.contenido, 10) : this.bebidaActual?.contenido,
+      precio: this.bebidaForm.value.precio ? parseFloat(this.bebidaForm.value.precio) : this.bebidaActual?.precio,
+      alcohol: this.bebidaForm.value.alcohol || this.bebidaActual?.alcohol,
+      imagen: this.bebidaForm.value.imagen || this.bebidaActual?.imagen,
+      proveedor: this.bebidaForm.value.proveedor || this.bebidaActual?.proveedor,
+    };
+
 
 
       this.bebidaService.actualizarBebida(codBebida, bebidaActualizada).subscribe({
