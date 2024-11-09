@@ -19,9 +19,10 @@ interface SideNavToggle {
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss',
 })
-export class SideNavComponent implements OnInit{
+export class SideNavComponent implements OnInit {
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(
+    private usuarioService: UsuarioService,
     private sideNavService: SideNavService,
     private almacenamientoService: AlmacenamientoService,
     public router: Router
@@ -33,60 +34,64 @@ export class SideNavComponent implements OnInit{
   screenWidth: number = 0;
   multiple: boolean = false;
 
+  // Tipo de usuario actual
+  userType: string = '';
+
   @HostListener('window:resize', ['$event'])
   onResize(event: any) {
     this.screenWidth = window.innerWidth;
     if(this.screenWidth <= 768) {
       this.collapsed = false;
-      this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth});
+      this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
     }
   }
 
-
   desplegarMenu(): void {
-    this.collapsed = !this.collapsed
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth})
+    this.collapsed = !this.collapsed;
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
   cerrarMenu(): void {
-    this.collapsed = false
-    this.onToggleSideNav.emit({collapsed: this.collapsed, screenWidth: this.screenWidth})
+    this.collapsed = false;
+    this.onToggleSideNav.emit({ collapsed: this.collapsed, screenWidth: this.screenWidth });
   }
 
-
-  
-  navData: navData[] = []
+  navData: navData[] = [];
 
   updateNavData(): void {
-    this.navData = this.sideNavService.getNavData()
+    this.navData = this.sideNavService.getNavData();
   }
 
   ngOnInit(): void {
-    this.sideNavService.filtrarFunciones(this.usuarioService.showTipoUsuario())
-    this.updateNavData()
+    // Comprobamos si el usuario está logueado y obtenemos el tipo de usuario
+    this.userType = this.usuarioService.showTipoUsuario() || '';  // Si no está logueado, será una cadena vacía
+    this.sideNavService.filtrarFunciones(this.userType);
+    this.updateNavData();
+
     if (typeof window !== 'undefined') {
       this.screenWidth = window.innerWidth;
     }
-    const redirigirAHome = this.almacenamientoService.getItem('redirigirAHome')
-    if(redirigirAHome === 'true') {
-      this.almacenamientoService.removeItem('redirigirAHome')
-      this.router.navigateByUrl('/home')
+
+    const redirigirAHome = this.almacenamientoService.getItem('redirigirAHome');
+    if (redirigirAHome === 'true') {
+      this.almacenamientoService.removeItem('redirigirAHome');
+      this.router.navigateByUrl('/home');
     }
   }
 
-  handleClick(item: navData): void{
+  handleClick(item: navData): void {
     this.shrinkItems(item);
-    item.expanded = !item.expanded
+    item.expanded = !item.expanded;
   }
 
-  getActiveClass(data:navData):string{
-    return this.router.url.includes(data.routeLink) ? 'active':'';
+  getActiveClass(data: navData): string {
+    return this.router.url.includes(data.routeLink) ? 'active' : '';
   }
 
-  shrinkItems(item:navData):void{
-    if (!this.multiple){
-      for(let modelItem of this.navData){
-        if (item !== modelItem && modelItem.expanded){
+  shrinkItems(item: navData): void {
+    if (!this.multiple) {
+      for (let modelItem of this.navData) {
+        if (item !== modelItem && modelItem.expanded) {
           modelItem.expanded = false;
         }
       }
