@@ -39,22 +39,6 @@ export class MesaListaComponent implements OnInit, OnDestroy {
     );
   }
 
-  cambiarEstadoMesa(mesa: any) {
-    const nuevoEstado = mesa.estado === 'Ocupada' ? 'Disponible' : 'Ocupada';
-    mesa.cargando = true; // Estado para indicar que la solicitud está en progreso
-
-    this.mesaService.actualizarEstadoMesa(mesa.nroMesa, nuevoEstado).subscribe(
-      (response) => {
-        mesa.estado = nuevoEstado; // Actualiza el estado solo si la respuesta es exitosa
-        console.log(`Mesa ${mesa.nroMesa} estado cambiado a: ${mesa.estado}`);
-        mesa.cargando = false; // Termina el estado de carga
-      },
-      (error) => {
-        console.error(`Error al actualizar el estado de la mesa ${mesa.nroMesa}:`, error);
-        mesa.cargando = false; // Termina el estado de carga en caso de error
-      }
-    );
-  }
 
   ngOnDestroy(): void {
     this.destroy$.next();

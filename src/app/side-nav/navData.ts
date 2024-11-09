@@ -94,7 +94,35 @@ export const navDataImport: navData[] = [
       }
     ]
   },
-
+ {
+    routeLink: "tipoplato",
+    icon: "fa-solid fa-spoon",
+    label: "Tipo Plato",
+    tipoUsuario: ['empleado'],
+    logueado: 'true',
+     items: [
+      {
+        routeLink: "tipoplato/Lista",
+        label: "Lista de Tipo Plato",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "tipoplato/Crear",
+        label: "Agregar Tipo Plato",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "tipoplato/Modificar",
+        label: "Modificar Tipo Plato",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "tipoplato/Eliminar",
+        label: "Eliminar Tipo Plato",
+        tipoUsuario: ['empleado'],
+      }
+    ]
+  },
 
     {
     routeLink: "mesa",

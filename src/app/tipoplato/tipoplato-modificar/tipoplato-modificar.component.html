@@ -1,0 +1,24 @@
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Modificar Tipo de Plato</p>
+
+    <!-- Muestra el mensaje aquí -->
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="tipoPlatoForm" (ngSubmit)="enviar()">
+
+      <!-- Número del Plato -->
+      <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Número del Plato">
+      </text-input>
+
+      <!-- Descripción del Tipo de Plato -->
+      <text-input [control]="fc['descTPlato']" [mostrarErrores]="enviado" label="Descripción del Tipo de Plato">
+      </text-input>
+
+      <default-button texto="Modificar Tipo de Plato"></default-button>
+    </form>
+  </div>
+</div>

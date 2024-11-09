@@ -23,5 +23,7 @@ export const routes: Routes = [
   { path: 'mesa',
     loadChildren: () => import('./mesas/mesa.module').then(m => m.MesaModule)},
   { path: 'cartaBebida', 
-    loadChildren: () => import('./carta-bebida/bebida.module').then(m => m.BebidaModule)}
+    loadChildren: () => import('./carta-bebida/bebida.module').then(m => m.BebidaModule)},
+      { path: 'tipoplato',
+    loadChildren: () => import('./tipoplato/tipoplato.module').then(m => m.TipoplatoModule)}
 ];

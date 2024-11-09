@@ -62,7 +62,7 @@ export class ProveedorCrearComponent implements OnInit {
           this.proveedorForm.reset();
           this.enviado = false; 
           this.mensaje = 'Proveedor agregado exitosamente'; 
-          this.router.navigate(['proveedores/Lista']); // Redirige a la página de lista de proveedores
+          this.router.navigate(['proveedor/Lista']); // Redirige a la página de lista de proveedores
         },
         error: (error) => {
           console.error('Error al crear el proveedor:', error);
