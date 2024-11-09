@@ -43,20 +43,17 @@ form {
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
-  width: 100%; // Ocupa el 100% del ancho del contenedor
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); // Sombra para los mensajes
-  transition: opacity 0.3s ease; // Transición para el efecto de aparición/desaparición
 }
 
 .exito {
   color: green;
-  background-color: #e7f9e7; // Color de fondo claro para el mensaje de éxito
+  background-color: #e7f9e7;
   border: 1px solid green;
 }
 
 .error {
   color: red;
-  background-color: #f9e7e7; // Color de fondo claro para el mensaje de error
+  background-color: #f9e7e7;
   border: 1px solid red;
 }
 

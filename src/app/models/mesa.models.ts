@@ -9,12 +9,38 @@ export interface ResponseMesas {
   data: Mesa[]; // Arreglo de mesas
 }
 
+export interface Proveedor{
+  id:number;
+  cuit: string;
+  razonSocial: string;
+  direccion: string;
+  ciudad: string;
+  provincia: string;
+  pais: string;
+  telefono: string;
+  email: string;
+  mostrarDetalles?: boolean;
+}
 
-export interface ResponseMesas {
-  message: string;
-  data: Mesa[];
+export interface ResponseProveedores {
+  message: string;  // Mensaje de respuesta del backend
+  data: Proveedor[]; // Arreglo de proveedores
 }
-export interface ResponseMesas {
-  message: string; // Propiedad que se requiere
-  data: Mesa[]; // Asumiendo que tienes una interfaz Mesa que define los atributos de cada mesa
+
+export interface Bebida{
+  codBebida: number;
+  descripcion: string;
+  unidadMedida: string;
+  contenido: number;
+  precio: number;
+  alcohol: string;
+  imagen: string;
+  proveedor: number;
 }
+
+export interface ResponseBebidas {
+  message: string;  // Mensaje de respuesta del backend
+  data: Bebida[]; // Arreglo de proveedores
+}
+
+

@@ -28,12 +28,34 @@ export const navDataImport: navData[] = [
     tipoUsuario: ['']
   },
 
+  {
+  routeLink: "cartaBebida",
+  icon: "fa-solid fa-beer",
+  label: "Carta de bebidas",
+  tipoUsuario: [''],
+  items: [
     {
-    routeLink: "cartaBebida",
-    icon: "fa-solid fa-beer",
-    label: "Carta de bebidas",
-    tipoUsuario: ['']
-  },
+      routeLink: "cartaBebida/Lista",
+      label: "Carta de bebidas",
+      tipoUsuario: [''],
+    },
+    {
+      routeLink: "cartaBebida/Crear",
+      label: "Agregar bebida",
+      tipoUsuario: ['empleado'],  
+    },
+    {
+      routeLink: "cartaBebida/Modificar",
+      label: "Modificar bebida",
+      tipoUsuario: ['empleado'],
+    },
+    {
+      routeLink: "cartaBebida/Eliminar",
+      label: "Eliminar bebida",
+      tipoUsuario: ['empleado'],
+    }
+  ]
+},
 
   {
     routeLink: "pedido",

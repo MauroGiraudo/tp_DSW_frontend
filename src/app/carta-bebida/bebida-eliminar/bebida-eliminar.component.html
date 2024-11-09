@@ -1,0 +1,24 @@
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Eliminar Bebida</p>
+
+    <!-- Muestra el mensaje aquí -->
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="bebidaForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['codBebida']" [mostrarErrores]="enviado" label="Código de Bebida">
+      </text-input>
+
+      <!-- Campo adicional para ID del proveedor -->
+      <text-input [control]="fc['proveedor']" [mostrarErrores]="enviado" label="ID del Proveedor">
+      </text-input>
+
+      <default-button texto="Eliminar Bebida"></default-button>
+    </form>
+  </div>
+</div>
+
+

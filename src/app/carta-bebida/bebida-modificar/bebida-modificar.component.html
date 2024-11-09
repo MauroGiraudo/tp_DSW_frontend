@@ -1,0 +1,48 @@
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Modificar Bebida</p>
+
+    <!-- Muestra el mensaje aquí -->
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="bebidaForm" (ngSubmit)="enviar()">
+      <!-- Número de Bebida -->
+      <text-input [control]="fc['codBebida']" [mostrarErrores]="enviado" label="Código de Bebida">
+      </text-input>
+
+      <!-- Descripción -->
+      <text-input [control]="fc['descripcion']" [mostrarErrores]="enviado" label="Descripción de la Bebida">
+      </text-input>
+
+      <!-- Unidad de Medida -->
+      <text-input [control]="fc['unidadMedida']" [mostrarErrores]="enviado" label="Unidad de Medida">
+      </text-input>
+
+      <!-- Contenido -->
+      <text-input [control]="fc['contenido']" [mostrarErrores]="enviado" label="Contenido (ml)">
+      </text-input>
+
+      <!-- Precio -->
+      <text-input [control]="fc['precio']" [mostrarErrores]="enviado" label="Precio">
+      </text-input>
+
+      <!-- Alcohol -->
+      <text-input [control]="fc['alcohol']" [mostrarErrores]="enviado" label="Contiene Alcohol?">
+      </text-input>
+
+      <!-- Proveedor -->
+      <text-input [control]="fc['proveedor']" [mostrarErrores]="enviado" label="Proveedor">
+      </text-input>
+
+      <!-- Imagen -->
+      <text-input [control]="fc['imagen']" [mostrarErrores]="enviado" label="Imagen de la Bebida">
+      </text-input>
+
+      <default-button texto="Actualizar Bebida"></default-button>
+    </form>
+  </div>
+</div>
+

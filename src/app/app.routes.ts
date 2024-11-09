@@ -19,8 +19,9 @@ export const routes: Routes = [
   { path: 'pedido', component: PedidoComponent },
   { path: 'registro', component: RegistroComponent },
   { path: 'proveedor', 
-    loadChildren: () => import('./proveedor/proveedor.module.js').then(m => m.ProveedorModule) },
+    loadChildren: () => import('./proveedor/proveedor.module').then(m => m.ProveedorModule) },
   { path: 'mesa',
-    loadChildren: () => import('./mesas/mesa.module.js').then(m => m.MesaModule)},
-  { path: 'cartaBebida', component: CartaBebidaComponent}
+    loadChildren: () => import('./mesas/mesa.module').then(m => m.MesaModule)},
+  { path: 'cartaBebida', 
+    loadChildren: () => import('./carta-bebida/bebida.module').then(m => m.BebidaModule)}
 ];
