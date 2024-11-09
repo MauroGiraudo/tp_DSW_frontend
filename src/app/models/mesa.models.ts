@@ -45,3 +45,12 @@ export interface ResponseBebidas {
 }
 
 
+  export interface Tipoplato{
+  numPlato: number;
+  descTPlato: string;
+}
+
+export interface ResponseTipoplato {
+  message: string;  // Mensaje de respuesta del backend
+  data: Tipoplato[]; // Arreglo de proveedores
+}
