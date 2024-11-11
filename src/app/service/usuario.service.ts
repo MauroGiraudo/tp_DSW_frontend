@@ -1,77 +1,89 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, OnChanges } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { UsuarioLogIn, UsuarioLogOut, UsuarioRegistro, UsuarioResponse } from '../shared/usuarioInterfaces.js';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Usuario } from '../shared/usuario.entity.js';
 import { AlmacenamientoService } from './almacenamiento.service.js';
 import { SideNavService } from './side-nav.service.js';
 
-const USER_KEY = 'Usuario'
+const USER_KEY = 'Usuario';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  private usuarioSubject = new BehaviorSubject<Usuario>(this.getUsuarioFromLocalStorage())
-  //public usuarioObservable: Observable<Usuario> = this.usuarioSubject.asObservable()
+  private usuarioSubject = new BehaviorSubject<Usuario>(this.getUsuarioFromLocalStorage());
+  public usuarioObservable: Observable<Usuario> = this.usuarioSubject.asObservable(); // Exponemos el observable
 
-  constructor(private http: HttpClient, 
+  constructor(
+    private http: HttpClient, 
     private almacenamientoService: AlmacenamientoService,
     private sideNavService: SideNavService
-  ) { }
+  ) {}
 
-  readonly urlUsuario = 'http://localhost:3000/api/usuarios'
+  readonly urlUsuario = 'http://localhost:3000/api/usuarios';
 
   public registrarUsuario(usuario: UsuarioRegistro) {
-    const url = this.urlUsuario + '/registro'
-    return this.http.post<UsuarioResponse>(url, usuario)
+    const url = this.urlUsuario + '/registro';
+    return this.http.post<UsuarioResponse>(url, usuario);
   }
 
   public loginUsuario(usuario: UsuarioLogIn) {
-    const url = this.urlUsuario + '/login'
-    return this.http.post<UsuarioResponse>(url, usuario).pipe(tap({
-      next: (response) => {
-        const usuario: Usuario = response.data
-        this.setUsuarioToLocalStorage(usuario)
-        this.usuarioSubject.next(usuario)
-        this.sideNavService.filtrarFunciones(usuario.tipoUsuario)
-      }
-    }))
+    const url = this.urlUsuario + '/login';
+    return this.http.post<UsuarioResponse>(url, usuario).pipe(
+      tap({
+        next: (response) => {
+          const usuario: Usuario = response.data;
+          this.setUsuarioToLocalStorage(usuario);
+          this.usuarioSubject.next(usuario); // Emitimos el usuario logueado
+          this.sideNavService.filtrarFunciones(usuario.tipoUsuario);
+        }
+      })
+    );
   }
 
   public logOutUsuario() {
-    const url = this.urlUsuario + '/logout'
-    return this.http.post<UsuarioLogOut>(url, null).pipe(tap({
-      next: (response) => {
-        this.usuarioSubject.next(new Usuario)
-        this.removeUsuarioFromLocalStorage()
-      }
-    }))
+    const url = this.urlUsuario + '/logout';
+    return this.http.post<UsuarioLogOut>(url, null).pipe(
+      tap({
+        next: () => {
+          this.usuarioSubject.next(new Usuario()); // Emitimos un usuario vacío
+          this.removeUsuarioFromLocalStorage();
+        }
+      })
+    );
   }
 
   private setUsuarioToLocalStorage(usuario: Usuario): void {
-    this.almacenamientoService.setItem(USER_KEY, JSON.stringify(usuario))
+    this.almacenamientoService.setItem(USER_KEY, JSON.stringify(usuario));
   }
 
   private getUsuarioFromLocalStorage(): Usuario {
-    const usuario = this.almacenamientoService.getItem(USER_KEY)
-    if(usuario) {
-      return JSON.parse(usuario)
+    const usuario = this.almacenamientoService.getItem(USER_KEY);
+    if (usuario) {
+      return JSON.parse(usuario);
     } else {
-      return new Usuario()
+      return new Usuario(); // Retorna un usuario vacío si no existe en el almacenamiento
     }
   }
 
-   public obtenerUsuarioActual(): Usuario {
+  private removeUsuarioFromLocalStorage(): void {
+    this.almacenamientoService.removeItem(USER_KEY);
+  }
+
+  // Método para obtener el usuario actual desde el BehaviorSubject
+  public obtenerUsuarioActual(): Usuario {
     return this.usuarioSubject.value;
   }
 
-  private removeUsuarioFromLocalStorage(): void {
-    this.almacenamientoService.removeItem(USER_KEY)
+  // Método para actualizar el usuario manualmente
+  public actualizarUsuario(usuario: Usuario): void {
+    this.setUsuarioToLocalStorage(usuario);
+    this.usuarioSubject.next(usuario); // Emitimos el usuario actualizado
   }
 
-  public showTipoUsuario() {
-    return this.usuarioSubject.value.tipoUsuario
+  public showTipoUsuario(): string {
+    return this.usuarioSubject.value.tipoUsuario;
   }
 }
