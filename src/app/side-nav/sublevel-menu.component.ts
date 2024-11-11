@@ -3,51 +3,51 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { navData } from './navData.js';
+import { UsuarioService } from '../service/usuario.service.js';
 
 @Component({
   selector: 'app-sublevel-menu',
   standalone: true,
   imports: [CommonModule, RouterModule],
   template: `
-   <ul *ngIf="collapsed && data.items && data.items.length > 0"
-   [@submenu] = "expanded
+<ul *ngIf="collapsed && data.items && data.items.length > 0"
+   [@submenu]="expanded
     ? {value: 'visible', 
         params: {transitionParams: '400ms cubic-bezier(0.86,0,0.07,1)', height:'*'}}
     : {value: 'hidden',
-        params: {transitionParams: '400ms cubic-bezier(0.86,0,0.07,1)', height: '0'}}
-   "
-    class = "sublevel-nav">
-      <li *ngFor="let item of data.items" class="sublevel-nav-item">
-        <a class="sublevel-nav-link"
-        (click) = "handleClick(item)"
-          *ngIf="item.items && item.items.length > 0"
-          [ngClass]="getActiveClass(item)"
-        >
-          <i class="sublevel-link-icon fa fa-circle"></i>
-          <span class="sublevel-link-text" *ngIf="collapsed">{{item.label}}</span>
-          <i *ngIf="item.items && collapsed" class="menu-collapse-icon"
-            [ngClass]="!item.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down' "
-          ></i>
-        </a>
-        <a class = "sublevel-nav-link"
+        params: {transitionParams: '400ms cubic-bezier(0.86,0,0.07,1)', height: '0'}}"
+    class="sublevel-nav">
+  
+  <ng-container *ngFor="let item of data.items">
+    <li *ngIf="isVisible(item)" class="sublevel-nav-item">
+      <a class="sublevel-nav-link"
+         (click)="handleClick(item)"
+         *ngIf="item.items && item.items.length > 0"
+         [ngClass]="getActiveClass(item)">
+        <i class="sublevel-link-icon fa fa-circle"></i>
+        <span class="sublevel-link-text" *ngIf="collapsed">{{item.label}}</span>
+        <i *ngIf="item.items && collapsed" class="menu-collapse-icon"
+           [ngClass]="!item.expanded ? 'fal fa-angle-right' : 'fal fa-angle-down'"></i>
+      </a>
+      <a class="sublevel-nav-link"
          *ngIf="!item.items || (item.items && item.items.length === 0)"
-          [routerLink]="[item.routeLink]" 
-          routerLinkActive="active-sublevel"
-          [routerLinkActiveOptions]="{exact: true}"
-        >
-          <i class="sublevel-link-icon fa fa-circle"></i>
-          <span class="sublevel-link-text" *ngIf="collapsed">{{item.label}}</span>
-        </a>
-        <div *ngIf="item.items && item.items.length > 0">
-          <app-sublevel-menu
-            [data]="item"
-            [collapsed]="collapsed"
-            [multiple]="multiple"
-            [expanded]="item.expanded"
-          ></app-sublevel-menu>
-        </div>
-      </li>
-   </ul>
+         [routerLink]="[item.routeLink]" 
+         routerLinkActive="active-sublevel"
+         [routerLinkActiveOptions]="{exact: true}">
+        <i class="sublevel-link-icon fa fa-circle"></i>
+        <span class="sublevel-link-text" *ngIf="collapsed">{{item.label}}</span>
+      </a>
+      <div *ngIf="item.items && item.items.length > 0">
+        <app-sublevel-menu
+          [data]="item"
+          [collapsed]="collapsed"
+          [multiple]="multiple"
+          [expanded]="item.expanded">
+        </app-sublevel-menu>
+      </div>
+    </li>
+  </ng-container>
+</ul>
   `,
   styleUrl: './side-nav.component.scss',
   animations: [
@@ -65,30 +65,37 @@ import { navData } from './navData.js';
     ])
   ]
 })
-export class SublevelMenuComponent implements OnInit{
+export class SublevelMenuComponent implements OnInit {
   @Input() data: navData = {
     routeLink: '',
     icon: '',
     label: '',
     tipoUsuario: [],
     items: [],
-  }
+  };
   @Input() collapsed = false;
   @Input() animating: boolean | undefined;
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;
 
-  constructor (public router:Router){}
+  userType: string = '';  // Almacenará el tipo de usuario
+
+  constructor(
+    public router: Router,
+    private usuarioService: UsuarioService  // Asegúrate de tener el servicio para obtener el tipo de usuario
+  ) {}
 
   ngOnInit(): void {
+    // Obtén el tipo de usuario desde el servicio
+    this.userType = this.usuarioService.showTipoUsuario() || '';
   }
 
-  handleClick(item:any):void{
-    if (!this.multiple){
-      if(this.data.items && this.data.items.length > 0){
-        for(let modelItem of this.data.items){
-          if(item !== modelItem && modelItem.expanded){
-            modelItem.expanded = false
+  handleClick(item: any): void {
+    if (!this.multiple) {
+      if (this.data.items && this.data.items.length > 0) {
+        for (let modelItem of this.data.items) {
+          if (item !== modelItem && modelItem.expanded) {
+            modelItem.expanded = false;
           }
         }
       }
@@ -96,7 +103,18 @@ export class SublevelMenuComponent implements OnInit{
     item.expanded = !item.expanded;
   }
 
-  getActiveClass(item:navData):string{
+  getActiveClass(item: navData): string {
     return item.expanded && this.router.url.includes(item.routeLink) ? 'active-sublevel' : '';
   }
+
+  // Método para comprobar si el item debe ser visible
+isVisible(item: navData): boolean {
+  // Verifica si el tipo de usuario está permitido para este item
+  if (item.tipoUsuario.length === 0 || item.tipoUsuario.includes(this.userType)) {
+    return true;
+  }
+  // Si el tipo de usuario es vacío, lo interpretamos como accesible para usuarios no logueados
+  return item.tipoUsuario.includes('');
+}
+
 }

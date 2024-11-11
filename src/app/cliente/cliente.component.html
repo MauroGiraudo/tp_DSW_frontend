@@ -1,8 +1,13 @@
-
 <div class="contenedor">
-  <div class="detalle-usuario">
 
+  <div *ngIf="usuario && usuario.nombre">
+    <p><strong>Nombre:</strong> {{ usuario.nombre }}</p>
+    <p><strong>Apellido:</strong> {{ usuario.apellido }}</p>
+    <p><strong>Email:</strong> {{ usuario.email }}</p>
+    <p><strong>Telefono:</strong> {{ usuario.telefono}}</p>
+    <p><strong>Tipo de Usuario:</strong> {{ usuario.tipoUsuario }}</p>
   </div>
+
   <button type="button" (click)="logOut()">Cerrar Sesión</button>
 </div>
 
