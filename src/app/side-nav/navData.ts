@@ -61,10 +61,25 @@ export const navDataImport: navData[] = [
     routeLink: "pedido",
     icon: "fa-regular fa-bookmark",
     label: "Pedidos",
-    tipoUsuario: ['cliente'] 
+    tipoUsuario: ['cliente'],
     //Por ahora queda de esta manera, pero la idea es crear una funcionalidad de pedido 
     //distinta para cada tipo de usuario
-  },
+    items: [
+      {
+        routeLink: "pedido/Crear",
+        label: "Nuevo pedido",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "pedido/Modificar",
+        label: "Pedido actual",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "pedido/Lista",
+        label: "Lista de pedidos",
+        tipoUsuario: ['cliente'],
+      }]},
 
   {
     routeLink: "proveedor",

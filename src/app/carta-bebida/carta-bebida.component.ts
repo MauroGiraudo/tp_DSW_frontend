@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PedidoService } from '../service/pedido.service.js';
+import { Bebida,BebidaConCantidad } from '../models/mesa.models.js';
 
 @Component({
   selector: 'app-carta-bebida',
@@ -59,14 +60,20 @@ export class CartaBebidaComponent implements OnInit {
     console.log('Filtro de tipo de bebida restablecido. Mostrando todas las bebidas.');
   }
 
-  agregarAlPedido(bebida: any): void {
-    const bebidaPedido = {
-      cod_bebida: bebida.cod_bebida,
+  agregarAlPedido(bebida: Bebida): void {
+    const bebidaPedido: BebidaConCantidad = {
+      codBebida: bebida.codBebida,
       descripcion: bebida.descripcion,
+      stock:bebida.stock,
+      unidadMedida: bebida.unidadMedida,
+      contenido:bebida.contenido,
       precio: bebida.precio,
-      cantidad: 1 // Cantidad inicial predeterminada
+      alcohol:bebida.alcohol,
+      imagen:bebida.imagen,
+      proveedor:bebida.proveedor,
+      cantidad:1,
     };
-    this.pedidoService.agregarPlatoAlPedido(bebidaPedido);
+    this.pedidoService.agregarBebidaAlPedido(bebidaPedido);
     console.log('Bebida agregada al pedido:', bebidaPedido);
   }
 }

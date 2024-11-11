@@ -63,6 +63,10 @@ export class UsuarioService {
     }
   }
 
+   public obtenerUsuarioActual(): Usuario {
+    return this.usuarioSubject.value;
+  }
+
   private removeUsuarioFromLocalStorage(): void {
     this.almacenamientoService.removeItem(USER_KEY)
   }
