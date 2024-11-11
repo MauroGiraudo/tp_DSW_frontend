@@ -17,7 +17,7 @@
   <button (click)="filterByType('con alcohol')" class="tag">Con alcohol</button>
 </div>
 
-<!-- Bebidas filtrados -->
+<!-- Bebidas filtradas -->
 <div class="bebidas-container">
   <div *ngFor="let bebida of filteredBebidas" class="flip-card">
     <div class="flip-card-inner">
@@ -27,11 +27,21 @@
       </div>
       <div class="flip-card-back">
         <h3>Detalles</h3>
-        <p>CodBebida: {{bebida.codBebida}}</p>
+
+        <!-- Mostrar codBebida solo si el usuario es empleado -->
+        <p *ngIf="tipoUsuario === 'empleado'">CodBebida: {{ bebida.codBebida }}</p>
+
         <p>Contenido: {{ bebida.contenido }} {{ bebida.unidadMedida }}</p>
+
+        <!-- Mostrar precio siempre -->
         <p>Precio: ${{ bebida.precio }}</p>
+
+        <!-- Mostrar alcohol siempre -->
         <p>Alcohol: {{ bebida.alcohol }}</p>
-        <p>Stock: {{ bebida.stock }}</p>
+
+        <!-- Mostrar stock solo si el usuario es empleado -->
+        <p *ngIf="tipoUsuario === 'empleado'">Stock: {{ bebida.stock }}</p>
+
         <button (click)="agregarAlPedido(bebida)" class="agregar">Agregar al pedido</button>
       </div>
     </div>

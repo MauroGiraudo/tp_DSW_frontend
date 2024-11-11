@@ -5,6 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PedidoService } from '../../service/pedido.service.js';
 import { Bebida, BebidaConCantidad } from '../../models/mesa.models.js';
+import { UsuarioService } from '../../service/usuario.service.js';  // Asegúrate de importar el servicio
 
 @Component({
   selector: 'app-lista-bebida',
@@ -18,11 +19,17 @@ export class BebidaListaComponent implements OnInit {
   bebidas: any[] = [];
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de bebida seleccionado
+  tipoUsuario: string = '';  // Tipo de usuario (empleado, cliente, etc.)
 
-  constructor(private bebidaService: BebidaService, private pedidoService: PedidoService) {}
+  constructor(
+    private bebidaService: BebidaService, 
+    private pedidoService: PedidoService,
+    private usuarioService: UsuarioService  // Inyectamos el servicio para obtener el tipo de usuario
+  ) {}
 
   ngOnInit(): void {
     this.getBebidas();
+    this.tipoUsuario = this.usuarioService.showTipoUsuario() || '';  // Obtenemos el tipo de usuario
   }
 
   getBebidas() {
@@ -64,14 +71,14 @@ export class BebidaListaComponent implements OnInit {
     const bebidaPedido: BebidaConCantidad = {
       codBebida: bebida.codBebida,
       descripcion: bebida.descripcion,
-      stock:bebida.stock,
+      stock: bebida.stock,
       unidadMedida: bebida.unidadMedida,
-      contenido:bebida.contenido,
+      contenido: bebida.contenido,
       precio: bebida.precio,
-      alcohol:bebida.alcohol,
-      imagen:bebida.imagen,
-      proveedor:bebida.proveedor,
-      cantidad:1,
+      alcohol: bebida.alcohol,
+      imagen: bebida.imagen,
+      proveedor: bebida.proveedor,
+      cantidad: 1,
     };
     this.pedidoService.agregarBebidaAlPedido(bebidaPedido);
     console.log('Bebida agregada al pedido:', bebidaPedido);
