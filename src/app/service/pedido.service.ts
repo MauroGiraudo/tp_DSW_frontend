@@ -274,4 +274,10 @@ recibido(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[]): Observ
   eliminarBebidaDelPedido(codBebida: number): void {
     this.bebidasPedido = this.bebidasPedido.filter(b => b.codBebida !== codBebida);
   }
+
+  cancelarPedido(pedidoId: number): Observable<any> {
+    const url = `${this.apiUrl}/pedidos/${pedidoId}/cancelar`;
+    const body = { estado: 'cancelado' };
+    return this.http.put(url, body);
+  }
 }

@@ -188,4 +188,33 @@ actualizarPedido(): void {
     );
   }
 
+  cancelarPedido(): void {
+  // Obtener el pedido en curso del cliente
+  this.pedidoService.obtenerPedidoEnCurso().subscribe(
+    (pedidoId) => {
+      if (pedidoId) {
+        // Llamar al servicio para cancelar el pedido en curso
+        this.pedidoService.cancelarPedido(pedidoId).subscribe(
+          (response) => {
+            console.log('Pedido cancelado exitosamente', response);
+            this.mensaje = 'Pedido cancelado exitosamente.'; // Mensaje de éxito
+          },
+          (error) => {
+            console.error('Error al cancelar el pedido', error);
+            this.mensaje = 'Error al cancelar el pedido. Intenta nuevamente.'; // Mensaje de error
+          }
+        );
+      } else {
+        console.log('No hay un pedido en curso para cancelar');
+        this.mensaje = 'No hay un pedido en curso para cancelar.'; // Mensaje si no hay pedido
+      }
+    },
+    (error) => {
+      console.error('Error al obtener el pedido en curso', error);
+      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.'; // Mensaje de error al obtener el pedido
+    }
+  );
+}
+
+
 } 
