@@ -72,6 +72,12 @@
   /* Color de fondo posterior */
   padding: 10px;
   /* Espaciado interno */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  /* Asegura que los elementos se distribuyan verticalmente */
+  height: 100%;
+  /* Ocupa toda la altura disponible */
 }
 
 img {
@@ -169,14 +175,16 @@ p {
 }
 
 .agregar {
+  margin-top: auto;
+  /* Empuja el botón hacia abajo */
   padding: 5px 10px; // Añade padding
   border-radius: 20px; // Bordes redondeados
   background-color: #eeefa6; // Color de fondo
   border: 1px solid #000000; // Borde negro
   cursor: pointer; // Cambiar el cursor al pasar el mouse
   transition: background-color 0.3s; // Efecto de transición
+}
 
-  &:hover {
-    background-color: #e0e0e0; // Color de fondo en hover
-  }
+.agregar:hover {
+  background-color: #e0e0e0; // Color de fondo en hover
 }
