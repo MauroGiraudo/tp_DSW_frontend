@@ -2,7 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Mesa } from '../models/mesa.models.js';
 import { Observable, tap } from 'rxjs';
-import { ResponseMesas } from '../models/mesa.models.js'; // Ajusta la ruta si es necesario
+import { ResponseMesas } from '../models/mesa.models.js';
+import { ResponseMesa } from '../models/mesa.models.js';
+import { map, catchError } from 'rxjs/operators';
+import { of } from 'rxjs'; // Necesario para usar 'of' en caso de error
 
 @Injectable({
   providedIn: 'root'
@@ -100,4 +103,24 @@ export class MesaService {
       })
     );
   }
+
+public verificarMesaDisponible(mesaId: number): Observable<boolean> {
+  const url = `${this.apiUrl}/${mesaId}`;
+  return this.http.get<ResponseMesa>(url).pipe(
+    map(response => {
+      console.log('Respuesta del servidor:', response); // Verifica la respuesta del servidor
+      const mesa = response?.data;  // Accedemos al objeto de la mesa
+      console.log('Mesa encontrada:', mesa); // Verifica el objeto de la mesa
+      return mesa ? mesa.estado === 'Disponible' : false; // Retorna si la mesa está disponible
+    }),
+    catchError((error) => {
+      console.error('Error al verificar la mesa:', error); // Verifica el error
+      return of(false);  // En caso de error, devolvemos `false`
+    })
+  );
 }
+
+
+
+}
+

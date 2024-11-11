@@ -39,3 +39,17 @@
 </div>
 
 <h3>Total: {{ calcularTotal() | currency }}</h3>
+
+<!-- Mostrar mensaje de éxito o error -->
+<div *ngIf="mensaje" class="mensaje"
+  [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+  {{ mensaje }}
+</div>
+
+<!-- Botones para actualizar, marcar como recibido y finalizar -->
+<div class="btn-container">
+  <button class="btn-actualizar" (click)="actualizarPedido()">Actualizar Pedido</button>
+  <button class="btn-recibido" (click)="marcarComoRecibido()">Recibido</button>
+  <button class="btn-finalizar" (click)="finalizarPedido()">Finalizar Pedido</button>
+</div>
+

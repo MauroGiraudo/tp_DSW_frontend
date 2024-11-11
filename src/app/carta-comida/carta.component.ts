@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PedidoService } from '../service/pedido.service.js';
+import { Plato } from '../models/mesa.models.js';
+import { PlatoConCantidad } from '../models/mesa.models.js';
 
 
 @Component({
@@ -59,12 +61,17 @@ export class CartaComidaComponents implements OnInit {
     console.log('Filtro de tipo de plato restablecido. Mostrando todos los platos.');
   }
 
-  agregarAlPedido(plato: any): void {
-  const platoPedido = {
-    num_plato: plato.num_plato,
+  agregarAlPedido(plato: Plato): void {
+  const platoPedido: PlatoConCantidad = {
+    numPlato: plato.numPlato,
     descripcion: plato.descripcion,
+    tiempo: plato.tiempo,
     precio: plato.precio,
-    cantidad: 1 // Cantidad inicial predeterminada
+    aptoCeliaco: plato.aptoCeliaco,
+    aptoVegetarianos: plato.aptoVegetarianos,
+    aptoVeganos: plato.aptoVeganos,
+    imagen: plato.imagen,
+    cantidad: 1,
   };
 
   this.pedidoService.agregarPlatoAlPedido(platoPedido);
