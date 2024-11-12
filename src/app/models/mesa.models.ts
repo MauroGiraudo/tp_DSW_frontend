@@ -139,3 +139,26 @@ export interface ResponseBebidaEst {
   message: string;  // Mensaje de respuesta del backend
   data: BebidaPedidoEst[]; 
 }
+
+export interface PedidosLis {
+  nroPed: number;
+  estado: string;
+  fecha?: Date;
+  hora?: string;
+  fechaCancelacion?: Date;
+  horaCancelacion?: string;
+  cliente: number;
+  mesa: number;
+  //platosPedido = new Collection<PlatoPedido>(this)
+  //bebidasPedido = new Collection<BebidaPedido>(this)
+  pago: number;
+  resena?: number;
+  mostrarDetalles?: boolean;
+}
+
+export interface ResponsePedidosLis {
+  message: string;  // Mensaje de respuesta del backend
+  data: PedidosLis[]; 
+}
+
+ 
