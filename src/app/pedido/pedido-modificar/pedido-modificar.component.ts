@@ -180,6 +180,5 @@ export class PedidoModificarComponent implements OnInit {
       console.error('Error al obtener el pedido en curso', error);
       this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
     }
-  );
+  )}
 }
-} 
