@@ -14,7 +14,7 @@ const USER_KEY = 'Usuario';
 export class UsuarioService {
 
   private usuarioSubject = new BehaviorSubject<Usuario>(this.getUsuarioFromLocalStorage());
-  public usuarioObservable: Observable<Usuario> = this.usuarioSubject.asObservable(); // Exponemos el observable
+  public usuarioObservable: Observable<Usuario> = this.usuarioSubject.asObservable(); 
 
   constructor(
     private http: HttpClient, 
@@ -36,7 +36,7 @@ export class UsuarioService {
         next: (response) => {
           const usuario: Usuario = response.data;
           this.setUsuarioToLocalStorage(usuario);
-          this.usuarioSubject.next(usuario); // Emitimos el usuario logueado
+          this.usuarioSubject.next(usuario); 
           this.sideNavService.filtrarFunciones(usuario.tipoUsuario);
         }
       })
@@ -48,7 +48,7 @@ export class UsuarioService {
     return this.http.post<UsuarioLogOut>(url, null).pipe(
       tap({
         next: () => {
-          this.usuarioSubject.next(new Usuario()); // Emitimos un usuario vacío
+          this.usuarioSubject.next(new Usuario()); 
           this.removeUsuarioFromLocalStorage();
         }
       })
@@ -64,7 +64,7 @@ export class UsuarioService {
     if (usuario) {
       return JSON.parse(usuario);
     } else {
-      return new Usuario(); // Retorna un usuario vacío si no existe en el almacenamiento
+      return new Usuario(); 
     }
   }
 
@@ -72,15 +72,13 @@ export class UsuarioService {
     this.almacenamientoService.removeItem(USER_KEY);
   }
 
-  // Método para obtener el usuario actual desde el BehaviorSubject
   public obtenerUsuarioActual(): Usuario {
     return this.usuarioSubject.value;
   }
 
-  // Método para actualizar el usuario manualmente
   public actualizarUsuario(usuario: Usuario): void {
     this.setUsuarioToLocalStorage(usuario);
-    this.usuarioSubject.next(usuario); // Emitimos el usuario actualizado
+    this.usuarioSubject.next(usuario); 
   }
 
   public showTipoUsuario(): string {

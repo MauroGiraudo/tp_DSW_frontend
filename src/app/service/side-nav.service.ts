@@ -11,7 +11,6 @@ export class SideNavService {
 
   constructor() { }
 
-  //Filtramos el array de opciones de la barra de navegación basándonos en el tipo de usuario
   filtrarFunciones(userType: string): void {
     this.clearNavData()
     this.navDataImport.forEach((item) => {

@@ -1,75 +1,71 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Proveedor } from '../models/mesa.models.js'; // Ajusta la ruta de acuerdo a la ubicación de tu archivo
+import { Proveedor } from '../models/mesa.models.js';
 import { Observable, tap, map } from 'rxjs';
-import { ResponseProveedores } from '../models/mesa.models.js';// Ajusta la ruta de acuerdo a la ubicación de tu archivo
+import { ResponseProveedores } from '../models/mesa.models.js';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProveedorService {
-  private readonly apiUrl = 'http://localhost:3000/api/proveedores'; // URL de la API para proveedores
+  private readonly apiUrl = 'http://localhost:3000/api/proveedores';
 
   constructor(private http: HttpClient) {}
 
-  // Método para crear un nuevo proveedor
   public crearProveedor(proveedor: Proveedor): Observable<Proveedor> {
-    const url = this.apiUrl; // URL de la API para crear un nuevo proveedor
+    const url = this.apiUrl; 
     return this.http.post<Proveedor>(url, {
-      cuit: proveedor.cuit,  // CUIT del proveedor
-      razonSocial: proveedor.razonSocial, // Razón social del proveedor
-      direccion: proveedor.direccion, // Dirección del proveedor
-      ciudad: proveedor.ciudad, // Ciudad del proveedor
-      provincia: proveedor.provincia, // Provincia del proveedor
-      pais: proveedor.pais, // País del proveedor
-      telefono: proveedor.telefono, // Teléfono del proveedor
-      email: proveedor.email // Email del proveedor
+      cuit: proveedor.cuit,  
+      razonSocial: proveedor.razonSocial, 
+      direccion: proveedor.direccion, 
+      ciudad: proveedor.ciudad, 
+      provincia: proveedor.provincia, 
+      pais: proveedor.pais, 
+      telefono: proveedor.telefono, 
+      email: proveedor.email 
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Proveedor creado:', response); // Manejo de respuesta exitosa
+          console.log('Proveedor creado:', response);
         },
         error: (error) => {
-          console.error('Error al crear el proveedor:', error); // Manejo de error
+          console.error('Error al crear el proveedor:', error);
         }
       })
     );
   }
 
-  // Método para obtener todos los proveedores
   getProveedores(): Observable<ResponseProveedores> {
   return this.http.get<ResponseProveedores>(this.apiUrl).pipe(
     tap({
       next: (response) => {
-        console.log('Proveedores obtenidos:', response); // Manejo de respuesta exitosa
+        console.log('Proveedores obtenidos:', response);
       },
       error: (error) => {
-        console.error('Error al obtener proveedores:', error); // Manejo de error
+        console.error('Error al obtener proveedores:', error);
       }
     })
   );
 }
 
-  // Método para obtener un proveedor por su ID
   public obtenerProveedor(proveedorId: number): Observable<Proveedor> {
-    const url = `${this.apiUrl}/${proveedorId}`; // URL para obtener el proveedor específico
+    const url = `${this.apiUrl}/${proveedorId}`; 
     return this.http.get<Proveedor>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Proveedor obtenido:', response); // Manejo de respuesta exitosa
+          console.log('Proveedor obtenido:', response); 
         },
         error: (error) => {
-          console.error('Error al obtener el proveedor:', error); // Manejo de error
+          console.error('Error al obtener el proveedor:', error);
         }
       })
     );
   }
 
-  // Método para actualizar un proveedor
   public actualizarProveedor(proveedorId: number, proveedorActualizado: Partial<Proveedor>): Observable<Proveedor> {
     const url = `${this.apiUrl}/${proveedorId}`;
     return this.http.patch<Proveedor>(url, {
-      ...proveedorActualizado, // Descompone los campos del objeto a enviar
+      ...proveedorActualizado,
       cuit: proveedorActualizado.cuit, 
       razonSocial: proveedorActualizado.razonSocial, 
       direccion: proveedorActualizado.direccion, 
@@ -81,25 +77,24 @@ export class ProveedorService {
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Proveedor actualizado:', response); // Manejo de respuesta exitosa
+          console.log('Proveedor actualizado:', response);
         },
         error: (error) => {
-          console.error('Error al actualizar el proveedor:', error); // Manejo de error
+          console.error('Error al actualizar el proveedor:', error);
         }
       })
     );
   }
 
-  // Método para eliminar un proveedor por su ID
   public eliminarProveedor(proveedorId: number): Observable<void> {
-    const url = `${this.apiUrl}/${proveedorId}`; // URL para eliminar el proveedor específico
+    const url = `${this.apiUrl}/${proveedorId}`;
     return this.http.delete<void>(url).pipe(
       tap({
         next: () => {
-          console.log(`Proveedor con ID ${proveedorId} eliminado exitosamente.`); // Mensaje de éxito en consola
+          console.log(`Proveedor con ID ${proveedorId} eliminado exitosamente.`);
         },
         error: (error) => {
-          console.error(`Error al eliminar el proveedor con ID ${proveedorId}:`, error); // Manejo de error
+          console.error(`Error al eliminar el proveedor con ID ${proveedorId}:`, error);
         }
       })
     );

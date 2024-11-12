@@ -5,100 +5,94 @@ import { Observable, tap } from 'rxjs';
 import { ResponseMesas } from '../models/mesa.models.js';
 import { ResponseMesa } from '../models/mesa.models.js';
 import { map, catchError } from 'rxjs/operators';
-import { of } from 'rxjs'; // Necesario para usar 'of' en caso de error
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MesaService {
-  private readonly apiUrl = 'http://localhost:3000/api/mesas'; // URL de la API para mesas
+  private readonly apiUrl = 'http://localhost:3000/api/mesas'; 
 
   constructor(private http: HttpClient) {}
 
-  // Método para crear una nueva mesa
   public crearMesa(mesa: Mesa): Observable<Mesa> {
-    const url = this.apiUrl; // URL de la API para crear una nueva mesa
+    const url = this.apiUrl; 
     return this.http.post<Mesa>(url, {
-      estado: mesa.estado,  // Estado de la mesa
-      cantPersonasMax: mesa.cant_personas_max, // Usar camelCase para el backend
-      nro_mesa: mesa.nro_mesa // Número de la mesa
+      estado: mesa.estado, 
+      cantPersonasMax: mesa.cant_personas_max, 
+      nro_mesa: mesa.nro_mesa 
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa creada:', response); // Manejo de respuesta exitosa
+          console.log('Mesa creada:', response); 
         },
         error: (error) => {
-          console.error('Error al crear la mesa:', error); // Manejo de error
+          console.error('Error al crear la mesa:', error); 
         }
       })
     );
   }
 
-  // Método para obtener todas las mesas
-  public getMesas(): Observable<ResponseMesas> { // Cambia el tipo de retorno a ResponseMesas
+  public getMesas(): Observable<ResponseMesas> { 
     return this.http.get<ResponseMesas>(this.apiUrl).pipe(
       tap({
         next: (response) => {
-          console.log('Mesas obtenidas:', response); // Manejo de respuesta exitosa
+          console.log('Mesas obtenidas:', response);
         },
         error: (error) => {
-          console.error('Error al obtener mesas:', error); // Manejo de error
+          console.error('Error al obtener mesas:', error); 
         }
       })
     );
   }
 
-  // Método para obtener una mesa por su ID
   public obtenerMesa(mesaId: number): Observable<Mesa> {
-    const url = `${this.apiUrl}/${mesaId}`; // URL para obtener la mesa específica
+    const url = `${this.apiUrl}/${mesaId}`;
     return this.http.get<Mesa>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa obtenida:', response); // Manejo de respuesta exitosa
+          console.log('Mesa obtenida:', response); 
         },
         error: (error) => {
-          console.error('Error al obtener la mesa:', error); // Manejo de error
+          console.error('Error al obtener la mesa:', error);
         }
       })
     );
   }
 
-  // Método para actualizar una mesa
   public actualizarMesa(mesaId: number, mesaActualizada: Partial<Mesa>): Observable<Mesa> {
     const url = `${this.apiUrl}/${mesaId}`;
     return this.http.patch<Mesa>(url, {
-      ...mesaActualizada, // Descompone los campos del objeto a enviar
-      cantPersonasMax: mesaActualizada.cant_personas_max, // Asegúrate de que esté en camelCase
-      nro_mesa: mesaActualizada.nro_mesa // Asegúrate de que esté en camelCase
+      ...mesaActualizada,
+      cantPersonasMax: mesaActualizada.cant_personas_max,
+      nro_mesa: mesaActualizada.nro_mesa
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa actualizada:', response); // Manejo de respuesta exitosa
+          console.log('Mesa actualizada:', response); 
         },
         error: (error) => {
-          console.error('Error al actualizar la mesa:', error); // Manejo de error
+          console.error('Error al actualizar la mesa:', error);
         }
       })
     );
   }
 
-  // Método para actualizar el estado de una mesa (opcional, puedes combinarlo)
   public actualizarEstadoMesa(mesaId: number, nuevoEstado: string): Observable<any> {
     const url = `${this.apiUrl}/${mesaId}`;
-    const body = { estado: nuevoEstado }; // Enviamos solo el nuevo estado
+    const body = { estado: nuevoEstado };
     return this.http.patch(url, body);
   }
 
-  // Método para eliminar una mesa por su número de mesa
   public eliminarMesa(mesaId: number): Observable<void> {
-    const url = `${this.apiUrl}/${mesaId}`; // URL para eliminar la mesa específica
+    const url = `${this.apiUrl}/${mesaId}`;
     return this.http.delete<void>(url).pipe(
       tap({
         next: () => {
-          console.log(`Mesa con ID ${mesaId} eliminada exitosamente.`); // Mensaje de éxito en consola
+          console.log(`Mesa con ID ${mesaId} eliminada exitosamente.`);
         },
         error: (error) => {
-          console.error(`Error al eliminar la mesa con ID ${mesaId}:`, error); // Manejo de error
+          console.error(`Error al eliminar la mesa con ID ${mesaId}:`, error);
         }
       })
     );
@@ -108,19 +102,16 @@ public verificarMesaDisponible(mesaId: number): Observable<boolean> {
   const url = `${this.apiUrl}/${mesaId}`;
   return this.http.get<ResponseMesa>(url).pipe(
     map(response => {
-      console.log('Respuesta del servidor:', response); // Verifica la respuesta del servidor
-      const mesa = response?.data;  // Accedemos al objeto de la mesa
-      console.log('Mesa encontrada:', mesa); // Verifica el objeto de la mesa
-      return mesa ? mesa.estado === 'Disponible' : false; // Retorna si la mesa está disponible
+      console.log('Respuesta del servidor:', response);
+      const mesa = response?.data; 
+      console.log('Mesa encontrada:', mesa);
+      return mesa ? mesa.estado === 'Disponible' : false;
     }),
     catchError((error) => {
-      console.error('Error al verificar la mesa:', error); // Verifica el error
-      return of(false);  // En caso de error, devolvemos `false`
+      console.error('Error al verificar la mesa:', error);
+      return of(false); 
     })
   );
 }
-
-
-
 }
 

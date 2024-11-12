@@ -8,7 +8,7 @@ import { ResponseBebidas } from '../models/mesa.models.js';
   providedIn: 'root'
 })
 export class BebidaService {
-  private readonly apiUrl = 'http://localhost:3000/api/bebidas'; // URL de la API para bebidas
+  private readonly apiUrl = 'http://localhost:3000/api/bebidas';
 
   constructor(private http: HttpClient) {}
 
@@ -77,7 +77,6 @@ export class BebidaService {
     );
   }
 
-  // Método para eliminar dependencias de bebida en bebida_de_proveedor
   private eliminarDependenciasDeBebida(codBebida: number, proveedor: number): Observable<void> {
     const url = `${this.apiUrl}/${codBebida}/proveedores/${proveedor}`;
     return this.http.delete<void>(url).pipe(
@@ -92,7 +91,6 @@ export class BebidaService {
     );
   }
 
-  // Método para eliminar una bebida y sus dependencias en cascada
   public eliminarBebidaConDependencias(codBebida: number, proveedor: number): Observable<void> {
     return this.eliminarDependenciasDeBebida(codBebida, proveedor).pipe(
       tap({
@@ -113,7 +111,6 @@ export class BebidaService {
     );
   }
 
-  // Método para eliminar una bebida por su ID
   public eliminarBebida(codBebida: number): Observable<void> {
     const url = `${this.apiUrl}/${codBebida}`;
     return this.http.delete<void>(url).pipe(
