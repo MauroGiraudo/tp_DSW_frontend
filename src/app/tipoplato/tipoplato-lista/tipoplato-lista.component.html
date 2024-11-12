@@ -1,6 +1,5 @@
 <h2>Lista de Tipos de Plato</h2>
 
-<!-- Search box -->
 <div class="search-container">
   <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por descripción de tipo de plato"
     class="search-box" type="text">
@@ -10,14 +9,13 @@
   </button>
 </div>
 
-<!-- Contenedor para los tipos de platos -->
 <div class="tipos-plato-container">
   <div *ngFor="let tipoPlato of filteredTiposPlato" class="tipo-plato-item">
     <div class="card">
       <div class="tipo-plato-info">
-        <span>{{ tipoPlato.descTPlato }}</span> <!-- Muestra la descripción del tipo de plato -->
+        <span>{{ tipoPlato.descTPlato }}</span>
         <div class="tipo-plato-numero">
-          <span><strong>ID:</strong> {{ tipoPlato.numPlato }}</span> <!-- Muestra el número del tipo de plato -->
+          <span><strong>ID:</strong> {{ tipoPlato.numPlato }}</span> 
         </div>
       </div>
     </div>

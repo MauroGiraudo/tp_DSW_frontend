@@ -18,15 +18,15 @@ export class ProveedorModificarComponent implements OnInit {
   proveedorForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  proveedorActual: Proveedor | null = null; // Inicializa con null
+  proveedorActual: Proveedor | null = null; 
 
   constructor(
     private fb: FormBuilder,
     private proveedorService: ProveedorService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router 
   ) {
     this.proveedorForm = this.fb.group({
-      id: ['', [Validators.required]],  // Este campo es obligatorio
+      id: ['', [Validators.required]], 
       razonSocial: [''],  
       cuit: [''],
       direccion: [''],
@@ -75,14 +75,10 @@ export class ProveedorModificarComponent implements OnInit {
   actualizarProveedor() {
     if (this.proveedorForm.valid) {
       const idProveedor = this.proveedorForm.value.id;
-
-      // Verifica que el ID sea un número válido
       if (isNaN(Number(idProveedor))) {
         this.mensaje = 'ID inválido. Debe ser un número.';
         return;
       }
-
-      // Creamos un objeto solo con los campos modificados
       const proveedorActualizado: Partial<Proveedor> = {
         id: idProveedor,
         razonSocial: this.proveedorForm.value.razonSocial || this.proveedorActual?.razonSocial,
@@ -94,14 +90,13 @@ export class ProveedorModificarComponent implements OnInit {
         telefono: this.proveedorForm.value.telefono || this.proveedorActual?.telefono,
         email: this.proveedorForm.value.email || this.proveedorActual?.email
       };
-
       this.proveedorService.actualizarProveedor(idProveedor, proveedorActualizado).subscribe({
         next: (response: Proveedor) => {
           console.log('Proveedor actualizado:', response);
           this.proveedorForm.reset();
           this.enviado = false;
           this.mensaje = 'Proveedor actualizado exitosamente';
-          this.router.navigate(['proveedores/Lista']); // Redirige a la página de la lista de proveedores
+          this.router.navigate(['proveedor/Lista']); 
         },
         error: (error) => {
           console.error('Error al actualizar el proveedor:', error);

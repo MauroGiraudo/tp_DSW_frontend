@@ -5,13 +5,11 @@
   <input type="number" [(ngModel)]="nro_mesa" placeholder="Ingresa el número de mesa" />
 </div>
 
-<!-- Mostrar mensaje de éxito o error al crear el pedido -->
 <div *ngIf="mensaje" class="mensaje"
   [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
   {{ mensaje }}
 </div>
 
-<!-- Botón para crear el pedido -->
 <button (click)="crearPedido()" [disabled]="pedidoEnCurso || !nro_mesa">
   Crear Pedido
 </button>

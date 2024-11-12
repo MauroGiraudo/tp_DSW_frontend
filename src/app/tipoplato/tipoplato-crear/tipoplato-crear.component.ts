@@ -21,11 +21,11 @@ export class TipoplatoCrearComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder, 
-    private tipoPlatoService: TipoplatoService,  // Servicio para crear tipo de plato
+    private tipoPlatoService: TipoplatoService, 
     private router: Router 
   ) {
     this.tipoPlatoForm = this.fb.group({
-      descTPlato: ['', [Validators.required]],  // Descripción del tipo de plato
+      descTPlato: ['', [Validators.required]],
     });
   }
 
@@ -48,7 +48,7 @@ export class TipoplatoCrearComponent implements OnInit {
           this.tipoPlatoForm.reset();
           this.enviado = false; 
           this.mensaje = 'Tipo de plato agregado exitosamente'; 
-          this.router.navigate(['tipoplato/Lista']); // Redirige a la página de lista de tipos de platos
+          this.router.navigate(['tipoplato/Lista']);
         },
         error: (error) => {
           console.error('Error al crear el tipo de plato:', error);

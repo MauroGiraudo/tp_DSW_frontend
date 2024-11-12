@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PedidoService } from '../../service/pedido.service.js';
 import { Bebida, BebidaConCantidad } from '../../models/mesa.models.js';
-import { UsuarioService } from '../../service/usuario.service.js';  // Asegúrate de importar el servicio
+import { UsuarioService } from '../../service/usuario.service.js'; 
 
 @Component({
   selector: 'app-lista-bebida',
@@ -24,12 +24,12 @@ export class BebidaListaComponent implements OnInit {
   constructor(
     private bebidaService: BebidaService, 
     private pedidoService: PedidoService,
-    private usuarioService: UsuarioService  // Inyectamos el servicio para obtener el tipo de usuario
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
     this.getBebidas();
-    this.tipoUsuario = this.usuarioService.showTipoUsuario() || '';  // Obtenemos el tipo de usuario
+    this.tipoUsuario = this.usuarioService.showTipoUsuario() || '';
   }
 
   getBebidas() {
@@ -42,8 +42,6 @@ export class BebidaListaComponent implements OnInit {
       console.log("Datos recibidos:", this.bebidas);
     });
   }
-
-  // Getter para bebidas filtradas
   get filteredBebidas() {
     return this.bebidas.filter(bebida =>
       bebida.descripcion.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
@@ -55,13 +53,12 @@ export class BebidaListaComponent implements OnInit {
     console.log('Término de búsqueda:', this.searchTerm);
   }
 
-  // Método para filtrar por tipo de bebida (con o sin alcohol)
+  // Filtro por (con o sin alcohol)
   filterByType(type: string): void {
     this.selectedType = type;
     console.log('Tipo de bebida seleccionado:', this.selectedType);
   }
 
-  // Método para mostrar todas las bebidas sin aplicar filtro de tipo
   resetFilter(): void {
     this.selectedType = '';
     console.log('Filtro de tipo de bebida restablecido. Mostrando todas las bebidas.');

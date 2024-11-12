@@ -3,7 +3,6 @@
   <div class="register">
     <p class="titulo">Eliminar Mesa</p>
 
-    <!-- Muestra el mensaje aquí -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}

@@ -34,8 +34,8 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
     this.pedidoService.obtenerPedidos().pipe(
       takeUntil(this.destroy$)
     ).subscribe(
-      (pedidosLis: PedidosLis[]) => {  // Aquí cambiamos el tipo a 'PedidosLis[]'
-        this.pedidosLis = pedidosLis;  // Ahora directamente asignamos los pedidos
+      (pedidosLis: PedidosLis[]) => {  
+        this.pedidosLis = pedidosLis; 
       },
       (error) => {
         console.error("Error al obtener los pedidos:", error);
@@ -43,25 +43,19 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
     );
   }
 
-
-
-
-  // Getter para pedidos filtrados
   get filteredPedidos() {
     return this.pedidosLis.filter(pedidosLis =>
       pedidosLis.nroPed.toString().includes(this.searchTerm)
     );
   }
 
-
   onSearch(): void {
     console.log('Término de búsqueda:', this.searchTerm);
   }
 
-toggleDetalles(pedidosLis: PedidosLis) {
-  pedidosLis.mostrarDetalles = !pedidosLis.mostrarDetalles;
-}
-
+  toggleDetalles(pedidosLis: PedidosLis) {
+    pedidosLis.mostrarDetalles = !pedidosLis.mostrarDetalles;
+  }
 
   ngOnDestroy(): void {
     this.destroy$.next();  

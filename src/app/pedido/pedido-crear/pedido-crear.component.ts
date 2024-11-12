@@ -17,10 +17,10 @@ export class PedidoCrearComponent implements OnInit {
   pedidoPlatos: PlatoConCantidad[] = [];
   pedidoBebidas: BebidaConCantidad[] = [];
   mensaje: string | undefined;
-  nro_mesa: number | undefined;  // Número de mesa
-  clienteId: number = 1;  // ID del cliente logueado
-  pedidoEnCurso: boolean = false; // Indica si ya se ha creado el pedido
-  nroPed: number | undefined; // Número de pedido actual
+  nro_mesa: number | undefined;  
+  clienteId: number = 1;  
+  pedidoEnCurso: boolean = false; 
+  nroPed: number | undefined; 
 
   constructor(
     private pedidoService: PedidoService,
@@ -28,36 +28,31 @@ export class PedidoCrearComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el estado del pedido al cargar el componente
     const pedidoActual = this.pedidoService.obtenerPedido();
     this.pedidoPlatos = pedidoActual.platos;
     this.pedidoBebidas = pedidoActual.bebidas;
   }
 
-  // Crear un nuevo pedido con número de mesa y cliente
+
   async crearPedido(): Promise<void> {
   if (!this.nro_mesa) {
     this.mensaje = 'Por favor ingresa el número de mesa.';
     return;
   }
-
   const mesaEsValida = await this.verificarMesaExistente();
   if (!mesaEsValida) {
     this.mensaje = 'La mesa ingresada no existe o no está disponible.';
     return;
   }
-
   const pedidoData = {
     mesa: this.nro_mesa,
   };
-
   this.pedidoService.crearPedido(pedidoData).subscribe({
     next: (response) => {
       console.log('Pedido creado', response);
       this.mensaje = 'Pedido creado exitosamente.';
       this.pedidoEnCurso = true;
-      this.nroPed = response.nroPed; // Asigna el nroPed del pedido creado
-      // Aquí debes actualizar los platos y bebidas después de crear el pedido
+      this.nroPed = response.nroPed; 
       this.pedidoService.obtenerPedido();
     },
     error: (error) => {
@@ -67,11 +62,9 @@ export class PedidoCrearComponent implements OnInit {
   });
 }
 
-
   aumentarCantidad(plato: PlatoConCantidad): void {
     plato.cantidad = (plato.cantidad || 1) + 1;
     this.pedidoService.actualizarCantidadPlato(plato.numPlato, plato.cantidad);
-    // Actualizamos el pedido en la UI después de aumentar la cantidad
     const pedidoActual = this.pedidoService.obtenerPedido();
     this.pedidoPlatos = pedidoActual.platos;
   }
@@ -84,7 +77,6 @@ export class PedidoCrearComponent implements OnInit {
       this.pedidoPlatos = this.pedidoPlatos.filter(p => p.numPlato !== plato.numPlato);
       this.pedidoService.actualizarCantidadPlato(plato.numPlato, 0);
     }
-    // Actualizamos el pedido en la UI después de reducir la cantidad
     const pedidoActual = this.pedidoService.obtenerPedido();
     this.pedidoPlatos = pedidoActual.platos;
   }
@@ -92,7 +84,6 @@ export class PedidoCrearComponent implements OnInit {
   aumentarCantidadBebida(bebida: BebidaConCantidad): void {
     bebida.cantidad = (bebida.cantidad || 1) + 1;
     this.pedidoService.actualizarCantidadBebida(bebida.codBebida, bebida.cantidad);
-    // Actualizamos el pedido en la UI después de aumentar la cantidad
     const pedidoActual = this.pedidoService.obtenerPedido();
     this.pedidoBebidas = pedidoActual.bebidas;
   }
@@ -105,7 +96,6 @@ export class PedidoCrearComponent implements OnInit {
       this.pedidoBebidas = this.pedidoBebidas.filter(b => b.codBebida !== bebida.codBebida);
       this.pedidoService.actualizarCantidadBebida(bebida.codBebida, 0);
     }
-    // Actualizamos el pedido en la UI después de reducir la cantidad
     const pedidoActual = this.pedidoService.obtenerPedido();
     this.pedidoBebidas = pedidoActual.bebidas;
   }
@@ -117,18 +107,18 @@ export class PedidoCrearComponent implements OnInit {
   }
 
   async verificarMesaExistente(): Promise<boolean> {
-    console.log('Verificando mesa con nro_mesa:', this.nro_mesa); // Verifica que nro_mesa esté correcto
+    console.log('Verificando mesa con nro_mesa:', this.nro_mesa);
     if (this.nro_mesa) {
       try {
         const mesaDisponible = await this.mesaService.verificarMesaDisponible(this.nro_mesa).toPromise();
-        console.log('Mesa disponible:', mesaDisponible);  // Verifica el estado de la mesa
-        return mesaDisponible ?? false;  // Si mesaDisponible es undefined, retornamos false
+        console.log('Mesa disponible:', mesaDisponible);  
+        return mesaDisponible ?? false;  
       } catch (error) {
         console.error('Error al verificar la mesa:', error);
-        return false;  // Si hay un error, devolvemos `false`
+        return false; 
       }
     }
-    return false;  // Si no hay número de mesa, devolvemos `false`
+    return false; 
   }
 }
 

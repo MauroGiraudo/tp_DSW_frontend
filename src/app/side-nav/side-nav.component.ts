@@ -33,8 +33,6 @@ export class SideNavComponent implements OnInit {
   collapsed: boolean = false;
   screenWidth: number = 0;
   multiple: boolean = false;
-
-  // Tipo de usuario actual
   userType: string = '';
 
   @HostListener('window:resize', ['$event'])
@@ -63,15 +61,12 @@ export class SideNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Comprobamos si el usuario está logueado y obtenemos el tipo de usuario
-    this.userType = this.usuarioService.showTipoUsuario() || '';  // Si no está logueado, será una cadena vacía
+    this.userType = this.usuarioService.showTipoUsuario() || ''; 
     this.sideNavService.filtrarFunciones(this.userType);
     this.updateNavData();
-
     if (typeof window !== 'undefined') {
       this.screenWidth = window.innerWidth;
     }
-
     const redirigirAHome = this.almacenamientoService.getItem('redirigirAHome');
     if (redirigirAHome === 'true') {
       this.almacenamientoService.removeItem('redirigirAHome');

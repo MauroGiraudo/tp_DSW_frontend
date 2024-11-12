@@ -18,17 +18,17 @@ export class MesaModificarComponent implements OnInit {
   mesaForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  mesaActual: Mesa | null = null; // Inicializa con null
+  mesaActual: Mesa | null = null;
 
   constructor(
     private fb: FormBuilder, 
     private mesaService: MesaService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router
   ) {
     this.mesaForm = this.fb.group({
-      nro_mesa: ['', [Validators.required]],  // Este campo no acepta espacios
-      cant_personas_max: ['', [this.numberOrWhitespaceValidator()]], // Permite espacios en blanco
-      estado: ['', [this.whitespaceValidator()]] // Permite espacios en blanco
+      nro_mesa: ['', [Validators.required]], 
+      cant_personas_max: ['', [this.numberOrWhitespaceValidator()]], 
+      estado: ['', [this.whitespaceValidator()]]
     });
   }
 
@@ -43,26 +43,24 @@ export class MesaModificarComponent implements OnInit {
     return this.mesaForm.controls; 
   }
 
-  // Validador que permite espacios en blanco pero verifica que sea un número válido
   numberOrWhitespaceValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value === '' || value.trim() === '') {
-        return null; // Permite espacios en blanco
+        return null;
       }
-      const valid = !isNaN(value) && value > 0; // Asegura que sea un número positivo
+      const valid = !isNaN(value) && value > 0; 
       return valid ? null : { 'invalidNumber': { value } };
     };
   }
 
-  // Validador que permite solo espacios en blanco
   whitespaceValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value.trim() === '') {
-        return null; // Permite espacios en blanco
+        return null; 
       }
-      return null; // También puedes agregar validaciones adicionales si es necesario
+      return null; 
     };
   }
 
@@ -85,28 +83,24 @@ export class MesaModificarComponent implements OnInit {
 
   actualizarMesa() {
   if (this.mesaForm.valid) {
-    // Convierte nro_mesa a número al momento de actualizar
     const nroMesa = Number(this.mesaForm.value.nro_mesa);
 
-    // Verifica si la conversión a número fue exitosa
     if (isNaN(nroMesa)) {
       this.mensaje = 'Número de mesa inválido. Debe ser un número.';
-      return; // Detiene la función si el número es inválido
+      return; 
     }
-
     const mesaActualizada: Partial<Mesa> = {
-      nro_mesa: nroMesa, // Aquí utilizas el número convertido
+      nro_mesa: nroMesa, 
       cant_personas_max: this.mesaForm.value.cant_personas_max ? parseInt(this.mesaForm.value.cant_personas_max, 10) : this.mesaActual?.cant_personas_max,
       estado: this.mesaForm.value.estado ? this.mesaForm.value.estado : this.mesaActual?.estado
     };
-
     this.mesaService.actualizarMesa(nroMesa, mesaActualizada).subscribe({
       next: (response: Mesa) => { 
         console.log('Mesa actualizada:', response);
         this.mesaForm.reset();
         this.enviado = false; 
         this.mensaje = 'Mesa actualizada con éxito'; 
-        this.router.navigate(['mesas/Lista']); // Redirige a la página de la lista de mesas
+        this.router.navigate(['mesa/Lista']);
       },
       error: (error) => {
         console.error('Error al actualizar la mesa:', error);
@@ -118,7 +112,6 @@ export class MesaModificarComponent implements OnInit {
     this.mensaje = 'Por favor, complete el formulario correctamente.'; 
   }
 }
-
 
   enviar() {
     this.enviado = true; 

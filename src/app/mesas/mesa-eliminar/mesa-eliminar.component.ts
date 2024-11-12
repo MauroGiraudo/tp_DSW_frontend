@@ -22,10 +22,10 @@ export class MesaEliminarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private mesaService: MesaService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router 
   ) {
     this.mesaForm = this.fb.group({
-      nro_mesa: ['', [Validators.required]],  // Solo se necesita el número de mesa
+      nro_mesa: ['', [Validators.required]], 
     });
   }
 
@@ -49,7 +49,7 @@ export class MesaEliminarComponent implements OnInit {
           this.mesaForm.reset();
           this.enviado = false;
           this.mensaje = 'Mesa eliminada exitosamente';
-          this.router.navigate(['mesas/Lista']); // Redirige a la página de la lista de mesas
+          this.router.navigate(['mesa/Lista']); 
         },
         error: (error) => {
           console.error('Error al eliminar la mesa:', error);

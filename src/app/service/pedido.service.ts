@@ -92,6 +92,8 @@ export class PedidoService {
     return requests.length > 0 ? forkJoin(requests) : of(null);
   }
 
+
+
   recibido(nroPed: number): Observable<any> {
     const obtenerPlatos = this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`);
     const obtenerBebidas = this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`);

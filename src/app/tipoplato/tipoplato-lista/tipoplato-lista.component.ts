@@ -32,9 +32,8 @@ export class TipoplatoListaComponent implements OnInit, OnDestroy {
       takeUntil(this.destroy$)
     ).subscribe(
       (response: ResponseTipoplato) => {
-        // Verifica que 'data' exista y sea un array
         if (response && response.data && Array.isArray(response.data)) {
-          this.tipoplato = response.data;  // Extrae los tipos de platos del campo 'data'
+          this.tipoplato = response.data; 
         } else {
           console.error("La respuesta no contiene 'data' o no es un array", response);
         }
@@ -45,7 +44,6 @@ export class TipoplatoListaComponent implements OnInit, OnDestroy {
     );
   }
 
-  // Getter para tipos de platos filtrados
   get filteredTiposPlato() {
     return this.tipoplato.filter(tipo =>
       tipo.descTPlato.toLowerCase().includes(this.searchTerm.toLowerCase())

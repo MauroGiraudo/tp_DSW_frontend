@@ -2,71 +2,21 @@
   <div class="register">
     <p class="titulo">Crear Proveedor</p>
 
-    <!-- Muestra el mensaje aquí -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
     </div>
 
     <form [formGroup]="proveedorForm" (ngSubmit)="enviar()">
-      
-      <!-- CUIT -->
-      <text-input 
-        [control]="fc['cuit']" 
-        [mostrarErrores]="enviado" 
-        label="CUIT">
-      </text-input>
+      <text-input [control]="fc['cuit']" [mostrarErrores]="enviado" label="CUIT"></text-input>
+      <text-input [control]="fc['razonSocial']" [mostrarErrores]="enviado" label="Razón Social"></text-input>
+      <text-input [control]="fc['direccion']" [mostrarErrores]="enviado" label="Dirección"></text-input>
+      <text-input [control]="fc['ciudad']" [mostrarErrores]="enviado" label="Ciudad"></text-input>
+      <text-input [control]="fc['provincia']" [mostrarErrores]="enviado" label="Provincia"></text-input>
+      <text-input [control]="fc['pais']" [mostrarErrores]="enviado" label="País"></text-input>
+      <text-input [control]="fc['telefono']" [mostrarErrores]="enviado" label="Teléfono"></text-input>
+      <text-input [control]="fc['email']" [mostrarErrores]="enviado" label="Email"></text-input>
 
-      <!-- Razón Social -->
-      <text-input 
-        [control]="fc['razonSocial']" 
-        [mostrarErrores]="enviado" 
-        label="Razón Social">
-      </text-input>
-
-      <!-- Dirección -->
-      <text-input 
-        [control]="fc['direccion']" 
-        [mostrarErrores]="enviado" 
-        label="Dirección">
-      </text-input>
-
-      <!-- Ciudad -->
-      <text-input 
-        [control]="fc['ciudad']" 
-        [mostrarErrores]="enviado" 
-        label="Ciudad">
-      </text-input>
-
-      <!-- Provincia -->
-      <text-input 
-        [control]="fc['provincia']" 
-        [mostrarErrores]="enviado" 
-        label="Provincia">
-      </text-input>
-
-      <!-- País -->
-      <text-input 
-        [control]="fc['pais']" 
-        [mostrarErrores]="enviado" 
-        label="País">
-      </text-input>
-
-      <!-- Teléfono -->
-      <text-input 
-        [control]="fc['telefono']" 
-        [mostrarErrores]="enviado" 
-        label="Teléfono">
-      </text-input>
-
-      <!-- Email -->
-      <text-input 
-        [control]="fc['email']" 
-        [mostrarErrores]="enviado" 
-        label="Email">
-      </text-input>
-
-      <!-- Botón para enviar el formulario -->
       <default-button texto="Crear Proveedor"></default-button>
     </form>
   </div>

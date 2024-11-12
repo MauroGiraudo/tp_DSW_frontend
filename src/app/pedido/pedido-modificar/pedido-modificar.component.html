@@ -1,6 +1,6 @@
 <h2>Tu Pedido</h2>
 
-<!-- Contenedor para los platos -->
+
 <div class="pedidos-container">
   <div *ngFor="let plato of pedidoPlatos" class="plato-item">
     <div class="card">
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <!-- Contenedor para las bebidas -->
+
   <div *ngFor="let bebida of pedidoBebidas" class="bebida-item">
     <div class="card">
       <img *ngIf="bebida.imagen" [src]="bebida.imagen" alt="{{ bebida.descripcion }}" class="bebida-imagen">
@@ -40,13 +40,11 @@
 
 <h3>Total: {{ calcularTotal() | currency }}</h3>
 
-<!-- Mostrar mensaje de éxito o error -->
 <div *ngIf="mensaje" class="mensaje"
   [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
   {{ mensaje }}
 </div>
 
-<!-- Botones para actualizar, marcar como recibido y finalizar -->
 <div class="btn-container">
   <button class="btn-actualizar" (click)="actualizarPedido()">Actualizar Pedido</button>
   <button class="btn-recibido" (click)="marcarComoRecibido()">Recibido</button>
