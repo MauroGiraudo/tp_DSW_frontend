@@ -15,14 +15,14 @@ import { UsuarioService } from '../../service/usuario.service.js';
   styleUrls: ['./bebida-lista.component.scss']
 })
 export class BebidaListaComponent implements OnInit {
-  
+
   bebidas: any[] = [];
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de bebida seleccionado
   tipoUsuario: string = '';  // Tipo de usuario (empleado, cliente, etc.)
 
   constructor(
-    private bebidaService: BebidaService, 
+    private bebidaService: BebidaService,
     private pedidoService: PedidoService,
     private usuarioService: UsuarioService
   ) {}
