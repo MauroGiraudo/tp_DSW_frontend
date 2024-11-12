@@ -5,7 +5,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { PedidoService } from '../../service/pedido.service.js';
 import { Bebida, BebidaConCantidad } from '../../models/mesa.models.js';
-import { UsuarioService } from '../../service/usuario.service.js';  // Asegúrate de importar el servicio
+import { UsuarioService } from '../../service/usuario.service.js';
 
 @Component({
   selector: 'app-lista-bebida',
@@ -15,14 +15,14 @@ import { UsuarioService } from '../../service/usuario.service.js';  // Asegúrat
   styleUrls: ['./bebida-lista.component.scss']
 })
 export class BebidaListaComponent implements OnInit {
-  
+
   bebidas: any[] = [];
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de bebida seleccionado
   tipoUsuario: string = '';  // Tipo de usuario (empleado, cliente, etc.)
 
   constructor(
-    private bebidaService: BebidaService, 
+    private bebidaService: BebidaService,
     private pedidoService: PedidoService,
     private usuarioService: UsuarioService  // Inyectamos el servicio para obtener el tipo de usuario
   ) {}
