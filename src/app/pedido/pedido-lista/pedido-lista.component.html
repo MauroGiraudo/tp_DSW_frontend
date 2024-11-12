@@ -1,1 +1,56 @@
-<p>pedido-lista works!</p>
+<h2>Lista de Pedidos</h2>
+
+<!-- Search box -->
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por número de mesa" class="search-box"
+    type="text">
+  <button (click)="onSearch()" class="search-button">
+    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png"
+      alt="Buscar">
+  </button>
+</div>
+
+<!-- Contenedor para los pedidos -->
+<div class="pedidos-container">
+  <div *ngFor="let pedido of filteredPedidos" class="pedido-item">
+    <div class="card">
+      <div class="pedido-info">
+        <span>N° Pedido: {{ pedido.nroPed }}</span>
+        <div class="estado">
+          <span [ngClass]="{
+              'en-curso': pedido.estado === 'en curso',
+              'finalizado': pedido.estado === 'finalizado',
+              'cancelado': pedido.estado === 'cancelado'
+            }">
+            {{ pedido.estado === 'en curso' ? 'En curso' : pedido.estado === 'finalizado' ? 'Finalizado' : 'Cancelado'
+            }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Detalles desplegables -->
+      <div *ngIf="pedido.mostrarDetalles" class="detalles">
+        <!-- Información adicional -->
+        <div class="pedido-info-extra">
+          <p><strong>Cliente ID:</strong> {{ pedido.cliente }}</p>
+          <p><strong>Fecha:</strong> {{ pedido.fecha | date: 'shortDate' }}</p>
+          <p><strong>Hora:</strong> {{ pedido.hora }}</p>
+          <p><strong>Mesa:</strong> {{ pedido.mesa }}</p>
+        </div>
+
+        <div *ngIf="pedido.estado === 'cancelado'" class="pedido-cancelacion">
+          <p><strong>Fecha de Cancelación:</strong> {{ pedido.fechaCancelacion | date: 'shortDate' }}</p>
+          <p><strong>Hora de Cancelación:</strong> {{ pedido.horaCancelacion }}</p>
+        </div>
+
+        <p><strong>Pago ID:</strong> {{ pedido.pago }}</p>
+        <p><strong>Reseña:</strong> {{ pedido.resena ? pedido.resena : 'Sin reseña' }}</p>
+      </div>
+
+      <!-- Botón para alternar detalles -->
+      <button (click)="toggleDetalles(pedido)">
+        {{ pedido.mostrarDetalles ? 'Ocultar detalles' : 'Mostrar detalles' }}
+      </button>
+    </div>
+  </div>
+</div>
