@@ -7,7 +7,7 @@ import { ResponsePlato } from '../models/mesa.models.js';
   providedIn: 'root'
 })
 export class PlatoService {
-  private readonly apiUrl = 'http://localhost:3000/api/platos'; // URL de la API para platos
+  private readonly apiUrl = 'http://localhost:3000/api/platos';
 
   constructor(private http: HttpClient) {}
 
@@ -76,7 +76,6 @@ export class PlatoService {
     );
   }
 
-  // Método para eliminar dependencias de plato en plato_de_tipo
   private eliminarDependenciasDePlato(numPlato: number, tipoPlato: number): Observable<void> {
     const url = `${this.apiUrl}/${numPlato}/tipo/${tipoPlato}`;
     return this.http.delete<void>(url).pipe(
@@ -91,7 +90,6 @@ export class PlatoService {
     );
   }
 
-  // Método para eliminar un plato y sus dependencias en cascada
   public eliminarPlatoConDependencias(numPlato: number, tipoPlato: number): Observable<void> {
     return this.eliminarDependenciasDePlato(numPlato, tipoPlato).pipe(
       tap({
@@ -112,7 +110,6 @@ export class PlatoService {
     );
   }
 
-  // Método para eliminar un plato por su ID
   public eliminarPlato(numPlato: number): Observable<void> {
     const url = `${this.apiUrl}/${numPlato}`;
     return this.http.delete<void>(url).pipe(

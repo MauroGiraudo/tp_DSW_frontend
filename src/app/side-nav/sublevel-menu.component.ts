@@ -78,15 +78,14 @@ export class SublevelMenuComponent implements OnInit {
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;
 
-  userType: string = '';  // Almacenará el tipo de usuario
+  userType: string = ''; 
 
   constructor(
     public router: Router,
-    private usuarioService: UsuarioService  // Asegúrate de tener el servicio para obtener el tipo de usuario
+    private usuarioService: UsuarioService
   ) {}
 
   ngOnInit(): void {
-    // Obtén el tipo de usuario desde el servicio
     this.userType = this.usuarioService.showTipoUsuario() || '';
   }
 
@@ -107,14 +106,10 @@ export class SublevelMenuComponent implements OnInit {
     return item.expanded && this.router.url.includes(item.routeLink) ? 'active-sublevel' : '';
   }
 
-  // Método para comprobar si el item debe ser visible
 isVisible(item: navData): boolean {
-  // Verifica si el tipo de usuario está permitido para este item
   if (item.tipoUsuario.length === 0 || item.tipoUsuario.includes(this.userType)) {
     return true;
   }
-  // Si el tipo de usuario es vacío, lo interpretamos como accesible para usuarios no logueados
   return item.tipoUsuario.includes('');
 }
-
 }

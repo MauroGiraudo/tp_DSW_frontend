@@ -22,10 +22,10 @@ export class ProveedorEliminarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private proveedorService: ProveedorService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router 
   ) {
     this.proveedorForm = this.fb.group({
-      id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],  // Validación de id (número positivo)
+      id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
     });
   }
 
@@ -38,19 +38,16 @@ export class ProveedorEliminarComponent implements OnInit {
   eliminarProveedor() {
     if (this.proveedorForm.valid) {
       const id = this.proveedorForm.value.id;
-
-      // Verifica que el ID sea un número válido
       if (isNaN(Number(id))) {
         this.mensaje = 'ID inválido. Debe ser un número positivo.';
         return;
       }
-
       this.proveedorService.eliminarProveedor(id).subscribe({
         next: () => {
           this.proveedorForm.reset();
           this.enviado = false;
           this.mensaje = 'Proveedor eliminado exitosamente';
-          this.router.navigate(['proveedores/Lista']); // Redirige a la página de la lista de proveedores
+          this.router.navigate(['proveedor/Lista']);
         },
         error: (error) => {
           console.error('Error al eliminar el proveedor:', error);

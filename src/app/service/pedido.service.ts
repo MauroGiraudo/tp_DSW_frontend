@@ -92,6 +92,8 @@ export class PedidoService {
     return requests.length > 0 ? forkJoin(requests) : of(null);
   }
 
+
+
   recibido(nroPed: number): Observable<any> {
     const obtenerPlatos = this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`);
     const obtenerBebidas = this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`);
@@ -176,22 +178,18 @@ export class PedidoService {
     return this.http.put(url, body);
   }
 
-  // Método para obtener todos los pedidos del cliente
   obtenerPedidos(): Observable<PedidosLis[]> {
-    const clienteId = this.usuarioService.obtenerUsuarioActual().id; // Obtener el clienteId del usuario logueado
-    const url = `${this.apiUrl}/${clienteId}/pedidos`;  // Construir la URL para obtener todos los pedidos
-    return this.http.get<{ data: PedidosLis[] }>(url).pipe(  // Asegúrate de que la respuesta tenga la estructura correcta
+    const clienteId = this.usuarioService.obtenerUsuarioActual().id; 
+    const url = `${this.apiUrl}/${clienteId}/pedidos`;  
+    return this.http.get<{ data: PedidosLis[] }>(url).pipe( 
       map(response => {
-        console.log('Pedidos obtenidos:', response);  // Log para verificar la respuesta
-        return response.data;  // Extraemos los datos del campo 'data'
+        console.log('Pedidos obtenidos:', response);  
+        return response.data;  
       }),
       catchError(error => {
-        console.error('Error al obtener los pedidos:', error);  // Manejo de errores
+        console.error('Error al obtener los pedidos:', error); 
         return throwError(() => new Error('No se pudieron obtener los pedidos del cliente'));
       })
     );
   }
-
-
-
 }

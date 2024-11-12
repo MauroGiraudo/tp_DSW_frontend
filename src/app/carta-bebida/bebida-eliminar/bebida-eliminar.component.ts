@@ -38,17 +38,12 @@ export class BebidaEliminarComponent implements OnInit {
   eliminarBebida() {
     if (this.bebidaForm.valid) {
       const codBebida = this.bebidaForm.controls['codBebida'].value;  
-
-      // Elimina las dependencias primero
       this.bebidaService.eliminarBebidaConDependencias(codBebida, this.bebidaForm.controls['proveedor'].value).subscribe({
         next: () => {
-          // Después de la eliminación exitosa, reiniciamos el formulario y mostramos el mensaje de éxito
           this.bebidaForm.reset();
           this.enviado = false;
           this.mensaje = 'Bebida eliminada exitosamente';
-
-
-          this.router.navigate(['bebidas/Lista']); // Redirige a la lista de bebidas
+          this.router.navigate(['cartaBebida/Lista']); 
         },
         error: (error) => {
           console.error('Error al eliminar las dependencias de la bebida:', error);

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './cliente.component.scss'
 })
 export class ClienteComponent implements OnInit {
-  usuario: Usuario = new Usuario(); // Inicializamos el usuario
+  usuario: Usuario = new Usuario();
 
   constructor(
     private usuarioService: UsuarioService,
@@ -22,12 +22,9 @@ export class ClienteComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Nos suscribimos al observable para obtener el estado del usuario
     this.usuarioService.usuarioObservable.subscribe(usuario => {
       this.usuario = usuario;
     });
-
-    // Comprobamos si hay un indicador de redirección
     const redirigirAHome = this.almacenamientoService.getItem('redirigirAHome');
     if (redirigirAHome === 'true') {
       this.almacenamientoService.removeItem('redirigirAHome');
@@ -37,9 +34,9 @@ export class ClienteComponent implements OnInit {
 
   logOut(): void {
     this.usuarioService.logOutUsuario().subscribe((response) => {
-      console.log(response.message); // Muestra el mensaje de respuesta en la consola
-      this.almacenamientoService.setItem('redirigirAHome', 'true'); // Indicamos que se debe redirigir al home
-      window.location.reload(); // Recargamos la página para aplicar los cambios
+      console.log(response.message);
+      this.almacenamientoService.setItem('redirigirAHome', 'true'); 
+      window.location.reload();
     });
   }
 }

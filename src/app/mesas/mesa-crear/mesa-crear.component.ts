@@ -22,7 +22,7 @@ export class MesaCrearComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private mesaService: MesaService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router
   ) {
     this.mesaForm = this.fb.group({
       nro_mesa: ['', [Validators.required]], 
@@ -41,7 +41,7 @@ export class MesaCrearComponent implements OnInit {
   if (this.mesaForm.valid) {
     const nuevaMesa: Mesa = {
       nro_mesa: this.mesaForm.value.nro_mesa,
-      cant_personas_max: parseInt(this.mesaForm.value.cant_personas_max, 10), // Asegúrate de enviar un número
+      cant_personas_max: parseInt(this.mesaForm.value.cant_personas_max, 10),
       estado: this.mesaForm.value.estado
     };
 
@@ -51,7 +51,7 @@ export class MesaCrearComponent implements OnInit {
         this.mesaForm.reset();
         this.enviado = false; 
         this.mensaje = 'Mesa creada con éxito'; 
-        this.router.navigate(['mesas/Lista']); // Redirige a la página deseada
+        this.router.navigate(['mesa/Lista']); 
       },
       error: (error) => {
         console.error('Error al crear la mesa:', error);

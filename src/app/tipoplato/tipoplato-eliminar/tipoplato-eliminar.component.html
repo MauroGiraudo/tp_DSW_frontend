@@ -2,18 +2,15 @@
   <div class="register">
     <p class="titulo">Eliminar Tipo de Plato</p>
 
-    <!-- Muestra el mensaje aquí -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
     </div>
 
     <form [formGroup]="tipoPlatoForm" (ngSubmit)="enviar()">
-      <!-- Campo para ingresar el número de plato -->
       <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Número de Plato">
       </text-input>
       
-      <!-- Botón para eliminar tipo de plato -->
       <default-button texto="Eliminar Tipo de Plato"></default-button>
     </form>
   </div>

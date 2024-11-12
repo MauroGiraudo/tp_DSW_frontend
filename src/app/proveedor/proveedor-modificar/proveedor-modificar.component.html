@@ -2,7 +2,6 @@
   <div class="register">
     <p class="titulo">Modificar Proveedor</p>
 
-    <!-- Muestra el mensaje aquí -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
@@ -12,28 +11,20 @@
 
       <text-input [control]="fc['id']" [mostrarErrores]="enviado" label="ID">
       </text-input>
-
       <text-input [control]="fc['cuit']" [mostrarErrores]="enviado" label="CUIT">
       </text-input>
-
       <text-input [control]="fc['razonSocial']" [mostrarErrores]="enviado" label="Razón Social">
       </text-input>
-
       <text-input [control]="fc['direccion']" [mostrarErrores]="enviado" label="Dirección">
       </text-input>
-
       <text-input [control]="fc['ciudad']" [mostrarErrores]="enviado" label="Ciudad">
       </text-input>
-
       <text-input [control]="fc['provincia']" [mostrarErrores]="enviado" label="Provincia">
       </text-input>
-
       <text-input [control]="fc['pais']" [mostrarErrores]="enviado" label="País">
       </text-input>
-
       <text-input [control]="fc['telefono']" [mostrarErrores]="enviado" label="Teléfono">
       </text-input>
-
       <text-input [control]="fc['email']" [mostrarErrores]="enviado" label="Email">
       </text-input>
 

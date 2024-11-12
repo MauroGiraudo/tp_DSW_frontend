@@ -21,11 +21,11 @@ export class TipoplatoEliminarComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private tipoPlatoService: TipoplatoService,  // El servicio correspondiente
-    private router: Router // Para redireccionar si es necesario
+    private tipoPlatoService: TipoplatoService,
+    private router: Router 
   ) {
     this.tipoPlatoForm = this.fb.group({
-      numPlato: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],  // Validación de numPlato (número positivo)
+      numPlato: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
     });
   }
 
@@ -39,20 +39,16 @@ export class TipoplatoEliminarComponent implements OnInit {
     if (this.tipoPlatoForm.valid) {
       const numPlato = this.tipoPlatoForm.value.numPlato;
       const descTPlato = this.tipoPlatoForm.value.descTPlato;
-
-      // Verifica que el numPlato sea un número válido
       if (isNaN(Number(numPlato))) {
         this.mensaje = 'Número de plato inválido. Debe ser un número positivo.';
         return;
       }
-
-      // Llama al servicio para eliminar el tipo de plato
       this.tipoPlatoService.eliminarTipoPlato(numPlato).subscribe({
         next: () => {
           this.tipoPlatoForm.reset();
           this.enviado = false;
           this.mensaje = 'Tipo de plato eliminado exitosamente';
-          this.router.navigate(['tipoplato/Lista']);  // Redirige a la página de la lista de tipos de plato
+          this.router.navigate(['tipoplato/Lista']); 
         },
         error: (error) => {
           console.error('Error al eliminar el tipo de plato:', error);

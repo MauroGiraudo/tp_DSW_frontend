@@ -34,7 +34,6 @@ export class MesaListaComponent implements OnInit, OnDestroy {
       },
       (error) => {
         console.error("Error al obtener las mesas:", error);
-        // Manejo del error aquí
       }
     );
   }

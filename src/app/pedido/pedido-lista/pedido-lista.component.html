@@ -1,6 +1,5 @@
 <h2>Lista de Pedidos</h2>
 
-<!-- Search box -->
 <div class="search-container">
   <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por número de mesa" class="search-box"
     type="text">
@@ -10,7 +9,6 @@
   </button>
 </div>
 
-<!-- Contenedor para los pedidos -->
 <div class="pedidos-container">
   <div *ngFor="let pedido of filteredPedidos" class="pedido-item">
     <div class="card">
@@ -28,9 +26,7 @@
         </div>
       </div>
 
-      <!-- Detalles desplegables -->
       <div *ngIf="pedido.mostrarDetalles" class="detalles">
-        <!-- Información adicional -->
         <div class="pedido-info-extra">
           <p><strong>Cliente ID:</strong> {{ pedido.cliente }}</p>
           <p><strong>Fecha:</strong> {{ pedido.fecha | date: 'shortDate' }}</p>
@@ -42,12 +38,11 @@
           <p><strong>Fecha de Cancelación:</strong> {{ pedido.fechaCancelacion | date: 'shortDate' }}</p>
           <p><strong>Hora de Cancelación:</strong> {{ pedido.horaCancelacion }}</p>
         </div>
-
+        
         <p><strong>Pago ID:</strong> {{ pedido.pago }}</p>
         <p><strong>Reseña:</strong> {{ pedido.resena ? pedido.resena : 'Sin reseña' }}</p>
       </div>
 
-      <!-- Botón para alternar detalles -->
       <button (click)="toggleDetalles(pedido)">
         {{ pedido.mostrarDetalles ? 'Ocultar detalles' : 'Mostrar detalles' }}
       </button>

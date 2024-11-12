@@ -2,18 +2,15 @@
   <div class="register">
     <p class="titulo">Eliminar Proveedor</p>
 
-    <!-- Muestra el mensaje aquí -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
     </div>
 
     <form [formGroup]="proveedorForm" (ngSubmit)="enviar()">
-      <!-- Campo para ingresar el ID del proveedor -->
       <text-input [control]="fc['id']" [mostrarErrores]="enviado" label="ID del Proveedor">
       </text-input>
 
-      <!-- Botón para eliminar proveedor -->
       <default-button texto="Eliminar Proveedor"></default-button>
     </form>
   </div>

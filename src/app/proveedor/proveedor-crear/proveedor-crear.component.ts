@@ -25,14 +25,14 @@ export class ProveedorCrearComponent implements OnInit {
     private router: Router 
   ) {
     this.proveedorForm = this.fb.group({
-      cuit: ['', [Validators.required, Validators.pattern('[0-9]{11}')]], // Validación del CUIT
+      cuit: ['', [Validators.required, Validators.pattern('[0-9]{11}')]],
       razonSocial: ['', [Validators.required]],
       direccion: ['', [Validators.required]],
       ciudad: ['', [Validators.required]],
       provincia: ['', [Validators.required]],
       pais: ['', [Validators.required]],
-      telefono: ['', [Validators.required, Validators.pattern(/^[+]{1}[0-9]{1,3}[ ]{0,1}[0-9]{1,4}[ ]{0,1}[0-9]{1,4}[ ]{0,1}[0-9]{1,4}$/)]], // Validación del teléfono
-      email: ['', [Validators.required, Validators.email]] // Validación del email
+      telefono: ['', [Validators.required, Validators.pattern(/^[+]{1}[0-9]{1,3}[ ]{0,1}[0-9]{1,4}[ ]{0,1}[0-9]{1,4}[ ]{0,1}[0-9]{1,4}$/)]],
+      email: ['', [Validators.required, Validators.email]] 
     });
   }
 
@@ -55,14 +55,13 @@ export class ProveedorCrearComponent implements OnInit {
         telefono: this.proveedorForm.value.telefono,
         email: this.proveedorForm.value.email
       };
-
       this.proveedorService.crearProveedor(nuevoProveedor).subscribe({
         next: (response: Proveedor) => { 
           console.log('Proveedor creado:', response);
           this.proveedorForm.reset();
           this.enviado = false; 
           this.mensaje = 'Proveedor agregado exitosamente'; 
-          this.router.navigate(['proveedor/Lista']); // Redirige a la página de lista de proveedores
+          this.router.navigate(['proveedor/Lista']);
         },
         error: (error) => {
           console.error('Error al crear el proveedor:', error);

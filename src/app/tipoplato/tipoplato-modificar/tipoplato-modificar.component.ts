@@ -18,28 +18,28 @@ export class TipoplatoModificarComponent implements OnInit {
   tipoPlatoForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  tipoPlatoActual: Tipoplato | null = null; // Inicializa con null
+  tipoPlatoActual: Tipoplato | null = null;
 
   constructor(
     private fb: FormBuilder,
-    private tipoPlatoService: TipoplatoService, // Servicio de TipoPlato
-    private router: Router // Para redireccionar si es necesario
+    private tipoPlatoService: TipoplatoService,
+    private router: Router
   ) {
     this.tipoPlatoForm = this.fb.group({
-      numPlato:['', [Validators.required]],  // Número del plato
-      descTPlato: ['', [this.whitespaceValidator()]]  // Descripción del tipo de plato
+      numPlato:['', [Validators.required]],
+      descTPlato: ['', [this.whitespaceValidator()]]
     });
   }
 
-whitespaceValidator(): ValidatorFn {
-    return (control: AbstractControl): { [key: string]: any } | null => {
-      const value = control.value;
-      if (value.trim() === '') {
-        return null; // Permite espacios en blanco
-      }
-      return null; 
-    };
-  }
+  whitespaceValidator(): ValidatorFn {
+      return (control: AbstractControl): { [key: string]: any } | null => {
+        const value = control.value;
+        if (value.trim() === '') {
+          return null;
+        }
+        return null; 
+      };
+    }
 
   ngOnInit(): void {
     const numPlato = this.router.getCurrentNavigation()?.extras.state?.['numPlato'];
@@ -72,14 +72,10 @@ whitespaceValidator(): ValidatorFn {
   actualizarTipoPlato() {
     if (this.tipoPlatoForm.valid) {
       const numPlato = this.tipoPlatoForm.value.numPlato;
-
-      // Verifica que el ID sea un número válido
       if (isNaN(Number(numPlato))) {
         this.mensaje = 'ID inválido. Debe ser un número.';
         return;
       }
-
-      // Creamos un objeto solo con los campos modificados
       const tipoPlatoActualizado: Partial<Tipoplato> = {
         descTPlato: this.tipoPlatoForm.value.descTPlato || this.tipoPlatoActual?.descTPlato,
         numPlato: this.tipoPlatoForm.value.numPlato ? parseInt(this.tipoPlatoForm.value.numPlato, 10) : this.tipoPlatoActual?.numPlato,
@@ -91,7 +87,7 @@ whitespaceValidator(): ValidatorFn {
           this.tipoPlatoForm.reset();
           this.enviado = false;
           this.mensaje = 'Tipo de plato actualizado exitosamente';
-          this.router.navigate(['tipoplato/Lista']) // Redirige a la página de la lista de tipos de plato
+          this.router.navigate(['tipoplato/Lista'])
         },
         error: (error) => {
           console.error('Error al actualizar el tipo de plato:', error);

@@ -18,7 +18,7 @@ export class BebidaModificarComponent implements OnInit {
   bebidaForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  bebidaActual: Bebida | null = null;  // Inicializa con null
+  bebidaActual: Bebida | null = null; 
 
   constructor(
     private fb: FormBuilder, 
@@ -42,19 +42,18 @@ export class BebidaModificarComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value === '' || value.trim() === '') {
-        return null; // Permite espacios en blanco
+        return null;
       }
-      const valid = !isNaN(value) && value > 0; // Asegura que sea un número positivo
+      const valid = !isNaN(value) && value > 0; 
       return valid ? null : { 'invalidNumber': { value } };
     };
   }
 
-  // Validador que permite solo espacios en blanco
   whitespaceValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value.trim() === '') {
-        return null; // Permite espacios en blanco
+        return null; 
       }
       return null; 
     };
@@ -65,7 +64,7 @@ export class BebidaModificarComponent implements OnInit {
     if (!control.value) {
       return null;  
     }
-    const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;  // Expresión regular para validar URL
+    const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;  
     const isValid = pattern.test(control.value.trim());
     return isValid ? null : { invalidUrl: { value: control.value } };
   };
@@ -112,9 +111,8 @@ export class BebidaModificarComponent implements OnInit {
 
       if (isNaN(codBebida)) {
         this.mensaje = 'Código de bebida inválido. Debe ser un número.';
-        return; // Detiene la función si el número es inválido
+        return;
       }
-
     const bebidaActualizada: Partial<Bebida> = {
       codBebida,
       descripcion: this.bebidaForm.value.descripcion || this.bebidaActual?.descripcion,
@@ -126,16 +124,13 @@ export class BebidaModificarComponent implements OnInit {
       imagen: this.bebidaForm.value.imagen || this.bebidaActual?.imagen,
       proveedor: this.bebidaForm.value.proveedor || this.bebidaActual?.proveedor,
     };
-
-
-
       this.bebidaService.actualizarBebida(codBebida, bebidaActualizada).subscribe({
         next: (response: Bebida) => { 
           console.log('Bebida actualizada:', response);
           this.bebidaForm.reset();
           this.enviado = false; 
           this.mensaje = 'Bebida actualizada exitosamente'; 
-          this.router.navigate(['bebidas/Lista']);  // Redirige a la página de la lista de bebidas
+          this.router.navigate(['cartaBebida/Lista']);  
         },
         error: (error) => {
           console.error('Error al actualizar la bebida:', error);

@@ -22,9 +22,9 @@ export class PlatoCrearComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private platoService: PlatoService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router 
   ) {
-    // Configuración del formulario para crear un plato
+    // Formulario para crear un plato
     this.platoForm = this.fb.group({
       descripcion: ['', [Validators.required]],
       tiempo: [null, [Validators.required, Validators.min(1)]],
@@ -46,24 +46,23 @@ export class PlatoCrearComponent implements OnInit {
   crearPlato() {
     if (this.platoForm.valid) {
       const nuevoPlato: Plato = {
-        numPlato: 0, // Puede ser autogenerado en el backend
+        numPlato: 0,
         descripcion: this.platoForm.value.descripcion,
-        tiempo: parseFloat(this.platoForm.value.tiempo), // Convertir a número
-        precio: parseFloat(this.platoForm.value.precio), // Convertir a número
+        tiempo: parseFloat(this.platoForm.value.tiempo), 
+        precio: parseFloat(this.platoForm.value.precio), 
         aptoCeliaco: this.platoForm.value.aptoCeliaco,
         aptoVegetarianos: this.platoForm.value.aptoVegetarianos,
         aptoVeganos: this.platoForm.value.aptoVeganos,
         imagen: this.platoForm.value.imagen,
         tipoPlato: this.platoForm.value.tipoPlato ? parseInt(this.platoForm.value.tipoPlato) : undefined // Opcional
       };
-
       this.platoService.crearPlato(nuevoPlato).subscribe({
         next: (response: Plato) => { 
           console.log('Plato creado:', response);
           this.platoForm.reset();
           this.enviado = false; 
           this.mensaje = 'Plato creado exitosamente'; 
-          this.router.navigate(['platos/lista']); // Redirige a la lista de platos
+          this.router.navigate(['cartaComida/Lista']); 
         },
         error: (error) => {
           console.error('Error al crear el plato:', error);

@@ -22,9 +22,9 @@ export class BebidaCrearComponent implements OnInit {
   constructor(
     private fb: FormBuilder, 
     private bebidaService: BebidaService,
-    private router: Router // Para redireccionar si es necesario
+    private router: Router
   ) {
-    // Configuración del formulario para crear una bebida
+    // Formulario para crear una bebida
     this.bebidaForm = this.fb.group({
       descripcion: ['', [Validators.required]],
       stock: [null, [Validators.required, Validators.min(0)]],
@@ -48,10 +48,10 @@ export class BebidaCrearComponent implements OnInit {
       const nuevaBebida: Bebida = {
         codBebida: this.bebidaForm.value.codBebida,
         descripcion: this.bebidaForm.value.descripcion,
-        stock: parseFloat(this.bebidaForm.value.stock), // Acceder correctamente a stock
+        stock: parseFloat(this.bebidaForm.value.stock), 
         unidadMedida: this.bebidaForm.value.unidadMedida,
-        contenido: parseFloat(this.bebidaForm.value.contenido), // Convertir a número
-        precio: parseFloat(this.bebidaForm.value.precio), // Convertir a número
+        contenido: parseFloat(this.bebidaForm.value.contenido), 
+        precio: parseFloat(this.bebidaForm.value.precio), 
         alcohol: this.bebidaForm.value.alcohol,
         imagen: this.bebidaForm.value.imagen,
         proveedor: this.bebidaForm.value.proveedor
@@ -63,7 +63,7 @@ export class BebidaCrearComponent implements OnInit {
           this.bebidaForm.reset();
           this.enviado = false; 
           this.mensaje = 'Bebida creada exitosamente'; 
-          this.router.navigate(['bebidas/lista']); // Redirige a la lista de bebidas
+          this.router.navigate(['cartaBebida/Lista']);
         },
         error: (error) => {
           console.error('Error al crear la bebida:', error);
