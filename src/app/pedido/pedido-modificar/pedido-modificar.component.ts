@@ -109,22 +109,13 @@ actualizarPedido(): void {
 
  // Marcar platos y bebidas como recibidos
   marcarComoRecibido(): void {
-    const platos: PlatoPedido[] = this.pedidoPlatos.map(plato => ({
-      numPlato: plato.numPlato,
-      cantidad: plato.cantidad || 1,
-    }));
-
-    const bebidas: BebidaPedido[] = this.pedidoBebidas.map(bebida => ({
-      codBebida: bebida.codBebida,
-      cantidad: bebida.cantidad || 1,
-    }));
 
     // Obtener el pedido en curso del cliente
     this.pedidoService.obtenerPedidoEnCurso().subscribe(
       (pedidoId) => {
         if (pedidoId) {
           // Llamar al servicio para marcar los platos y bebidas como recibidos
-          this.pedidoService.recibido(pedidoId, platos, bebidas).subscribe(
+          this.pedidoService.recibido(pedidoId).subscribe(
             (response) => {
               console.log('Platos y bebidas marcados como recibidos', response);
               this.mensaje = 'Platos y bebidas marcados como recibidos exitosamente.'; // Mensaje de éxito

@@ -5,6 +5,9 @@ import { Observable,map,switchMap,of,throwError,forkJoin } from 'rxjs';
 import { UsuarioService } from './usuario.service';
 import { TarjetaService } from './tarjeta.service.js';
 import { PedidoActualiza } from '../models/mesa.models';
+import { PlatoPedidosEst } from '../models/mesa.models';
+import { BebidaPedidoEst } from '../models/mesa.models';
+
 
 @Injectable({
   providedIn: 'root'
@@ -133,62 +136,60 @@ actualizarPedidoEnCurso(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPe
 
 // En el servicio de pedidos (pedidoService)
 
-recibido(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[]): Observable<any> {
-  const clienteId = this.usuarioService.obtenerUsuarioActual().id;  // Obtener el clienteId
+recibido(nroPed: number): Observable<any> {
+  const clienteId = this.usuarioService.obtenerUsuarioActual().id; // Obtener el clienteId
 
-  // Crear las solicitudes para bebidas y platos
-  const requests: Observable<any>[] = [];
+  // Obtener platos y bebidas del pedido
+  const obtenerPlatos = this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`);
+  const obtenerBebidas = this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`);
 
-  // Procesar las bebidas y agregar fecha y hora
- bebidas.forEach(bebida => {
-  const fecha = new Date();
-  const fechaSolicitud = fecha.toISOString().split('T')[0];  
-  const horaSolicitud = fecha.toISOString().split('T')[1].split('.')[0];
+  return forkJoin([obtenerPlatos, obtenerBebidas]).pipe(
+    switchMap(([ResponsePlatoEst, ResponseBebidaEst]) => {
+      const requests: Observable<any>[] = [];
 
-  // Crear el objeto de datos a enviar
-  const bebidaData = {
-    fechaSolicitud: fechaSolicitud,
-    horaSolicitud: horaSolicitud,
-    cantidad: bebida.cantidad || 1,  // Si no se especifica cantidad, usar 1
-  };
+      // Extraemos los datos de cada plato y bebida de la propiedad "data"
+      const platos = ResponsePlatoEst.data;
+      const bebidas = ResponseBebidaEst.data;
 
-    // Agregar la solicitud PUT para cada bebida
-    requests.push(
-      this.http.put(
-        `http://localhost:3000/api/pedidos/${nroPed}/bebidas/${bebida.codBebida}`,
-        bebidaData
-      )
-    );
-  });
+      // Agregar solicitudes para bebidas usando la fecha y cantidad existentes
+      bebidas.forEach(bebida => {
+        const bebidaData = {
+          fechaSolicitud: bebida.fechaSolicitud,
+          horaSolicitud: bebida.horaSolicitud,
+          cantidad: bebida.cantidad,
+        };
 
-  // Procesar los platos y agregar fecha y hora
-  platos.forEach(plato => {
-    const fecha = new Date();
-    const fechaSolicitud = fecha.toISOString().split('T')[0];  // Fecha en formato YYYY-MM-DD
-    const horaSolicitud = fecha.toISOString().split('T')[1].split('.')[0];  // Hora en formato HH:mm:ss
+        requests.push(
+          this.http.put(
+            `http://localhost:3000/api/pedidos/${nroPed}/bebidas/${bebida.bebida.codBebida}`,
+            bebidaData
+          )
+        );
+      });
 
-    const platoData = {
-      fechaSolicitud: fechaSolicitud,
-      horaSolicitud: horaSolicitud,
-      cantidad: plato.cantidad || 1,  // Si no se especifica cantidad, usar 1
-    };
+      // Agregar solicitudes para platos usando la fecha y cantidad existentes
+      platos.forEach(plato => {
+        const platoData = {
+          fechaSolicitud: plato.fechaSolicitud,
+          horaSolicitud: plato.horaSolicitud,
+          cantidad: plato.cantidad,
+        };
 
-    // Agregar la solicitud PUT para cada plato
-    requests.push(
-      this.http.put(
-        `http://localhost:3000/api/pedidos/${nroPed}/platos/${plato.numPlato}`,
-        platoData
-      )
-    );
-  });
+        requests.push(
+          this.http.put(
+            `http://localhost:3000/api/pedidos/${nroPed}/platos/${plato.plato.numPlato}`,
+            platoData
+          )
+        );
+      });
 
-  // Ejecutamos todas las solicitudes en paralelo si hay alguna
-  if (requests.length > 0) {
-    return forkJoin(requests);  // Ejecutamos en paralelo
-  } else {
-    return of(null);  // Si no hay platos ni bebidas, devolvemos un Observable vacío
-  }
+      // Ejecutar todas las solicitudes en paralelo
+      return requests.length > 0 ? forkJoin(requests) : of(null);
+    })
+  );
 }
+
+
 
 
 
