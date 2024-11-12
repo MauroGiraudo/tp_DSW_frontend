@@ -83,6 +83,7 @@ export interface Plato{
   aptoVegetarianos: boolean;
   aptoVeganos: boolean;
   imagen: string;
+  tipoPlato?: number;
 }
 export type PlatoConCantidad = Plato & { cantidad: number };
 
@@ -106,4 +107,35 @@ export interface PedidoActualiza {
   platos: PlatoPedido[];  // Arreglo de platos con su cantidad
   bebidas: BebidaPedido[];  // Arreglo de bebidas con su cantidad
   enCurso: boolean;  // Indica si el pedido está en curso
+}
+
+export interface BebidaPedidoEst {
+  pedido: Pedido;
+  bebida: Bebida;
+  fechaSolicitud: string;
+  horaSolicitud: string;
+  cantidad: number;
+  fechaEntrega?: string;
+  horaEntrega?: string;
+  entregado: boolean;
+}
+
+export interface PlatoPedidosEst {
+  pedido: Pedido;
+  plato: Plato;
+  fechaSolicitud: string;
+  horaSolicitud: string;
+  cantidad: number;
+  fechaEntrega?: string;
+  horaEntrega?: string;
+  entregado: boolean;
+}
+export interface ResponsePlatoEst {
+  message: string;  // Mensaje de respuesta del backend
+  data: PlatoPedidosEst[]; 
+}
+
+export interface ResponseBebidaEst {
+  message: string;  // Mensaje de respuesta del backend
+  data: BebidaPedidoEst[]; 
 }

@@ -15,7 +15,9 @@ export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'cliente', component: ClienteComponent },
-  { path: 'cartaComida', component: CartaComidaComponents },
+  { path: 'cartaComida', 
+    loadChildren: () => import('./carta-comida/plato.module.js').then(m => m.PlatoModule) 
+  },
   { path: 'pedido', 
     loadChildren: () => import('./pedido/pedido.module').then(m => m.PedidoModule) },
   { path: 'registro', component: RegistroComponent },

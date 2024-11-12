@@ -25,7 +25,29 @@ export const navDataImport: navData[] = [
     routeLink: "cartaComida",
     icon: "fa-solid fa-utensils",
     label: "Carta de comidas",
-    tipoUsuario: ['']
+    tipoUsuario: [''],
+items: [
+    {
+      routeLink: "cartaComida/Lista",
+      label: "Carta de comidas",
+      tipoUsuario: [''],
+    },
+    {
+      routeLink: "cartaComida/Crear",
+      label: "Agregar comida",
+      tipoUsuario: ['empleado'],  
+    },
+    {
+      routeLink: "cartaComida/Modificar",
+      label: "Modificar comida",
+      tipoUsuario: ['empleado'],
+    },
+    {
+      routeLink: "cartaComida/Eliminar",
+      label: "Eliminar comida",
+      tipoUsuario: ['empleado'],
+    }
+  ]
   },
 
   {
