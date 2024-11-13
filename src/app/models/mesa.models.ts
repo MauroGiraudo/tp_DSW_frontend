@@ -161,4 +161,20 @@ export interface ResponsePedidosLis {
   data: PedidosLis[]; 
 }
 
- 
+export interface Ingrediente{
+  codigo: number;
+  descIngre: string;
+  puntoDePedido: number;
+  stock: number;
+  unidadMedida: string;
+  aptoCeliacos: boolean;
+  aptoVegetarianos: boolean;
+  aptoVeganos: boolean;
+  mostrarDetalles?: boolean;
+  proveedor?: number;
+}
+
+export interface ResponseIngredientes {
+  message: string;  // Mensaje de respuesta del backend
+  data: Ingrediente[]; 
+}

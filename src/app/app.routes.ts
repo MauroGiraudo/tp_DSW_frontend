@@ -20,6 +20,8 @@ export const routes: Routes = [
     loadChildren: () => import('./proveedor/proveedor.module').then(m => m.ProveedorModule) },
   { path: 'mesa',
     loadChildren: () => import('./mesas/mesa.module').then(m => m.MesaModule)},
+    { path: 'ingrediente', 
+    loadChildren: () => import('./ingrediente/ingrediente.module').then(m => m.IngredienteModule)},
   { path: 'cartaBebida', 
     loadChildren: () => import('./carta-bebida/bebida.module').then(m => m.BebidaModule)},
       { path: 'tipoplato',

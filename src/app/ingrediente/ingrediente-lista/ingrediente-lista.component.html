@@ -1,0 +1,40 @@
+<h2>Lista de Ingredientes</h2>
+
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por descripcion" class="search-box"
+    type="text">
+  <button (click)="onSearch()" class="search-button">
+    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png"
+      alt="Buscar">
+  </button>
+</div>
+
+<div class="pedidos-container">
+  <div *ngFor="let ingrediente of filteredIngredientes" class="plato-item">
+    <div class="card">
+      <div class="plato-info">
+        <span>{{ ingrediente.descIngre }}</span>
+        <div class="precio-cantidad">
+          <div class="cantidad-container">
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="ingrediente.mostrarDetalles" class="detalles">
+        <p><strong>Codigo:</strong> {{ ingrediente.codigo }}</p>
+        <p><strong>Punto de pedido:</strong> {{ ingrediente.puntoDePedido }}</p>
+        <p><strong>Stock:</strong> {{ ingrediente.stock }}</p>
+        <p><strong>Unidad de medida:</strong> {{ ingrediente.unidadMedida}}</p>
+        <p><strong>Apto celíacos:</strong> {{ ingrediente.aptoCeliacos? 'Sí' : 'No' }}</p>
+        <p><strong>Apto vegetarianos:</strong> {{ ingrediente.aptoVegetarianos ? 'Sí' : 'No' }}</p>
+        <p><strong>Apto veganos:</strong> {{ ingrediente.aptoVeganos ? 'Sí' : 'No' }}</p>
+
+      </div>
+
+      <button (click)="toggleDetalles(ingrediente)">
+        {{ ingrediente.mostrarDetalles ? 'Ocultar detalles' : 'Mostrar detalles' }}
+      </button>
+    </div>
+  </div>
+</div>
+
