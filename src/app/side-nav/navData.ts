@@ -131,9 +131,38 @@ items: [
       }
     ]
   },
+  {
+    routeLink: "ingrediente",
+    icon: "fa-solid fa-carrot",
+    label: "Ingrediente",
+    tipoUsuario: ['empleado'],
+    logueado: 'true',
+     items: [
+      {
+        routeLink: "ingrediente/Lista",
+        label: "Lista de ingredientes",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "ingrediente/Crear",
+        label: "Agregar ingrediente",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "ingrediente/Modificar",
+        label: "Modificar ingrediente",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "ingrediente/Eliminar",
+        label: "Eliminar ingrediente",
+        tipoUsuario: ['empleado'],
+      }
+    ]
+  },
  {
     routeLink: "tipoplato",
-    icon: "fa-solid fa-spoon",
+    icon: "fa-solid fa-plate-wheat",
     label: "Tipo Plato",
     tipoUsuario: ['empleado'],
     logueado: 'true',

@@ -7,11 +7,11 @@
       {{ mensaje }}
     </div>
 
-    <form [formGroup]="proveedorForm" (ngSubmit)="enviar()">
-      <text-input [control]="fc['id']" [mostrarErrores]="enviado" label="ID del Proveedor">
+    <form [formGroup]="ingredienteForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['codigo']" [mostrarErrores]="enviado" label="Codigo del ingrediente">
       </text-input>
 
-      <default-button texto="Eliminar Proveedor"></default-button>
+      <default-button texto="Eliminar Ingrediente"></default-button>
     </form>
   </div>
 </div>

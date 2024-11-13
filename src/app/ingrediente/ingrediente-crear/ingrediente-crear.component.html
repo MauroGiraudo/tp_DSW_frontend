@@ -1,0 +1,23 @@
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Crear Ingrediente</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="ingredienteForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['descIngre']" [mostrarErrores]="enviado" label="Descripcion"></text-input>
+      <text-input [control]="fc['puntoDePedido']" [mostrarErrores]="enviado" label="Punto de pedido"></text-input>
+      <text-input [control]="fc['stock']" [mostrarErrores]="enviado" label="Stock"></text-input>
+      <text-input [control]="fc['unidadMedida']" [mostrarErrores]="enviado" label="Unidad de medida"></text-input>
+      <text-input [control]="fc['aptoCeliacos']" [mostrarErrores]="enviado" label="Apto celiacos"></text-input>
+      <text-input [control]="fc['aptoVegetarianos']" [mostrarErrores]="enviado" label="Apto vegetarianos"></text-input>
+      <text-input [control]="fc['aptoVeganos']" [mostrarErrores]="enviado" label="Apto veganos"></text-input>
+      <text-input [control]="fc['proveedor']" [mostrarErrores]="enviado" label="Proveedor"></text-input>
+
+      <default-button texto="Crear Ingrediente"></default-button>
+    </form>
+  </div>
+</div>

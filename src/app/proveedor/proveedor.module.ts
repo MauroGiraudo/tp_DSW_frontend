@@ -6,11 +6,11 @@ import { ProveedorComponent } from './proveedor.component.js';
 
 @NgModule({
   declarations: [
-  ProveedorComponent
   ],
   imports: [
     CommonModule,
-    ProveedorRoutingModule
+    ProveedorRoutingModule,
+    ProveedorComponent
   ]
 })
 export class ProveedorModule { }
