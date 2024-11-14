@@ -98,7 +98,6 @@ button:hover {
   cursor: pointer;
   padding: 5px;
   margin-left: -40px;
-  /* Superpone el botón en el borde del input */
 }
 
 .search-button img {
@@ -112,5 +111,25 @@ button:hover {
 
 .search-box:focus {
   border-color: #004668;
-  /* Cambia el color del borde al hacer foco */
+}
+
+.tags-container {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.tag {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #9ecde5;
+  border: 1px solid #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: black;
+}
+
+.tag:hover {
+  background-color: #e0e0e0;
+  color: black;
 }
