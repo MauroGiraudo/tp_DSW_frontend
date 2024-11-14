@@ -221,6 +221,36 @@ items: [
   },
 
   {
+    routeLink: "tarjeta",
+    icon: "fa-solid fa-credit-card",
+    label: "Tarjeta",
+    tipoUsuario: ['empleado'],
+    logueado: 'true',
+     items: [
+      {
+        routeLink: "tarjeta/Lista",
+        label: "Lista de tarjetas",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "tarjeta/Crear",
+        label: "Agregar tarjeta",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "tarjeta/Modificar",
+        label: "Modificar tarjeta",
+        tipoUsuario: ['empleado'],
+      },
+      {
+        routeLink: "tarjeta/Eliminar",
+        label: "Eliminar tarjeta",
+        tipoUsuario: ['empleado'],
+      }
+    ]
+  },
+
+  {
     routeLink: "cliente",
     icon: "fa-solid fa-user",
     label: "Cuenta",

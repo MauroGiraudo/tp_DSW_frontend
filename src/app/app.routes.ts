@@ -24,6 +24,9 @@ export const routes: Routes = [
     loadChildren: () => import('./ingrediente/ingrediente.module').then(m => m.IngredienteModule)},
   { path: 'cartaBebida', 
     loadChildren: () => import('./carta-bebida/bebida.module').then(m => m.BebidaModule)},
-      { path: 'tipoplato',
-    loadChildren: () => import('./tipoplato/tipoplato.module').then(m => m.TipoplatoModule)}
+  { path: 'tipoplato',
+    loadChildren: () => import('./tipoplato/tipoplato.module').then(m => m.TipoplatoModule)},
+  { path: 'tarjeta',
+    loadChildren: () => import('./tarjeta/tarjeta.module').then(m => m.TarjetaModule)},
+
 ];
