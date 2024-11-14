@@ -9,6 +9,12 @@
   </button>
 </div>
 
+<div class="tags-container">
+  <button (click)="resetFilter()" class="tag reset">Todos</button>
+  <button (click)="filterByStock('falta-stock')" class="tag">Falta stock</button>
+  <button (click)="filterByStock('con-stock')" class="tag">Con stock</button>
+</div>
+
 <div class="pedidos-container">
   <div *ngFor="let ingrediente of filteredIngredientes" class="plato-item">
     <div class="card">

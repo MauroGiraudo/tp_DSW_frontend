@@ -10,13 +10,14 @@ import { takeUntil } from 'rxjs/operators';
 @Component({
   selector: 'app-ingrediente-lista',
   standalone: true,
-  imports: [CommonModule,HttpClientModule, FormsModule],
+  imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './ingrediente-lista.component.html',
-  styleUrl: './ingrediente-lista.component.scss'
+  styleUrls: ['./ingrediente-lista.component.scss']
 })
 export class IngredienteListaComponent implements OnInit, OnDestroy {
   ingredientes: Ingrediente[] = [];
   searchTerm: string = '';
+  selectedStock: string = ''; // Para manejar el estado del filtro por stock
   private destroy$ = new Subject<void>();
 
   constructor(private ingredienteService: IngredienteService) {}
@@ -44,15 +45,37 @@ export class IngredienteListaComponent implements OnInit, OnDestroy {
 
   get filteredIngredientes() {
     return this.ingredientes.filter(ingrediente =>
-      ingrediente.descIngre.toLowerCase().includes(this.searchTerm.toLowerCase())
+      ingrediente.descIngre.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
+      this.applyStockFilter(ingrediente)
     );
   }
 
-    onSearch(): void {
+
+  applyStockFilter(ingrediente: Ingrediente): boolean {
+    if (this.selectedStock === 'falta-stock') {
+      return ingrediente.stock <= ingrediente.puntoDePedido;
+    }
+    if (this.selectedStock === 'con-stock') {
+      return ingrediente.stock > ingrediente.puntoDePedido;
+    }
+    return true;
+  }
+
+  onSearch(): void {
     console.log('Término de búsqueda:', this.searchTerm);
   }
 
-    toggleDetalles(ingrediente: any): void {
+  filterByStock(stock: string): void {
+    this.selectedStock = stock;
+    console.log('Filtro de stock seleccionado:', this.selectedStock);
+  }
+
+  resetFilter(): void {
+    this.selectedStock = '';
+    console.log('Filtro restablecido. Mostrando todos los ingredientes.');
+  }
+
+  toggleDetalles(ingrediente: any): void {
     ingrediente.mostrarDetalles = !ingrediente.mostrarDetalles;
   }
 

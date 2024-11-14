@@ -46,6 +46,7 @@ constructor(private platoService: PlatoService,private pedidoService: PedidoServ
 
   onSearch(): void {
   console.log('Término de búsqueda:', this.searchTerm);}
+  
   filterByType(type: string): void {
     this.selectedType = type;
     console.log('Tipo de plato seleccionado:', this.selectedType);

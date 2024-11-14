@@ -53,7 +53,7 @@ export class BebidaListaComponent implements OnInit {
     console.log('Término de búsqueda:', this.searchTerm);
   }
 
-  // Filtro por (con o sin alcohol)
+
   filterByType(type: string): void {
     this.selectedType = type;
     console.log('Tipo de bebida seleccionado:', this.selectedType);

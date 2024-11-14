@@ -21,7 +21,8 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
   
   pedidos: Pedido[] = [];
   pedidosLis: PedidosLis[] = [];
-  searchTerm: string = '';  
+  searchTerm: string = '';
+  selectedType: string = '';   
   private destroy$ = new Subject<void>();  
 
   constructor(private pedidoService: PedidoService) {}
@@ -45,12 +46,24 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
 
   get filteredPedidos() {
     return this.pedidosLis.filter(pedidosLis =>
-      pedidosLis.nroPed.toString().includes(this.searchTerm)
+      pedidosLis.nroPed.toString().includes(this.searchTerm.toLowerCase()) &&
+      (this.selectedType === '' || pedidosLis.estado === this.selectedType)
     );
+    
   }
 
   onSearch(): void {
     console.log('Término de búsqueda:', this.searchTerm);
+  }
+
+  filterByStatus(type: string): void {
+    this.selectedType = type;
+    console.log('Estado eleccionado:', this.selectedType);
+  }
+
+  resetFilter(): void {
+    this.selectedType = '';
+    console.log('Filtro de estado restablecido. Mostrando todos los pedidos.');
   }
 
   toggleDetalles(pedidosLis: PedidosLis) {
