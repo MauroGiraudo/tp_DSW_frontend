@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
+import { tap, switchMap } from 'rxjs/operators';
 import { Plato } from '../models/mesa.models.js';
 import { ResponsePlato } from '../models/mesa.models.js';
+import { Plato1 } from '../models/mesa.models.js';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -11,8 +14,9 @@ export class PlatoService {
 
   constructor(private http: HttpClient) {}
 
-  public crearPlato(plato: Plato): Observable<Plato> {
-    return this.http.post<Plato>(this.apiUrl, {
+  /** Crea un plato enviando la estructura correcta con ingredientes */
+  public crearPlato(plato: Plato1): Observable<Plato1> {
+    return this.http.post<Plato1>(this.apiUrl, {
       descripcion: plato.descripcion,
       tiempo: plato.tiempo,
       precio: plato.precio,
@@ -20,107 +24,54 @@ export class PlatoService {
       aptoVegetarianos: plato.aptoVegetarianos,
       aptoVeganos: plato.aptoVeganos,
       imagen: plato.imagen,
-      tipoPlato: plato.tipoPlato
+      tipoPlato: plato.tipoPlato,
+      ingredientes: plato.ingredientes // Se agregó el envío de ingredientes
     }).pipe(
-      tap({
-        next: (response) => {
-          console.log('Plato creado:', response);
-        },
-        error: (error) => {
-          console.error('Error al crear el plato:', error);
-        }
-      })
+      tap(response => console.log('Plato creado:', response))
     );
   }
 
+  /** Obtiene todos los platos */
   public getPlatos(): Observable<ResponsePlato> {
     return this.http.get<ResponsePlato>(this.apiUrl).pipe(
-      tap({
-        next: (response) => {
-          console.log('Platos obtenidos:', response);
-        },
-        error: (error) => {
-          console.error('Error al obtener platos:', error);
-        }
-      })
+      tap(response => console.log('Platos obtenidos:', response))
     );
   }
 
-  public obtenerPlato(numPlato: number): Observable<Plato> {
-    const url = `${this.apiUrl}/${numPlato}`;
-    return this.http.get<Plato>(url).pipe(
-      tap({
-        next: (response) => {
-          console.log('Plato obtenido:', response);
-        },
-        error: (error) => {
-          console.error('Error al obtener el plato:', error);
-        }
-      })
+  /** Obtiene un plato específico por su número */
+  public obtenerPlato(numPlato: number): Observable<Plato1> {
+    return this.http.get<Plato1>(`${this.apiUrl}/${numPlato}`).pipe(
+      tap(response => console.log('Plato obtenido:', response))
     );
   }
 
-  public actualizarPlato(numPlato: number, platoActualizado: Partial<Plato>): Observable<Plato> {
-    const url = `${this.apiUrl}/${numPlato}`;
-    return this.http.patch<Plato>(url, {
-      ...platoActualizado
-    }).pipe(
-      tap({
-        next: (response) => {
-          console.log('Plato actualizado:', response);
-        },
-        error: (error) => {
-          console.error('Error al actualizar el plato:', error);
-        }
-      })
+  /** Actualiza los datos de un plato */
+  public actualizarPlato(numPlato: number, platoActualizado: Partial<Plato1>): Observable<Plato1> {
+    return this.http.patch<Plato1>(`${this.apiUrl}/${numPlato}`, platoActualizado).pipe(
+      tap(response => console.log('Plato actualizado:', response))
     );
   }
 
+  /** Elimina dependencias de un plato antes de eliminarlo */
   private eliminarDependenciasDePlato(numPlato: number, tipoPlato: number): Observable<void> {
-    const url = `${this.apiUrl}/${numPlato}/tipo/${tipoPlato}`;
-    return this.http.delete<void>(url).pipe(
-      tap({
-        next: () => {
-          console.log(`Dependencias del plato con número ${numPlato} eliminadas.`);
-        },
-        error: (error) => {
-          console.error(`Error al eliminar dependencias del plato con número ${numPlato}:`, error);
-        }
-      })
+    return this.http.delete<void>(`${this.apiUrl}/${numPlato}/tipo/${tipoPlato}`).pipe(
+      tap(() => console.log(`Dependencias del plato ${numPlato} eliminadas.`))
     );
   }
 
+  /** Elimina un plato junto con sus dependencias */
   public eliminarPlatoConDependencias(numPlato: number, tipoPlato: number): Observable<void> {
     return this.eliminarDependenciasDePlato(numPlato, tipoPlato).pipe(
-      tap({
-        next: () => {
-          this.eliminarPlato(numPlato).subscribe({
-            next: () => {
-              console.log('Plato eliminado exitosamente con dependencias');
-            },
-            error: (error) => {
-              console.error('Error al eliminar el plato:', error);
-            }
-          });
-        },
-        error: (error) => {
-          console.error('Error al eliminar dependencias del plato:', error);
-        }
-      })
+      switchMap(() => this.eliminarPlato(numPlato)), // Encadena la eliminación del plato
+      tap(() => console.log(`Plato ${numPlato} eliminado exitosamente con dependencias`))
     );
   }
 
+  /** Elimina un plato por su número */
   public eliminarPlato(numPlato: number): Observable<void> {
-    const url = `${this.apiUrl}/${numPlato}`;
-    return this.http.delete<void>(url).pipe(
-      tap({
-        next: () => {
-          console.log(`Plato con número ${numPlato} eliminado exitosamente.`);
-        },
-        error: (error) => {
-          console.error(`Error al eliminar el plato con número ${numPlato}:`, error);
-        }
-      })
+    return this.http.delete<void>(`${this.apiUrl}/${numPlato}`).pipe(
+      tap(() => console.log(`Plato ${numPlato} eliminado.`))
     );
   }
 }
+
