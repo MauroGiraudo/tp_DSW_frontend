@@ -1,11 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { PlatoService } from '../../service/plato.service.js';
-import { Plato } from '../../models/mesa.models.js';
 import { TextInputComponent } from '../../text-input/text-input.component.js';
 import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { Plato1 } from '../../models/mesa.models.js';
 
 @Component({
   selector: 'app-crear-plato',
@@ -24,16 +24,16 @@ export class PlatoCrearComponent implements OnInit {
     private platoService: PlatoService,
     private router: Router 
   ) {
-    // Formulario para crear un plato
     this.platoForm = this.fb.group({
       descripcion: ['', [Validators.required]],
       tiempo: [null, [Validators.required, Validators.min(1)]],
       precio: [null, [Validators.required, Validators.min(0)]],
-      aptoCeliaco: [false, Validators.required],
-      aptoVegetarianos: [false, Validators.required],
-      aptoVeganos: [false, Validators.required],
-      imagen: ['', Validators.required],
-      tipoPlato: [null]
+      tipoPlato: [null, Validators.required],
+      aptoCeliaco: [false],  // Se agregan valores por defecto
+      aptoVegetarianos: [false],
+      aptoVeganos: [false],
+      imagen: [''], 
+      ingredientes: this.fb.array([], Validators.required) // Se asegura que tenga al menos un ingrediente
     });
   }
 
@@ -43,36 +43,69 @@ export class PlatoCrearComponent implements OnInit {
     return this.platoForm.controls; 
   }
 
-  crearPlato() {
-    if (this.platoForm.valid) {
-      const nuevoPlato: Plato = {
-        numPlato: 0,
-        descripcion: this.platoForm.value.descripcion,
-        tiempo: parseFloat(this.platoForm.value.tiempo), 
-        precio: parseFloat(this.platoForm.value.precio), 
-        aptoCeliaco: this.platoForm.value.aptoCeliaco,
-        aptoVegetarianos: this.platoForm.value.aptoVegetarianos,
-        aptoVeganos: this.platoForm.value.aptoVeganos,
-        imagen: this.platoForm.value.imagen,
-        tipoPlato: this.platoForm.value.tipoPlato ? parseInt(this.platoForm.value.tipoPlato) : undefined // Opcional
-      };
-      this.platoService.crearPlato(nuevoPlato).subscribe({
-        next: (response: Plato) => { 
-          console.log('Plato creado:', response);
-          this.platoForm.reset();
-          this.enviado = false; 
-          this.mensaje = 'Plato creado exitosamente'; 
-          this.router.navigate(['cartaComida/Lista']); 
-        },
-        error: (error) => {
-          console.error('Error al crear el plato:', error);
-          const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-          this.mensaje = `Error al crear el plato: ${errorMsg}`; 
-        }
-      });
-    } else {
-      this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+  get ingredientes() {
+    return this.platoForm.get('ingredientes') as FormArray;
+  }
+
+  agregarIngrediente() {
+    this.ingredientes.push(this.fb.group({
+      ingrediente: [null, Validators.required],
+      cantidadNecesaria: [null, [Validators.required, Validators.min(1)]]
+    }));
+  }
+
+  eliminarIngrediente(index: number) {
+    if (this.ingredientes.length > 0) {
+      this.ingredientes.removeAt(index);
     }
+  }
+
+  crearPlato() {
+    if (this.platoForm.invalid) {
+      this.mensaje = 'Por favor, complete el formulario correctamente.';
+      return;
+    }
+
+    const nuevoPlato: Plato1 = {
+  numPlato: 0,
+  descripcion: this.platoForm.value.descripcion,
+  tiempo: Number(this.platoForm.value.tiempo),
+  precio: Number(this.platoForm.value.precio),
+  tipoPlato: Number(this.platoForm.value.tipoPlato),
+  aptoCeliaco: false,
+  aptoVegetarianos: false,
+  aptoVeganos: false,
+  imagen: this.platoForm.value.imagen,
+  ingredientes: this.platoForm.value.ingredientes.map((ing: any) => ({
+    ingrediente: ing.ingrediente, // Código del ingrediente
+    cantidadNecesaria: Number(ing.cantidadNecesaria)
+  }))
+};
+
+    this.platoService.crearPlato(nuevoPlato).subscribe({
+      next: (response) => { 
+        console.log('Plato creado:', response);
+        this.mensaje = 'Plato creado exitosamente'; 
+        this.platoForm.reset({
+          descripcion: '',
+          tiempo: null,
+          precio: null,
+          tipoPlato: null,
+          aptoCeliaco: false,
+          aptoVegetarianos: false,
+          aptoVeganos: false,
+          imagen: '',
+          ingredientes: []
+        });
+        this.enviado = false; 
+        this.router.navigate(['cartaComida/Lista']); 
+      },
+      error: (error) => {
+        console.error('Error al crear el plato:', error);
+        const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
+        this.mensaje = `Error al crear el plato: ${errorMsg}`; 
+      }
+    });
   }
 
   enviar() {

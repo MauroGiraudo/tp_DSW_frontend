@@ -85,6 +85,19 @@ export interface Plato{
   imagen: string;
   tipoPlato?: number;
 }
+
+export interface Plato1 {
+  numPlato: number;
+  descripcion: string;
+  tiempo: number;
+  precio: number;
+  aptoCeliaco: boolean;
+  aptoVegetarianos: boolean;
+  aptoVeganos: boolean;
+  imagen: string;
+  tipoPlato?: number;
+  ingredientes: Ingrediente[]; // Se agregó la lista de ingredientes
+}
 export type PlatoConCantidad = Plato & { cantidad: number };
 
 export interface ResponsePlato {

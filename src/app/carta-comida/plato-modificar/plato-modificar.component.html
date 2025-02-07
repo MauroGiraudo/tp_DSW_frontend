@@ -1,1 +1,42 @@
-<p>plato-modificar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Modificar Plato</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="platoForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Numero de Plato"></text-input>
+      <text-input [control]="fc['descripcion']" [mostrarErrores]="enviado" label="Descripción"></text-input>
+      <text-input [control]="fc['tiempo']" [mostrarErrores]="enviado"
+        label="Tiempo de Preparación (minutos)"></text-input>
+      <text-input [control]="fc['precio']" [mostrarErrores]="enviado" label="Precio"></text-input>
+      <text-input [control]="fc['aptoCeliaco']" [mostrarErrores]="enviado"
+        label="Apto para Celíacos (Sí/No)"></text-input>
+      <text-input [control]="fc['aptoVegetarianos']" [mostrarErrores]="enviado"
+        label="Apto para Vegetarianos (Sí/No)"></text-input>
+      <text-input [control]="fc['aptoVeganos']" [mostrarErrores]="enviado"
+        label="Apto para Veganos (Sí/No)"></text-input>
+      <text-input [control]="fc['imagen']" [mostrarErrores]="enviado" label="URL de Imagen"></text-input>
+      <text-input [control]="fc['tipoPlato']" [mostrarErrores]="enviado" label="ID del Tipo de Plato"></text-input>
+
+      <!-- Sección de Ingredientes -->
+      <div class="ingredientes-container">
+        <p class="subtitulo">Ingredientes</p>
+        <div *ngFor="let ingrediente of ingredientes.controls; let i = index" class="ingrediente">
+          <text-input [control]="ingrediente.get('ingrediente')!" [mostrarErrores]="enviado"
+            label="Código del Ingrediente"></text-input>
+          <text-input [control]="ingrediente.get('cantidadNecesaria')!" [mostrarErrores]="enviado"
+            label="Cantidad Necesaria"></text-input>
+
+          <button type="button" (click)="eliminarIngrediente(i)">Eliminar</button>
+        </div>
+        <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
+      </div>
+
+      <default-button texto="Actualizar Plato"></default-button>
+    </form>
+  </div>
+</div>
