@@ -192,4 +192,94 @@ export class PedidoService {
       })
     );
   }
+
+  obtenerPlatosBebidasPorPedido(pedidoId: number): Observable<{ platos: PlatoConCantidad[], bebidas: BebidaConCantidad[] }> {
+  // Hacer las solicitudes para obtener los platos y las bebidas
+  const obtenerPlatos = this.http.get<{ data: any[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/platos`);
+  const obtenerBebidas = this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/bebidas`);
+
+  // Usamos forkJoin para esperar ambas respuestas
+  return forkJoin([obtenerPlatos, obtenerBebidas]).pipe(
+    map(([ResponsePlatoEst, ResponseBebidaEst]) => {
+      // Adaptar los platos con la cantidad
+      const platosAdaptados: PlatoConCantidad[] = ResponsePlatoEst.data.map(plato => ({
+        numPlato: plato.plato.numPlato,
+        descripcion: plato.plato.descripcion,
+        tiempo: plato.plato.tiempo,
+        precio: plato.plato.precio,
+        cantidad: plato.cantidad,
+        aptoCeliaco: plato.plato.aptoCeliaco,
+        aptoVegetarianos: plato.plato.aptoVegetarianos,
+        aptoVeganos: plato.plato.aptoVeganos,
+        imagen: plato.plato.imagen,  // Corregido el typo de "imagents" a "imagen"
+      }));
+
+      // Adaptar las bebidas con la cantidad
+      const bebidasAdaptadas: BebidaConCantidad[] = ResponseBebidaEst.data.map(bebida => ({
+        codBebida: bebida.bebida.codBebida,
+        descripcion: bebida.bebida.descripcion,
+        stock: bebida.bebida.stock,
+        unidadMedida: bebida.bebida.unidadMedida,
+        contenido: bebida.bebida.contenido,
+        precio: bebida.bebida.precio,
+        alcohol: bebida.bebida.alcohol,
+        imagen: bebida.bebida.imagen,
+        proveedor: bebida.bebida.proveedor,
+        cantidad: bebida.cantidad || 1,  // Asignar la cantidad, con valor por defecto si es undefined
+      }));
+
+      // Devolver los platos y las bebidas adaptadas
+      return {
+        platos: platosAdaptados,
+        bebidas: bebidasAdaptadas
+      };
+    }),
+    catchError(error => {
+      console.error('Error al obtener los platos y bebidas del pedido:', error);
+      return throwError(() => new Error('No se pudieron obtener los platos y bebidas del pedido. Intente nuevamente más tarde.'));
+    })
+  );
+}
+
+marcarPlatoComoRecibido(nroPed: number, numPlato: number): Observable<any> {
+  return this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`).pipe(
+    switchMap(ResponsePlatoEst => {
+      const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato); // Buscar el plato específico
+      if (plato) {
+        const platoData = {
+          fechaSolicitud: plato.fechaSolicitud,
+          horaSolicitud: plato.horaSolicitud,
+          cantidad: plato.cantidad,
+          recibido: true // Marcamos el plato como recibido
+        };
+        return this.http.put(`http://localhost:3000/api/pedidos/${nroPed}/platos/${numPlato}`, platoData);
+      } else {
+        return of(null); // Si no se encuentra el plato, retornamos null
+      }
+    })
+  );
+}
+
+marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
+  return this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`).pipe(
+    switchMap(ResponseBebidaEst => {
+      const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida); // Buscar la bebida específica
+      if (bebida) {
+        const bebidaData = {
+          fechaSolicitud: bebida.fechaSolicitud,
+          horaSolicitud: bebida.horaSolicitud,
+          cantidad: bebida.cantidad,
+          recibido: true // Marcamos la bebida como recibida
+        };
+        return this.http.put(`http://localhost:3000/api/pedidos/${nroPed}/bebidas/${codBebida}`, bebidaData);
+      } else {
+        return of(null); // Si no se encuentra la bebida, retornamos null
+      }
+    })
+  );
+}
+
+obtenerPlatosDelPedido(pedidoId: number): Observable<PlatoConCantidad[]> {
+    return this.http.get<PlatoConCantidad[]>(`http://localhost:3000/api/pedidos/${pedidoId}/platos`);
+  }
 }
