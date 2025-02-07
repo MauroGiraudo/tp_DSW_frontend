@@ -19,7 +19,8 @@ import { PlatoConCantidad } from '../../models/mesa.models.js';
 export class PlatoListaComponent implements OnInit {
   platos: any[] = [];
   searchTerm: string = ''; 
-  selectedType: string = ''; 
+  selectedType: string = '';
+  mensaje: string = '';  
 
 constructor(private platoService: PlatoService,private pedidoService: PedidoService) {}
 
@@ -57,20 +58,71 @@ constructor(private platoService: PlatoService,private pedidoService: PedidoServ
     console.log('Filtro de tipo de plato restablecido. Mostrando todos los platos.');
   }
 
-  agregarAlPedido(plato: Plato): void {
-  const platoPedido: PlatoConCantidad = {
-    numPlato: plato.numPlato,
-    descripcion: plato.descripcion,
-    tiempo: plato.tiempo,
-    precio: plato.precio,
-    aptoCeliaco: plato.aptoCeliaco,
-    aptoVegetarianos: plato.aptoVegetarianos,
-    aptoVeganos: plato.aptoVeganos,
-    imagen: plato.imagen,
-    cantidad: 1,
-  };
+   agregarAlPedido(plato: Plato): void {
+    this.actualizarPedido(plato);
+    console.log('Plato agregado al pedido:', plato);
+  }
 
-  this.pedidoService.agregarPlatoAlPedido(platoPedido);
-  console.log('Plato agregado al pedido:', platoPedido);
+actualizarPedido(plato: Plato): void {
+  this.pedidoService.obtenerPedidoEnCurso().subscribe(
+    (pedidoId) => {
+      if (!pedidoId) {
+        console.log('No hay un pedido en curso para actualizar');
+        this.mensaje = 'No hay un pedido en curso para agregar el plato.';
+        return;
+      }
+
+      this.pedidoService.obtenerPlatosDelPedido(pedidoId).subscribe(
+        (platosExistentes: any[] | null) => {
+          // Verifica la estructura exacta de la respuesta
+          console.log('Platos existentes en el pedido:', platosExistentes);
+
+          // Asegúrate de que platosExistentes sea un array
+          const platos = Array.isArray(platosExistentes) ? platosExistentes : [];
+
+          // Verificar si el plato ya está en el pedido
+          const platoExistente = platos.find(p => p.plato.numPlato === plato.numPlato);
+
+          if (platoExistente) {
+            // Si el plato ya existe, aumentamos la cantidad
+            console.log(`El plato con numPlato ${plato.numPlato} ya existe en el pedido. Cantidad actual: ${platoExistente.cantidad}`);
+            platoExistente.cantidad += 1;
+          } else {
+            // Si el plato no existe, lo agregamos con cantidad 1
+            console.log(`El plato con numPlato ${plato.numPlato} no está en el pedido, lo agregamos con cantidad 1`);
+            platos.push({ plato: { numPlato: plato.numPlato }, cantidad: 1 });
+          }
+
+          // Asegúrate de que solo se envíen numPlato y cantidad
+          const platosActualizados = platos.map(p => ({
+            numPlato: p.plato.numPlato,
+            cantidad: p.cantidad
+          }));
+
+          console.log('Platos después de actualización:', platosActualizados);
+
+          // Actualizar el pedido con la nueva lista de platos
+          this.pedidoService.actualizarPedidoEnCurso(pedidoId, platosActualizados, []).subscribe(
+            () => {
+              console.log('Pedido actualizado con el plato agregado con éxito');
+              this.mensaje = 'Plato agregado exitosamente al pedido.';
+            },
+            (error) => {
+              console.error('Error al actualizar el pedido en curso con el plato', error);
+              this.mensaje = 'Error al actualizar el pedido. Intenta nuevamente.';
+            }
+          );
+        },
+        (error) => {
+          console.error('Error al obtener los platos del pedido', error);
+          this.mensaje = 'Error al obtener los platos del pedido. Intenta nuevamente.';
+        }
+      );
+    },
+    (error) => {
+      console.error('Error al obtener el pedido en curso', error);
+      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+    }
+  );
 }
 }

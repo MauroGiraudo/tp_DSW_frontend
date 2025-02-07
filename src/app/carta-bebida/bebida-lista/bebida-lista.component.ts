@@ -20,6 +20,7 @@ export class BebidaListaComponent implements OnInit {
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de bebida seleccionado
   tipoUsuario: string = '';  // Tipo de usuario (empleado, cliente, etc.)
+  mensaje: string = ''; 
 
   constructor(
     private bebidaService: BebidaService,
@@ -65,19 +66,44 @@ export class BebidaListaComponent implements OnInit {
   }
 
   agregarAlPedido(bebida: Bebida): void {
-    const bebidaPedido: BebidaConCantidad = {
-      codBebida: bebida.codBebida,
-      descripcion: bebida.descripcion,
-      stock: bebida.stock,
-      unidadMedida: bebida.unidadMedida,
-      contenido: bebida.contenido,
-      precio: bebida.precio,
-      alcohol: bebida.alcohol,
-      imagen: bebida.imagen,
-      proveedor: bebida.proveedor,
-      cantidad: 1,
-    };
-    this.pedidoService.agregarBebidaAlPedido(bebidaPedido);
-    console.log('Bebida agregada al pedido:', bebidaPedido);
-  }
+  // Crear el objeto BebidaPedido con la bebida recibida como parámetro
+  const bebidaPedido: BebidaConCantidad = {
+    codBebida: bebida.codBebida,
+    descripcion: bebida.descripcion,
+    stock: bebida.stock,
+    unidadMedida: bebida.unidadMedida,
+    contenido: bebida.contenido,
+    precio: bebida.precio,
+    alcohol: bebida.alcohol,
+    imagen: bebida.imagen,
+    proveedor: bebida.proveedor,
+    cantidad: 1,  // Cantidad inicial de 1 (puedes ajustarlo si es necesario)
+  };
+
+  // Obtener el pedido en curso
+  this.pedidoService.obtenerPedidoEnCurso().subscribe(
+    (pedidoId) => {
+      if (pedidoId) {
+        // Agregar la bebida al pedido en curso
+        this.pedidoService.actualizarPedidoEnCurso(pedidoId, [], [bebidaPedido]).subscribe(
+          (response) => {
+            console.log('Pedido actualizado con la bebida agregada con éxito', response);
+            this.mensaje = 'Bebida agregada exitosamente al pedido.';
+          },
+          (error) => {
+            console.error('Error al actualizar el pedido en curso con la bebida', error);
+            this.mensaje = 'Error al actualizar el pedido. Intenta nuevamente.';
+          }
+        );
+      } else {
+        console.log('No hay un pedido en curso para actualizar');
+        this.mensaje = 'No hay un pedido en curso para agregar la bebida.';
+      }
+    },
+    (error) => {
+      console.error('Error al obtener el pedido en curso', error);
+      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+    }
+  );
+}
 }

@@ -1,6 +1,5 @@
 <h2>Tu Pedido</h2>
 
-
 <div class="pedidos-container">
   <div *ngFor="let plato of pedidoPlatos" class="plato-item">
     <div class="card">
@@ -15,10 +14,11 @@
             <button class="btn-aumentar" (click)="aumentarCantidad(plato)">+</button>
           </div>
         </div>
+        <!-- Botón Recibido para cada plato, ahora pasamos nroPed -->
+        <button class="btn-recibido" (click)="marcarPlatoComoRecibido(plato)">Recibido</button>
       </div>
     </div>
   </div>
-
 
   <div *ngFor="let bebida of pedidoBebidas" class="bebida-item">
     <div class="card">
@@ -33,6 +33,8 @@
             <button class="btn-aumentar" (click)="aumentarCantidadBebida(bebida)">+</button>
           </div>
         </div>
+        <!-- Botón Recibido para cada bebida, ahora pasamos nroPed -->
+        <button class="btn-recibido" (click)="marcarBebidaComoRecibida(bebida)">Recibido</button>
       </div>
     </div>
   </div>
@@ -46,12 +48,11 @@
 </div>
 
 <div class="btn-container">
-  <button class="btn-actualizar" (click)="actualizarPedido()">Actualizar Pedido</button>
-  <button class="btn-recibido" (click)="marcarComoRecibido()">Recibido</button>
   <button class="btn-finalizar" (click)="finalizarPedido()">Finalizar Pedido</button>
   <button (click)="cancelarPedido()">Cancelar Pedido</button>
 </div>
 
 <h3> </h3>
 <h3> </h3>
-<h4>Nota: No actualizar pedido hasta haber elegido todos los platos y bebidas deseados, en caso de haber actualizado y querer agregar quitar los anteriores</h4>
+<h4>Nota: No actualizar pedido hasta haber elegido todos los platos y bebidas deseados, en caso de haber actualizado y
+  querer agregar o quitar los anteriores</h4>

@@ -1,1 +1,17 @@
-<p>tarjeta-eliminar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Eliminar Tipo de Tarjeta</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="tipoTarjetaForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['idTarjeta']" [mostrarErrores]="enviado" label="Número de Tarjeta">
+      </text-input>
+
+      <default-button texto="Eliminar Tipo de Tarjeta"></default-button>
+    </form>
+  </div>
+</div>

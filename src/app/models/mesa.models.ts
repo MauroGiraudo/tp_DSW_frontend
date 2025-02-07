@@ -178,3 +178,17 @@ export interface ResponseIngredientes {
   message: string;  // Mensaje de respuesta del backend
   data: Ingrediente[]; 
 }
+
+export interface NuevoTipotarjeta{
+  descTarjeta: string;
+}
+
+export interface Tipotarjeta{
+  idTarjeta: number;
+  descTarjeta: string;
+}
+
+export interface ResponseTipotarjeta {
+  message: string;  // Mensaje de respuesta del backend
+  data: Tipotarjeta[]; 
+}
