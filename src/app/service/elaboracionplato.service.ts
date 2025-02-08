@@ -1,0 +1,58 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable,tap } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ElaboracionplatoService {
+  private apiUrl = 'http://localhost:3000/api/platos';
+
+  constructor(private http: HttpClient) {}
+
+  // Obtener los detalles del ingrediente por numPlato e ingrediente
+  obtenerIngrediente(numPlato: number, ingrediente: string): Observable<any> {
+    const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
+    return this.http.get<any>(url);
+  }
+
+  // Actualizar el ingrediente con la cantidad necesaria
+public actualizarIngrediente(numPlato: number, ingrediente: string, cantidadNecesaria: number): Observable<any> {
+  const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
+  return this.http.patch<any>(url, {
+    cantidadNecesaria
+  }).pipe(
+    tap({
+      next: (response) => {
+        console.log('Ingrediente actualizado en el plato:', response);
+      },
+      error: (error) => {
+        console.error('Error al actualizar ingrediente:', error);
+      }
+    })
+  );
+}
+
+  // Agregar un ingrediente al plato
+  agregarIngrediente(numPlato: number, ingrediente: number, cantidadNecesaria: number): Observable<any> {
+    const url = `${this.apiUrl}/${numPlato}/ingredientes`;
+    return this.http.post(url, { ingrediente, cantidadNecesaria });
+  }
+
+  public eliminarIngrediente(numPlato: number, ingrediente: string): Observable<void> {
+  const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
+  return this.http.delete<void>(url).pipe(
+    tap({
+      next: () => {
+        console.log(`Ingrediente ${ingrediente} del plato ${numPlato} eliminado exitosamente.`);
+      },
+      error: (error) => {
+        console.error(`Error al eliminar el ingrediente ${ingrediente} del plato ${numPlato}:`, error);
+      }
+    })
+  );
+}
+
+}
+
+
