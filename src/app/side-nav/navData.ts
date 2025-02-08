@@ -80,6 +80,35 @@ items: [
 },
 
   {
+    routeLink: "elaboracionPlato",
+    icon: "fa-solid fa-fire-burner",
+    label: "Elaboracion de plato",
+    tipoUsuario: ['empleado'],
+items: [
+    {
+      routeLink: "elaboracionPlato/Lista",
+      label: "Lista de elaboraciones",
+      tipoUsuario: ['empleado'],
+    },
+    {
+      routeLink: "elaboracionPlato/Crear",
+      label: "Agregar elaboracion",
+      tipoUsuario: ['empleado'],  
+    },
+    {
+      routeLink: "elaboracionPlato/Modificar",
+      label: "Modificar elaboracion",
+      tipoUsuario: ['empleado'],
+    },
+    {
+      routeLink: "elaboracionPlato/Eliminar",
+      label: "Eliminar elaboracion",
+      tipoUsuario: ['empleado'],
+    }
+  ]
+  },
+
+  {
     routeLink: "pedido",
     icon: "fa-regular fa-bookmark",
     label: "Pedidos",
@@ -102,6 +131,34 @@ items: [
         label: "Lista de pedidos",
         tipoUsuario: ['cliente'],
       }]},
+  {
+    routeLink: "resena",
+    icon: "fa-solid fa-pen-to-square",
+    label: "Reseñas",
+    tipoUsuario: ['cliente'],
+    items: [
+      {
+        routeLink: "resena/Lista",
+        label: "Lista de reseñas",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "resena/Crear",
+        label: "Agregar una reseñas",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "resena/Modificar",
+        label: "Modificar una reseña",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "resena/Eliminar",
+        label: "Eliminar una reseña",
+        tipoUsuario: ['cliente'],
+      }
+    ]
+  },
 
   {
     routeLink: "proveedor",
@@ -246,6 +303,36 @@ items: [
         routeLink: "tarjeta/Eliminar",
         label: "Eliminar tarjeta",
         tipoUsuario: ['empleado'],
+      }
+    ]
+  },
+
+    {
+    routeLink: "tarjetaCliente",
+    icon: "fa-solid fa-credit-card",
+    label: "Tarjeta de cliente",
+    tipoUsuario: ['cliente'],
+    logueado: 'true',
+     items: [
+      {
+        routeLink: "tarjetaCliente/Lista",
+        label: "Lista de tarjetas",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "tarjetaCliente/Crear",
+        label: "Agregar tarjeta",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "tarjetaCliente/Modificar",
+        label: "Modificar tarjeta",
+        tipoUsuario: ['cliente'],
+      },
+      {
+        routeLink: "tarjetaCliente/Eliminar",
+        label: "Eliminar tarjeta",
+        tipoUsuario: ['cliente'],
       }
     ]
   },

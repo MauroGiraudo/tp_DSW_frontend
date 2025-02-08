@@ -28,5 +28,10 @@ export const routes: Routes = [
     loadChildren: () => import('./tipoplato/tipoplato.module').then(m => m.TipoplatoModule)},
   { path: 'tarjeta',
     loadChildren: () => import('./tarjeta/tarjeta.module').then(m => m.TarjetaModule)},
-
+  { path: 'elaboracionPlato',
+    loadChildren: () => import('./elaboracion-plato/elaboracion-plato.module').then(m => m.ElaboracionPlatoModule)},
+  { path: 'resena',
+    loadChildren: () => import('./resena/resena.module').then(m => m.ResenaModule)},
+  { path: 'tarjetaCliente',
+    loadChildren: () => import('./tarjeta-cliente/tarjeta-cliente.module.js').then(m => m.TarjetaClienteModule)},    
 ];
