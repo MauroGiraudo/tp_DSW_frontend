@@ -1,1 +1,20 @@
-<p>elaboracion-plato-eliminar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Eliminar Ingrediente del Plato</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="elaboracionPlatoForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Número de Plato">
+      </text-input>
+
+      <text-input [control]="fc['ingrediente']" [mostrarErrores]="enviado" label="Ingrediente">
+      </text-input>
+
+      <default-button texto="Agregar Ingrediente"></default-button>
+    </form>
+  </div>
+</div>
