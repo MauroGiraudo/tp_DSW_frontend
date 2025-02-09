@@ -46,6 +46,21 @@ items: [
       routeLink: "cartaComida/Eliminar",
       label: "Eliminar comida",
       tipoUsuario: ['empleado'],
+    },
+        {
+      routeLink: "cartaComida/ElaboracionLista",
+      label: "Lista de elaboraciones",
+      tipoUsuario: ['empleado'],  
+    },
+    {
+      routeLink: "cartaComida/ElaboracionModificar",
+      label: "Modificar una elaboracion",
+      tipoUsuario: ['empleado'],
+    },
+    {
+      routeLink: "cartaComida/ElaboracionEliminar",
+      label: "Eliminar una elaboracion",
+      tipoUsuario: ['empleado'],
     }
   ]
   },
@@ -79,36 +94,7 @@ items: [
   ]
 },
 
-  {
-    routeLink: "elaboracionPlato",
-    icon: "fa-solid fa-fire-burner",
-    label: "Elaboracion de plato",
-    tipoUsuario: ['empleado'],
-items: [
-    {
-      routeLink: "elaboracionPlato/Lista",
-      label: "Lista de elaboraciones",
-      tipoUsuario: ['empleado'],
-    },
-    {
-      routeLink: "elaboracionPlato/Crear",
-      label: "Agregar elaboracion",
-      tipoUsuario: ['empleado'],  
-    },
-    {
-      routeLink: "elaboracionPlato/Modificar",
-      label: "Modificar elaboracion",
-      tipoUsuario: ['empleado'],
-    },
-    {
-      routeLink: "elaboracionPlato/Eliminar",
-      label: "Eliminar elaboracion",
-      tipoUsuario: ['empleado'],
-    }
-  ]
-  },
-
-  {
+{
     routeLink: "pedido",
     icon: "fa-regular fa-bookmark",
     label: "Pedidos",
