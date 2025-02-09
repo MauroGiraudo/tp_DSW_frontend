@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable,tap } from 'rxjs';
+import { Observable,tap,catchError,throwError,map } from 'rxjs';
+import { PlatoIngrediente } from '../models/mesa.models.js';
+import { Ingrediente } from '../models/mesa.models.js';
+import { Plato } from '../models/mesa.models.js';
 
 @Injectable({
   providedIn: 'root'
@@ -53,6 +56,25 @@ public actualizarIngrediente(numPlato: number, ingrediente: string, cantidadNece
   );
 }
 
+getElaboraciones(numPlato: number): Observable<PlatoIngrediente[]> {
+  const url = `${this.apiUrl}/${numPlato}/ingredientes`;
+  return this.http.get<any>(url).pipe(
+    map((response: any) => {
+      if (response?.data) {
+        return response.data.map((item: { ingrediente: Ingrediente; plato: Plato; cantidadNecesaria: number }) => ({
+          ingrediente: item.ingrediente,
+          plato: item.plato,
+          cantidadNecesaria: item.cantidadNecesaria
+        }));
+      }
+      return [];
+    }),
+    catchError(error => {
+      console.error('Error obteniendo elaboraciones:', error);
+      return throwError(() => new Error('Error al obtener los datos.'));
+    })
+  );
+}
 }
 
 
