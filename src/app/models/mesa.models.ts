@@ -205,3 +205,9 @@ export interface ResponseTipotarjeta {
   message: string;  // Mensaje de respuesta del backend
   data: Tipotarjeta[]; 
 }
+
+export interface PlatoIngrediente {
+  ingrediente: Ingrediente;
+  plato: Plato;
+  cantidadNecesaria: number;
+}
