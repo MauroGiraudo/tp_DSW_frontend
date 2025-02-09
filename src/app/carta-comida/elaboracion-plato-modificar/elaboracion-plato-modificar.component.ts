@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { ElaboracionplatoService } from '../../service/elaboracionplato.service.js';
-import { TextInputComponent } from '../../text-input/text-input.component';
-import { DefaultButtonComponent } from '../../default-button/default-button.component';
+import { TextInputComponent } from '../../text-input/text-input.component.js';
+import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
 import { tap } from 'rxjs';
 
 @Component({
