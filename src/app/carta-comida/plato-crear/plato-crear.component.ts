@@ -12,7 +12,8 @@ import { Plato1 } from '../../models/mesa.models.js';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TextInputComponent, DefaultButtonComponent, RouterModule],
   templateUrl: './plato-crear.component.html',
-  styleUrls: ['./plato-crear.component.scss']
+  styleUrls: ['./plato-crear.component.scss'],
+  
 })
 export class PlatoCrearComponent implements OnInit {
   platoForm: FormGroup;

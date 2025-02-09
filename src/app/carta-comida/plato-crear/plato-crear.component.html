@@ -21,22 +21,27 @@
       <text-input [control]="fc['imagen']" [mostrarErrores]="enviado" label="URL de Imagen"></text-input>
       <text-input [control]="fc['tipoPlato']" [mostrarErrores]="enviado" label="ID del Tipo de Plato"></text-input>
 
-    <!-- Sección de Ingredientes -->
-    <div class="ingredientes-container">
-      <p class="subtitulo">Ingredientes</p>
-      <div *ngFor="let ingrediente of ingredientes.controls; let i = index" class="ingrediente">
-        <text-input [control]="ingrediente.get('ingrediente')!" [mostrarErrores]="enviado"
-          label="Código del Ingrediente"></text-input>
-        <text-input [control]="ingrediente.get('cantidadNecesaria')!" [mostrarErrores]="enviado"
-          label="Cantidad Necesaria"></text-input>
-    
-        <button type="button" (click)="eliminarIngrediente(i)">Eliminar</button>
+      <!-- Sección de Ingredientes -->
+      <div class="ingredientes-container">
+        <p class="subtitulo">Ingredientes</p>
+        <div *ngFor="let ingrediente of ingredientes.controls; let i = index" class="ingrediente">
+          <text-input [control]="ingrediente.get('ingrediente')!" [mostrarErrores]="enviado"
+            label="Código del Ingrediente"></text-input>
+          <text-input [control]="ingrediente.get('cantidadNecesaria')!" [mostrarErrores]="enviado"
+            label="Cantidad Necesaria"></text-input>
+
+          <!-- Botón de Eliminar Ingrediente -->
+          <default-button tipo="button" (click)="eliminarIngrediente(i)" texto="Eliminar"
+            class="small-left-button"></default-button>
+        </div>
+
+        <!-- Botón de Agregar Ingrediente -->
+        <default-button tipo="button" (click)="agregarIngrediente()" texto="Agregar Ingrediente"
+          class="small-left-button"></default-button>
       </div>
-      <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
-    </div>
 
-
-      <default-button texto="Crear Plato"></default-button>
+      <!-- Botón de Crear Plato -->
+      <default-button tipo="submit" texto="Crear Plato"></default-button>
     </form>
   </div>
 </div>
