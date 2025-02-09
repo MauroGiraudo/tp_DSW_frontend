@@ -1,1 +1,18 @@
-<p>plato-eliminar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Eliminar Plato</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="platoForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Número de Plato">
+      </text-input>
+
+      <default-button texto="Eliminar Plato"></default-button>
+    </form>
+  </div>
+</div>
+

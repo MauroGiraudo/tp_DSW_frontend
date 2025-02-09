@@ -59,6 +59,7 @@ form {
   border: 1px solid red;
 }
 
+/* Estilo para el contenedor general */
 .contenedor {
   display: flex;
   justify-content: center;
@@ -66,4 +67,39 @@ form {
   height: 100vh;
   padding-top: 3rem;
   gap: 1.5rem;
+}
+
+/* Sección de Ingredientes */
+.ingredientes-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ingrediente {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+  /* Espacio entre ingredientes */
+}
+
+.small-left-button {
+  font-size: 0.625rem;
+  /* Ajuste del tamaño del texto */
+  padding: 3px 6px;
+  margin-top: 5px;
+  margin-left: 0;
+  align-self: flex-start;
+  /* Alinea el botón a la izquierda */
+  width: auto;
+  /* Evita que ocupe todo el espacio */
+}
+
+/* Contenedor para los botones de eliminar y agregar */
+.ingredientes-boton-container {
+  display: flex;
+  justify-content: flex-start;
+  /* Alinea los botones a la izquierda */
+  width: 100%;
 }
