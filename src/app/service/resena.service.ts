@@ -14,10 +14,13 @@ export class ResenaService {
     return this.http.post(`${this.apiUrl}/${nroPed}/resena`, resena);
   }
 
+  modificarResena(nroPed: number, resena: { cuerpo: string; puntaje: number }): Observable<any> {
+    return this.http.put(`${this.apiUrl}/${nroPed}/resena`, resena);
+  }
+
   eliminarResena(nroPed: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${nroPed}/resena`);
   }
 }
-
 
 

@@ -39,7 +39,7 @@ export class ResenaCrearComponent {
       const nuevaResena = {
         nroPed: this.resenaForm.value.nroPed,
         cuerpo: this.resenaForm.value.cuerpo,
-        puntaje: Number(this.resenaForm.value.puntaje) // Convertir puntaje a número
+        puntaje: Number(this.resenaForm.value.puntaje)
       };
 
       this.resenaService.crearResena(nuevaResena.nroPed, nuevaResena).subscribe({

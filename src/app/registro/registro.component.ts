@@ -83,6 +83,9 @@ export class RegistroComponent implements OnInit {
       console.log(this.usuarioCreado);
       alert(this.usuarioCreado.message);
       this.router.navigateByUrl(this.loginURL);
+    },
+    (error) => {
+      alert('Error al registrar usuario: ' + error.error.message)
     });
   }
 }
