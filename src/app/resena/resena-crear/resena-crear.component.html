@@ -1,1 +1,24 @@
-<p>resena-crear works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Crear Reseña</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="resenaForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['nroPed']" [mostrarErrores]="enviado" label="Número de Pedido" type="text" required>
+      </text-input>
+
+      <text-input [control]="fc['cuerpo']" [mostrarErrores]="enviado" label="Cuerpo de la Reseña" type="text" required>
+      </text-input>
+
+      <text-input [control]="fc['puntaje']" [mostrarErrores]="enviado" label="Puntaje" required min="1"
+        max="5">
+      </text-input>
+
+      <default-button texto="Crear Reseña"></default-button>
+    </form>
+  </div>
+</div>

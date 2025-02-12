@@ -1,1 +1,17 @@
-<p>resena-eliminar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Eliminar Reseña</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="resenaForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['nroPed']" [mostrarErrores]="enviado" label="Número de Pedido" type="text" required>
+      </text-input>
+
+      <default-button texto="Eliminar Reseña"></default-button>
+    </form>
+  </div>
+</div>
