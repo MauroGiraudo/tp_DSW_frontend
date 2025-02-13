@@ -1,1 +1,26 @@
-<p>resena-lista works!</p>
+<h2>Lista de Reseñas</h2>
+
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" placeholder="Buscar por contenido de reseña" class="search-box" type="text">
+  <button (click)="onSearch()" class="search-button">
+    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png"
+      alt="Buscar">
+  </button>
+</div>
+
+<div class="tags-container">
+  <button (click)="resetFilter()" class="tag reset">Todas</button>
+  <button *ngFor="let puntaje of [1, 2, 3, 4, 5]" (click)="filterByPuntaje(puntaje)" class="tag">{{ puntaje }}
+    estrella</button>
+</div>
+
+<div class="resenas-container">
+  <div *ngFor="let resena of filteredResenas" class="resena-item">
+    <div class="card">
+      <p>{{ resena.cuerpo }}</p>
+      <p><strong>Puntaje:</strong> {{ resena.puntaje }}</p>
+      <p><strong>Fecha de Reseña:</strong> {{ resena.fechaHoraResena | date: 'short' }}</p>
+      <p><strong>Última Modificación:</strong> {{ resena.fechaHoraModificacion | date: 'short' }}</p>
+    </div>
+  </div>
+</div>
