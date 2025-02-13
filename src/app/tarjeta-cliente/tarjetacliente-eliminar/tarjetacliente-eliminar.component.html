@@ -1,1 +1,17 @@
-<p>tarjetacliente-eliminar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Eliminar Tarjeta de Cliente</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="tarjetaEliminarForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['tarjetaId']" [mostrarErrores]="enviado" label="ID de la Tarjeta">
+      </text-input>
+
+      <default-button texto="Eliminar Tarjeta"></default-button>
+    </form>
+  </div>
+</div>

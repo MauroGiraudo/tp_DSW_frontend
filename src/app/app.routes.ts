@@ -31,5 +31,5 @@ export const routes: Routes = [
   { path: 'resena',
     loadChildren: () => import('./resena/resena.module').then(m => m.ResenaModule)},
   { path: 'tarjetaCliente',
-    loadChildren: () => import('./tarjeta-cliente/tarjeta-cliente.module.js').then(m => m.TarjetaClienteModule)},    
+    loadChildren: () => import('./tarjeta-cliente/tarjeta-cliente.module').then(m => m.TarjetaClienteModule)},    
 ];
