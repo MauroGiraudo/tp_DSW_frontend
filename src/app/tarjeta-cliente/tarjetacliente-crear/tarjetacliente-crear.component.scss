@@ -1,0 +1,105 @@
+.titulo {
+  color: black;
+  font-size: 1.8rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center;
+  margin-bottom: 1.2rem;
+}
+
+.register_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  padding-top: 2rem;
+}
+
+.register {
+  width: 28rem;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-control {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.mensaje {
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.exito {
+  color: green;
+  background-color: #e7f9e7;
+  border: 1px solid green;
+}
+
+.error {
+  color: red;
+  background-color: #f9e7e7;
+  border: 1px solid red;
+}
+
+/* Estilo para el contenedor general */
+.contenedor {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  padding-top: 3rem;
+  gap: 1.5rem;
+}
+
+/* Sección de Ingredientes */
+.ingredientes-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.ingrediente {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 10px;
+  /* Espacio entre ingredientes */
+}
+
+.small-left-button {
+  font-size: 0.625rem;
+  /* Ajuste del tamaño del texto */
+  padding: 3px 6px;
+  margin-top: 5px;
+  margin-left: 0;
+  align-self: flex-start;
+  /* Alinea el botón a la izquierda */
+  width: auto;
+  /* Evita que ocupe todo el espacio */
+}
+
+/* Contenedor para los botones de eliminar y agregar */
+.ingredientes-boton-container {
+  display: flex;
+  justify-content: flex-start;
+  /* Alinea los botones a la izquierda */
+  width: 100%;
+}
