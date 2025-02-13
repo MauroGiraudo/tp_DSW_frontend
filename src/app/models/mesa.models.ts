@@ -211,3 +211,15 @@ export interface PlatoIngrediente {
   plato: Plato;
   cantidadNecesaria: number;
 }
+
+export interface Resena {
+  fechaHoraResena: Date;
+  fechaHoraModificacion?: Date;
+  cuerpo: string;
+  puntaje: number;
+}
+
+export interface ResponseResenas {
+  message: string;
+  data: Resena[];
+}

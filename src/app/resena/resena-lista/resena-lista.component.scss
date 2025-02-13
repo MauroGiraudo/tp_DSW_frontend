@@ -1,0 +1,135 @@
+.pedidos-container {
+  display: block;
+  margin: 5px;
+}
+
+.plato-item {
+  width: 100%;
+  margin: 5px 0;
+}
+
+.card {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  padding: 10px;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.plato-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.precio-cantidad {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cantidad-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+button {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #000;
+  background-color: #9ecde5;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: inline-flex;
+  align-items: center;
+}
+
+button:hover {
+  background-color: #e0e0e0;
+}
+
+.detalles {
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
+button {
+  margin-top: 10px;
+  padding: 5px 15px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  flex: 1;
+  padding: 10px 15px;
+  border-radius: 25px;
+  border: 2px solid #7699ab;
+  font-size: 16px;
+  outline: none;
+}
+
+.search-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: -40px;
+}
+
+.search-button img {
+  width: 24px;
+  height: 24px;
+}
+
+.search-button:hover {
+  opacity: 0.8;
+}
+
+.search-box:focus {
+  border-color: #004668;
+}
+
+.tags-container {
+  display: flex;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.tag {
+  padding: 10px 20px;
+  border-radius: 20px;
+  background-color: #9ecde5;
+  border: 1px solid #000000;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  color: black;
+}
+
+.tag:hover {
+  background-color: #e0e0e0;
+  color: black;
+}
