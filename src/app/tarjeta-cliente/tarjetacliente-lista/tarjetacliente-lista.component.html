@@ -1,1 +1,37 @@
-<p>tarjetacliente-lista works!</p>
+<h2>Lista de Tarjetas</h2>
+
+<div class="search-container">
+  <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por nombre del titular"
+    class="search-box" type="text">
+  <button (click)="onSearch()" class="search-button">
+    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png"
+      alt="Buscar">
+  </button>
+</div>
+
+<div class="tarjetas-container">
+  <div *ngFor="let tarjeta of filteredTarjetas" class="tarjeta-item">
+    <div class="card">
+      <div class="tarjeta-info">
+        <span><strong>{{ tarjeta.tarjeta.descTarjeta }}</strong></span>
+        <p><strong>Número:</strong> {{ tarjeta.nroTarjeta }}</p>
+        <p><strong>Tipo:</strong> {{ tarjeta.tipoTarjeta }}</p>
+        <p><strong>Banco:</strong> {{ tarjeta.bancoTarjeta }}</p>
+        <p><strong>Titular:</strong> {{ tarjeta.titular }}</p>
+        <p><strong>Vencimiento:</strong> {{ tarjeta.vencimiento }}</p>
+      </div>
+
+      <div *ngIf="tarjeta.mostrarDetalles" class="detalles">
+        <p><strong>ID Tarjeta:</strong> {{ tarjeta.idTarjeta }}</p>
+        <p><strong>Código de Seguridad:</strong> {{ tarjeta.codSeguridad }}</p>
+        <p><strong>Cliente:</strong> {{ tarjeta.cliente.nombre }} {{ tarjeta.cliente.apellido }}</p>
+        <p><strong>Email:</strong> {{ tarjeta.cliente.email }}</p>
+        <p><strong>Teléfono:</strong> {{ tarjeta.cliente.telefono }}</p>
+      </div>
+
+      <button (click)="toggleDetalles(tarjeta)">
+        {{ tarjeta.mostrarDetalles ? 'Ocultar detalles' : 'Mostrar detalles' }}
+      </button>
+    </div>
+  </div>
+</div>
