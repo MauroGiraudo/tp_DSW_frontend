@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { UsuarioService } from './usuario.service'; // Asegúrate de que la ruta sea correcta
+import { TarjetaCliente } from '../tarjeta-cliente/tarjetaCliente.entity.js';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class TarjetaService {
    */
   obtenerTarjetaCliente(): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    const url = `${this.apiUrl}/${clienteId}/tarjetas`;  
+    const url = `${this.apiUrl}/${clienteId}/tarjetas`;
     return this.http.get<any>(url);
   }
 
@@ -29,7 +30,7 @@ export class TarjetaService {
    */
   crearTarjetaCliente(tarjetaClienteData: any): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    const url = `${this.apiUrl}/${clienteId}/tarjetas`; 
+    const url = `${this.apiUrl}/${clienteId}/tarjetas`;
     return this.http.post<any>(url, tarjetaClienteData);
   }
 

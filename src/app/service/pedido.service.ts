@@ -131,14 +131,14 @@ export class PedidoService {
                 switchMap(pagoCreado => {
                   pedidoActualizado.pago = pagoCreado;
                   const pedidoData = { platos, bebidas, totalImporte };
-                  return this.http.patch(url, pedidoData).pipe(map(() => pedidoActualizado));
+                  return this.http.put(url, pedidoData).pipe(map(() => pedidoActualizado));
                 })
               );
             })
           );
         } else {
           const pedidoData = { platos, bebidas, totalImporte };
-          return this.http.patch(url, pedidoData).pipe(map(() => pedidoActualizado));
+          return this.http.put(url, pedidoData).pipe(map(() => pedidoActualizado));
         }
       })
     );
