@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido,PlatoPedidosEst, BebidaPedidoEst,PedidosLis } from '../models/mesa.models';
-import { Observable, of, throwError, forkJoin,catchError } from 'rxjs'; 
+import { Observable, of, throwError, forkJoin,catchError } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 import { UsuarioService } from './usuario.service';
 import { TarjetaService } from './tarjeta.service';
@@ -10,7 +10,7 @@ import { TarjetaService } from './tarjeta.service';
   providedIn: 'root'
 })
 export class PedidoService {
-  
+
   private platosPedido: PlatoConCantidad[] = [];
   private bebidasPedido: BebidaConCantidad[] = [];
   private pedidoEnCurso: boolean = false;
@@ -81,7 +81,7 @@ export class PedidoService {
       plato: plato.numPlato,
       cantidad: plato.cantidad || 1,
     }));
-    
+
     const requests: Observable<any>[] = [];
     bebidasData.forEach(bebida => {
       requests.push(this.http.post(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`, bebida));
@@ -179,15 +179,15 @@ export class PedidoService {
   }
 
   obtenerPedidos(): Observable<PedidosLis[]> {
-    const clienteId = this.usuarioService.obtenerUsuarioActual().id; 
-    const url = `${this.apiUrl}/${clienteId}/pedidos`;  
-    return this.http.get<{ data: PedidosLis[] }>(url).pipe( 
+    const clienteId = this.usuarioService.obtenerUsuarioActual().id;
+    const url = `${this.apiUrl}/${clienteId}/pedidos`;
+    return this.http.get<{ data: PedidosLis[] }>(url).pipe(
       map(response => {
-        console.log('Pedidos obtenidos:', response);  
-        return response.data;  
+        console.log('Pedidos obtenidos:', response);
+        return response.data;
       }),
       catchError(error => {
-        console.error('Error al obtener los pedidos:', error); 
+        console.error('Error al obtener los pedidos:', error);
         return throwError(() => new Error('No se pudieron obtener los pedidos del cliente'));
       })
     );
