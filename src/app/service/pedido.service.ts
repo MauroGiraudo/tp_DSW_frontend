@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido, PlatoPedidosEst, BebidaPedidoEst, PedidosLis } from '../models/mesa.models';
-import { Observable, of, throwError, forkJoin, catchError } from 'rxjs';
+import { Observable, of, throwError, forkJoin, catchError } from 'rxjs'; 
 import { map, switchMap } from 'rxjs/operators';
 import { UsuarioService } from './usuario.service';
 import { TarjetaService } from './tarjeta.service';
@@ -10,7 +10,7 @@ import { TarjetaService } from './tarjeta.service';
   providedIn: 'root'
 })
 export class PedidoService {
-
+  
   private platosPedido: PlatoConCantidad[] = [];
   private bebidasPedido: BebidaConCantidad[] = [];
   private pedidoEnCurso: boolean = false;
@@ -85,7 +85,7 @@ export class PedidoService {
       plato: plato.numPlato,
       cantidad: plato.cantidad || 1,
     }));
-
+    
     const requests: Observable<any>[] = [];
     bebidasData.forEach(bebida => {
       requests.push(this.http.post(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`, bebida));
@@ -172,35 +172,40 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
 }
 
   // Método para finalizar el pedido
-  finalizarPedido(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[], totalImporte: number): Observable<any> {
-    const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    const url = `http://localhost:3000/api/pedidos/${nroPed}`;
+finalizarPedido(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[], totalImporte: number): Observable<any> {
+  const clienteId = this.usuarioService.obtenerUsuarioActual().id;
+  const clientePedidoUrl = `${this.apiUrl}/pedidos/${nroPed}`;
 
-    return this.http.get(`${this.apiUrl}/pedidos/${nroPed}`).pipe(
-      switchMap((pedidoActualizado: any) => {
-        if (!pedidoActualizado.pago) {
-          return this.tarjetaService.obtenerTarjetaCliente().pipe(
-            switchMap(tarjetaResponse => {
-              const tarjeta = tarjetaResponse.data[0];
+  return this.http.get(`${this.apiUrl}/pedidos/${nroPed}`).pipe(
+    switchMap((pedidoActualizado: any) => {
+      if (!pedidoActualizado.pago) {
+        return this.tarjetaService.obtenerTarjetaCliente().pipe(
+          switchMap(tarjetaResponse => {
+            const tarjeta = tarjetaResponse.data[0];
+            if (!tarjeta) {
+              return throwError(() => new Error('La tarjeta del cliente no se encuentra registrada'));
+            }
+            const nuevoPago = { tarjetaCliente: tarjeta.idTarjeta };
+            const postUrl = `http://localhost:3000/api/pedidos/${nroPed}/pagos`;
+            
+            return this.http.post(postUrl, nuevoPago).pipe(
+              switchMap(pagoCreado => {
+                return this.http.put(clientePedidoUrl, {}).pipe(
+                  map(() => pagoCreado)
+                );
+              })
+            );
+          })
+        );
+      } else {
+        return this.http.put(clientePedidoUrl, {}).pipe(
+          map(() => pedidoActualizado)
+        );
+      }
+    })
+  );
+}
 
-              if (!tarjeta) {
-                return throwError(() => new Error('La tarjeta del cliente no se encuentra registrada'));
-              }
-
-              const nuevoPago = { tarjetaCliente: tarjeta.idTarjeta };
-
-              const postUrl = `http://localhost:3000/api/pedidos/${nroPed}/pagos`;
-              return this.http.post(postUrl, nuevoPago).pipe(
-                map(pagoCreado => pagoCreado)
-              );
-            })
-          );
-        } else {
-          return of(pedidoActualizado);
-        }
-      })
-    );
-  }
 
   // Métodos para gestionar el pedido: agregar, actualizar y eliminar platos y bebidas
   actualizarCantidadPlato(numPlato: number, nuevaCantidad: number): void {
@@ -240,10 +245,10 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
 
   // Obtener lista de pedidos del cliente
   obtenerPedidos(): Observable<PedidosLis[]> {
-    const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    const url = `${this.apiUrl}/${clienteId}/pedidos`;
-    return this.http.get<{ data: PedidosLis[] }>(url).pipe(
-      map(response => response.data),
+    const clienteId = this.usuarioService.obtenerUsuarioActual().id; 
+    const url = `${this.apiUrl}/${clienteId}/pedidos`;  
+    return this.http.get<{ data: PedidosLis[] }>(url).pipe( 
+      map(response => response.data), 
       catchError(error => throwError(() => new Error('No se pudieron obtener los pedidos del cliente')))
     );
   }
