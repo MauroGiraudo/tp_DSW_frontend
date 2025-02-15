@@ -8,11 +8,6 @@
         <span>{{ plato.descripcion }}</span>
         <div class="precio-cantidad">
           <span>{{ plato.precio | currency }}</span>
-          <div class="cantidad-container">
-            <button class="btn-reducir" (click)="reducirCantidad(plato)">-</button>
-            <span>{{ plato.cantidad || 0 }}</span>
-            <button class="btn-aumentar" (click)="aumentarCantidad(plato)">+</button>
-          </div>
         </div>
         <!-- Botón Recibido para cada plato, ahora pasamos nroPed -->
         <button class="btn-recibido" (click)="marcarPlatoComoRecibido(plato)">Recibido</button>
@@ -27,11 +22,6 @@
         <span>{{ bebida.descripcion }}</span>
         <div class="precio-cantidad">
           <span>{{ bebida.precio | currency }}</span>
-          <div class="cantidad-container">
-            <button class="btn-reducir" (click)="reducirCantidadBebida(bebida)">-</button>
-            <span>{{ bebida.cantidad || 0 }}</span>
-            <button class="btn-aumentar" (click)="aumentarCantidadBebida(bebida)">+</button>
-          </div>
         </div>
         <!-- Botón Recibido para cada bebida, ahora pasamos nroPed -->
         <button class="btn-recibido" (click)="marcarBebidaComoRecibida(bebida)">Recibido</button>
@@ -51,8 +41,3 @@
   <button class="btn-finalizar" (click)="finalizarPedido()">Finalizar Pedido</button>
   <button (click)="cancelarPedido()">Cancelar Pedido</button>
 </div>
-
-<h3> </h3>
-<h3> </h3>
-<h4>Nota: No actualizar pedido hasta haber elegido todos los platos y bebidas deseados, en caso de haber actualizado y
-  querer agregar o quitar los anteriores</h4>
