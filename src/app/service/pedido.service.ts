@@ -257,7 +257,3 @@ finalizarPedido(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[], 
     return this.http.get<PlatoConCantidad[]>(`http://localhost:3000/api/pedidos/${pedidoId}/platos`);
   }
 }
-
-
-
-
