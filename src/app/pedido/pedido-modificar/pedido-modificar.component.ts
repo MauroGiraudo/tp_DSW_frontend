@@ -6,9 +6,9 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pedido-modificar',
-  templateUrl: './pedido-modificar.component.html',
   standalone: true,
   imports: [CommonModule],
+    templateUrl: './pedido-modificar.component.html',
   styleUrls: ['./pedido-modificar.component.scss']
 })
 export class PedidoModificarComponent implements OnInit {
@@ -67,37 +67,6 @@ ngOnInit(): void {
     }
   );
 }
-
-
-  aumentarCantidad(plato: PlatoConCantidad): void {
-    plato.cantidad = (plato.cantidad || 1) + 1;
-    this.pedidoService.actualizarCantidadPlato(plato.numPlato, plato.cantidad);
-  }
-
-  reducirCantidad(plato: PlatoConCantidad): void {
-    if ((plato.cantidad || 1) > 1) {
-      plato.cantidad = (plato.cantidad || 1) - 1;
-      this.pedidoService.actualizarCantidadPlato(plato.numPlato, plato.cantidad);
-    } else {
-      this.pedidoPlatos = this.pedidoPlatos.filter(p => p.numPlato !== plato.numPlato);
-      this.pedidoService.actualizarCantidadPlato(plato.numPlato, 0);
-    }
-  }
-
-  aumentarCantidadBebida(bebida: BebidaConCantidad): void {
-    bebida.cantidad = (bebida.cantidad || 1) + 1;
-    this.pedidoService.actualizarCantidadBebida(bebida.codBebida, bebida.cantidad);
-  }
-
-  reducirCantidadBebida(bebida: BebidaConCantidad): void {
-    if ((bebida.cantidad || 1) > 1) {
-      bebida.cantidad = (bebida.cantidad || 1) - 1;
-      this.pedidoService.actualizarCantidadBebida(bebida.codBebida, bebida.cantidad);
-    } else {
-      this.pedidoBebidas = this.pedidoBebidas.filter(b => b.codBebida !== bebida.codBebida);
-      this.pedidoService.actualizarCantidadBebida(bebida.codBebida, 0);
-    }
-  }
 
   calcularTotal(): number {
     const totalPlatos = this.pedidoPlatos.reduce((total, plato) => total + (plato.precio * (plato.cantidad || 0)), 0);
