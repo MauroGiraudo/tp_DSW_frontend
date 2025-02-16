@@ -1,93 +1,99 @@
 import { Component, OnInit } from '@angular/core';
 import { PedidoService } from '../../service/pedido.service.js';
-import { PlatoConCantidad, BebidaConCantidad,PlatoPedido,BebidaPedido } from '../../models/mesa.models.js';
+import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido } from '../../models/mesa.models.js';
 import { CommonModule } from '@angular/common';
-
+import { TarjetaService } from '../../service/tarjeta.service.js';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-pedido-modificar',
   standalone: true,
-  imports: [CommonModule],
-    templateUrl: './pedido-modificar.component.html',
+  imports: [CommonModule, FormsModule],
+  templateUrl: './pedido-modificar.component.html',
   styleUrls: ['./pedido-modificar.component.scss']
 })
 export class PedidoModificarComponent implements OnInit {
-
   pedidoPlatos: PlatoConCantidad[] = [];
   pedidoBebidas: BebidaConCantidad[] = [];
+  tarjetasCliente: any[] = [];
+  tarjetaSeleccionada: any | undefined;
+  filteredTarjetas: any[] = []; // Definir la propiedad
   mensaje: string | undefined;
+  private destroy$ = new Subject<void>();
 
-  constructor(private pedidoService: PedidoService) {}
+  constructor(
+    private pedidoService: PedidoService,
+    private tarjetaService: TarjetaService) {}
 
-ngOnInit(): void {
-  // Recupera el pedido en curso desde el servicio
-  this.pedidoService.obtenerPedidoEnCurso().subscribe(
-    (pedidoId) => {
-      if (pedidoId) {
-        // Usamos el método que obtiene platos y bebidas en una sola llamada
-        this.pedidoService.obtenerPlatosBebidasPorPedido(pedidoId).subscribe(
-          (response) => {
-            // Asigna los platos recuperados a la variable, si existen
-            this.pedidoPlatos = response.platos
-              ? response.platos.map(plato => ({ ...plato, cantidad: plato.cantidad || 1 }))
-              : []; // Si no hay platos, asigna un arreglo vacío
-
-            // Asigna las bebidas recuperadas a la variable, si existen
-            this.pedidoBebidas = response.bebidas && Array.isArray(response.bebidas)
-              ? response.bebidas.map(bebida => ({ ...bebida, cantidad: bebida.cantidad || 1 }))
-              : []; // Si no hay bebidas, asigna un arreglo vacío
-
-            // Si no se encuentran platos ni bebidas, actualiza el mensaje
-            if (this.pedidoPlatos.length === 0 && this.pedidoBebidas.length === 0) {
-              this.mensaje = 'No se han encontrado platos ni bebidas para el pedido en curso.';
-            } else if (this.pedidoPlatos.length === 0) {
-              // Si no hay platos, pero sí bebidas, actualiza el mensaje
-              this.mensaje = 'No se han encontrado platos para el pedido, pero sí bebidas.';
-            } else if (this.pedidoBebidas.length === 0) {
-              // Si no hay bebidas, pero sí platos, actualiza el mensaje
-              this.mensaje = 'No se han encontrado bebidas para el pedido, pero sí platos.';
-            } else {
-              // Si se encuentran tanto platos como bebidas, puedes actualizar el mensaje
-              this.mensaje = ''; // Mensaje vacío si se encuentran ambos
-            }
-          },
-          (error) => {
-            console.error('Error al obtener los platos y bebidas del pedido', error);
-            this.mensaje = 'Error al obtener los platos y bebidas del pedido. Intenta nuevamente.';
-          }
-        );
-      } else {
-        console.log('No hay un pedido en curso');
-        this.mensaje = 'No hay un pedido en curso para mostrar.';
-      }
-    },
-    (error) => {
-      console.error('Error al obtener el pedido en curso', error);
-      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
-    }
-  );
-}
-
-  calcularTotal(): number {
-    const totalPlatos = this.pedidoPlatos.reduce((total, plato) => total + (plato.precio * (plato.cantidad || 0)), 0);
-    const totalBebidas = this.pedidoBebidas.reduce((total, bebida) => total + (bebida.precio * (bebida.cantidad || 0)), 0);
-    return totalPlatos + totalBebidas;
-  }
-
-  finalizarPedido(): void {
-    const platos: PlatoPedido[] = this.pedidoPlatos.map(plato => ({
-      numPlato: plato.numPlato,
-      cantidad: plato.cantidad || 1,
-    }));
-    const bebidas: BebidaPedido[] = this.pedidoBebidas.map(bebida => ({
-      codBebida: bebida.codBebida,
-      cantidad: bebida.cantidad || 1,
-    }));
-    const totalImporte = this.calcularTotal();
+  ngOnInit(): void {
     this.pedidoService.obtenerPedidoEnCurso().subscribe(
       (pedidoId) => {
         if (pedidoId) {
-          this.pedidoService.finalizarPedido(pedidoId, platos, bebidas, totalImporte).subscribe(
+          this.pedidoService.obtenerPlatosBebidasPorPedido(pedidoId).subscribe(
+            (response) => {
+              this.pedidoPlatos = response.platos ? response.platos.map(plato => ({ ...plato, cantidad: plato.cantidad || 1 })) : [];
+              this.pedidoBebidas = response.bebidas ? response.bebidas.map(bebida => ({ ...bebida, cantidad: bebida.cantidad || 1 })) : [];
+              this.mensaje = (this.pedidoPlatos.length === 0 && this.pedidoBebidas.length === 0) ? 'No se han encontrado platos ni bebidas para el pedido en curso.' : '';
+            },
+            (error) => {
+              console.error('Error al obtener los platos y bebidas del pedido', error);
+              this.mensaje = 'Error al obtener los platos y bebidas del pedido. Intenta nuevamente.';
+            }
+          );
+        } else {
+          this.mensaje = 'No hay un pedido en curso para mostrar.';
+        }
+      },
+      (error) => {
+        console.error('Error al obtener el pedido en curso', error);
+        this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+      }
+    );
+
+    // Obtener tarjetas del cliente
+    this.tarjetaService.obtenerTarjetaCliente()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(
+        (tarjetaResponse) => {
+          this.tarjetasCliente = tarjetaResponse.data;
+          this.filteredTarjetas = tarjetaResponse.data; // Inicializa filteredTarjetas con todas las tarjetas
+          if (this.tarjetasCliente.length === 0) {
+            this.mensaje = 'No se han encontrado tarjetas asociadas a este cliente.';
+          }
+        },
+        (error) => {
+          console.error('Error al obtener tarjetas del cliente', error);
+          this.mensaje = 'Error al obtener las tarjetas del cliente. Intenta nuevamente.';
+        }
+      );
+  }
+
+  seleccionarTarjeta(tarjeta: any): void {
+    this.tarjetaSeleccionada = tarjeta;
+    console.log('Tarjeta seleccionada:', this.tarjetaSeleccionada); // Verifica la tarjeta seleccionada
+  }
+
+  calcularTotal(): number {
+    return this.pedidoPlatos.reduce((total, plato) => total + (plato.precio * (plato.cantidad || 0)), 0) +
+           this.pedidoBebidas.reduce((total, bebida) => total + (bebida.precio * (bebida.cantidad || 0)), 0);
+  }
+
+  finalizarPedido(): void {
+    if (!this.tarjetaSeleccionada) {
+      this.mensaje = 'Debe seleccionar una tarjeta para finalizar el pedido.';
+      return;
+    }
+
+    const platos: PlatoPedido[] = this.pedidoPlatos.map(plato => ({ numPlato: plato.numPlato, cantidad: plato.cantidad || 1 }));
+    const bebidas: BebidaPedido[] = this.pedidoBebidas.map(bebida => ({ codBebida: bebida.codBebida, cantidad: bebida.cantidad || 1 }));
+    const totalImporte = this.calcularTotal();
+
+    this.pedidoService.obtenerPedidoEnCurso().subscribe(
+      (pedidoId) => {
+        if (pedidoId) {
+          this.pedidoService.finalizarPedido(pedidoId, platos, bebidas, totalImporte, this.tarjetaSeleccionada).subscribe(
             (response) => {
               console.log('Pedido finalizado exitosamente', response);
               this.mensaje = 'Pedido finalizado exitosamente';
@@ -97,9 +103,28 @@ ngOnInit(): void {
               this.mensaje = 'Error al finalizar el pedido. Intenta nuevamente.';
             }
           );
+        }
+      }
+    );
+  }
+
+  cancelarPedido(): void {
+    this.pedidoService.obtenerPedidoEnCurso().subscribe(
+      (pedidoId) => {
+        if (pedidoId) {
+          this.pedidoService.cancelarPedido(pedidoId).subscribe(
+            (response) => {
+              console.log('Pedido cancelado exitosamente', response);
+              this.mensaje = 'Pedido cancelado exitosamente.';
+            },
+            (error) => {
+              console.error('Error al cancelar el pedido', error);
+              this.mensaje = 'Error al cancelar el pedido. Intenta nuevamente.';
+            }
+          );
         } else {
-          console.log('No hay un pedido en curso para finalizar');
-          this.mensaje = 'No hay un pedido en curso para finalizar.';
+          console.log('No hay un pedido en curso para cancelar');
+          this.mensaje = 'No hay un pedido en curso para cancelar.';
         }
       },
       (error) => {
@@ -109,35 +134,9 @@ ngOnInit(): void {
     );
   }
 
-  cancelarPedido(): void {
-  this.pedidoService.obtenerPedidoEnCurso().subscribe(
-    (pedidoId) => {
-      if (pedidoId) {
-        this.pedidoService.cancelarPedido(pedidoId).subscribe(
-          (response) => {
-            console.log('Pedido cancelado exitosamente', response);
-            this.mensaje = 'Pedido cancelado exitosamente.';
-          },
-          (error) => {
-            console.error('Error al cancelar el pedido', error);
-            this.mensaje = 'Error al cancelar el pedido. Intenta nuevamente.'; 
-          }
-        );
-      } else {
-        console.log('No hay un pedido en curso para cancelar');
-        this.mensaje = 'No hay un pedido en curso para cancelar.';
-      }
-    },
-    (error) => {
-      console.error('Error al obtener el pedido en curso', error);
-      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
-    }
-  )}
-
- 
-   marcarPlatoComoRecibido(plato: PlatoConCantidad): void {
+  marcarPlatoComoRecibido(plato: PlatoConCantidad): void {
     this.pedidoService.obtenerPedidoEnCurso().subscribe(
-      (nroPed) => {  // El nroPed es un número, no un objeto
+      (nroPed) => {
         if (nroPed) {
           this.pedidoService.marcarPlatoComoRecibido(nroPed, plato.numPlato).subscribe(
             (response) => {
@@ -161,10 +160,9 @@ ngOnInit(): void {
     );
   }
 
-  // Método para marcar la bebida como recibida
   marcarBebidaComoRecibida(bebida: BebidaConCantidad): void {
     this.pedidoService.obtenerPedidoEnCurso().subscribe(
-      (nroPed) => {  // El nroPed es un número, no un objeto
+      (nroPed) => {
         if (nroPed) {
           this.pedidoService.marcarBebidaComoRecibida(nroPed, bebida.codBebida).subscribe(
             (response) => {
@@ -188,3 +186,4 @@ ngOnInit(): void {
     );
   }
 }
+

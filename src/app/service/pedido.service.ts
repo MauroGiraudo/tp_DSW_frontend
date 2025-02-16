@@ -171,41 +171,44 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
   );
 }
 
-  // Método para finalizar el pedido
-finalizarPedido(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[], totalImporte: number): Observable<any> {
-  const clienteId = this.usuarioService.obtenerUsuarioActual().id;
+  finalizarPedido(
+  nroPed: number, 
+  platos: PlatoPedido[], 
+  bebidas: BebidaPedido[], 
+  totalImporte: number, 
+  tarjetaSeleccionada: any
+): Observable<any> { 
+  console.log('Tarjeta seleccionada:', tarjetaSeleccionada); // Agregar log para verificar los datos
+
   const clientePedidoUrl = `${this.apiUrl}/pedidos/${nroPed}`;
 
   return this.http.get(`${this.apiUrl}/pedidos/${nroPed}`).pipe(
     switchMap((pedidoActualizado: any) => {
       if (!pedidoActualizado.pago) {
-        return this.tarjetaService.obtenerTarjetaCliente().pipe(
-          switchMap(tarjetaResponse => {
-            const tarjeta = tarjetaResponse.data[0];
-            if (!tarjeta) {
-              return throwError(() => new Error('La tarjeta del cliente no se encuentra registrada'));
-            }
-            const nuevoPago = { tarjetaCliente: tarjeta.idTarjeta };
-            const postUrl = `http://localhost:3000/api/pedidos/${nroPed}/pagos`;
-            
-            return this.http.post(postUrl, nuevoPago).pipe(
-              switchMap(pagoCreado => {
-                return this.http.put(clientePedidoUrl, {}).pipe(
-                  map(() => pagoCreado)
-                );
-              })
+        // Verificar que la tarjeta seleccionada existe
+        if (!tarjetaSeleccionada?.idTarjeta) {
+          return throwError(() => new Error('Debe seleccionar una tarjeta para finalizar el pedido.'));
+        }
+
+        const nuevoPago = { tarjetaCliente: tarjetaSeleccionada.idTarjeta };
+        const postUrl = `http://localhost:3000/api/pedidos/${nroPed}/pagos`;
+
+        return this.http.post(postUrl, nuevoPago).pipe(
+          switchMap(pagoCreado => {
+            const actualizarPedido = { ...pedidoActualizado, pago: true, platos, bebidas, totalImporte };
+            return this.http.put(clientePedidoUrl, actualizarPedido).pipe(
+              map(() => pagoCreado)
             );
           })
         );
       } else {
-        return this.http.put(clientePedidoUrl, {}).pipe(
+        return this.http.put(clientePedidoUrl, pedidoActualizado).pipe(
           map(() => pedidoActualizado)
         );
       }
     })
   );
 }
-
 
   // Métodos para gestionar el pedido: agregar, actualizar y eliminar platos y bebidas
   actualizarCantidadPlato(numPlato: number, nuevaCantidad: number): void {
