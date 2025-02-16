@@ -85,7 +85,6 @@ export class PedidoModificarComponent implements OnInit {
       this.mensaje = 'Debe seleccionar una tarjeta para finalizar el pedido.';
       return;
     }
-
     const platos: PlatoPedido[] = this.pedidoPlatos.map(plato => ({ numPlato: plato.numPlato, cantidad: plato.cantidad || 1 }));
     const bebidas: BebidaPedido[] = this.pedidoBebidas.map(bebida => ({ codBebida: bebida.codBebida, cantidad: bebida.cantidad || 1 }));
     const totalImporte = this.calcularTotal();
@@ -103,7 +102,14 @@ export class PedidoModificarComponent implements OnInit {
               this.mensaje = 'Error al finalizar el pedido. Intenta nuevamente.';
             }
           );
+        } else {
+          console.log('No hay un pedido en curso para finalizar');
+          this.mensaje = 'No hay un pedido en curso para finalizar.';
         }
+      },
+      (error) => {
+        console.error('Error al obtener el pedido en curso', error);
+        this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
       }
     );
   }

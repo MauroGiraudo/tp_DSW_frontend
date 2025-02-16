@@ -171,13 +171,7 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
   );
 }
 
-  finalizarPedido(
-  nroPed: number, 
-  platos: PlatoPedido[], 
-  bebidas: BebidaPedido[], 
-  totalImporte: number, 
-  tarjetaSeleccionada: any
-): Observable<any> { 
+  finalizarPedido(nroPed: number,platos: PlatoPedido[],bebidas: BebidaPedido[],totalImporte: number,tarjetaSeleccionada: any): Observable<any> { 
   console.log('Tarjeta seleccionada:', tarjetaSeleccionada); // Agregar log para verificar los datos
 
   const clientePedidoUrl = `${this.apiUrl}/pedidos/${nroPed}`;
