@@ -223,3 +223,20 @@ export interface ResponseResenas {
   message: string;
   data: Resena[];
 }
+
+
+
+export interface Tarjeta{
+  idTarjeta: number;
+  nroTarjeta: string;
+  tipoTarjeta: string;
+  bancoTarjeta: string;
+  titular: string;
+  vencimiento: Date;
+  codSeguridad: number;
+}
+
+export interface ResponseTarjetas {
+  message: string;  // Mensaje de respuesta del backend
+  data: Tarjeta[]; 
+}
