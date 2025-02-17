@@ -1,25 +1,40 @@
-<div class="register_box">
-  <div class="register">
-    <p class="titulo">Crear Proveedor</p>
+<!DOCTYPE html>
+<html lang="es">
 
-    <div *ngIf="mensaje" class="mensaje"
-      [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
-      {{ mensaje }}
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Crear Proveedor</title>
+  <link rel="stylesheet" href="proveedor-crear.component.scss">
+</head>
+
+<body>
+  <div class="register_box">
+    <div class="register">
+      <p class="titulo">Crear Proveedor</p>
+
+      <div *ngIf="mensaje" class="mensaje"
+        [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
+        {{ mensaje }}
+      </div>
+
+      <form [formGroup]="proveedorForm" (ngSubmit)="enviar()">
+        <text-input [control]="fc['cuit']" [mostrarErrores]="enviado" label="CUIT"></text-input>
+        <text-input [control]="fc['razonSocial']" [mostrarErrores]="enviado" label="Razón Social"></text-input>
+        <text-input [control]="fc['direccion']" [mostrarErrores]="enviado" label="Dirección"></text-input>
+        <text-input [control]="fc['ciudad']" [mostrarErrores]="enviado" label="Ciudad"></text-input>
+        <text-input [control]="fc['provincia']" [mostrarErrores]="enviado" label="Provincia"></text-input>
+        <text-input [control]="fc['pais']" [mostrarErrores]="enviado" label="País"></text-input>
+        <text-input [control]="fc['telefono']" [mostrarErrores]="enviado" label="Teléfono"></text-input>
+        <text-input [control]="fc['email']" [mostrarErrores]="enviado" label="Email"></text-input>
+
+        <default-button texto="Crear Proveedor"></default-button>
+      </form>
     </div>
-
-    <form [formGroup]="proveedorForm" (ngSubmit)="enviar()">
-      <text-input [control]="fc['cuit']" [mostrarErrores]="enviado" label="CUIT"></text-input>
-      <text-input [control]="fc['razonSocial']" [mostrarErrores]="enviado" label="Razón Social"></text-input>
-      <text-input [control]="fc['direccion']" [mostrarErrores]="enviado" label="Dirección"></text-input>
-      <text-input [control]="fc['ciudad']" [mostrarErrores]="enviado" label="Ciudad"></text-input>
-      <text-input [control]="fc['provincia']" [mostrarErrores]="enviado" label="Provincia"></text-input>
-      <text-input [control]="fc['pais']" [mostrarErrores]="enviado" label="País"></text-input>
-      <text-input [control]="fc['telefono']" [mostrarErrores]="enviado" label="Teléfono"></text-input>
-      <text-input [control]="fc['email']" [mostrarErrores]="enviado" label="Email"></text-input>
-
-      <default-button texto="Crear Proveedor"></default-button>
-    </form>
   </div>
-</div>
+</body>
+
+</html>
+
 
 

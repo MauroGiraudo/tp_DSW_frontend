@@ -1,6 +1,9 @@
 .pedidos-container {
   display: block;
   margin: 5px;
+  max-width: 100%;
+  width: 100%;
+  padding: 10px;
 }
 
 .plato-item {
@@ -27,12 +30,14 @@
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .precio-cantidad {
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .cantidad-container {
@@ -81,6 +86,7 @@ button:hover {
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .search-box {
@@ -90,6 +96,8 @@ button:hover {
   border: 2px solid #7699ab;
   font-size: 16px;
   outline: none;
+  width: 100%;
+  margin-bottom: 10px;
 }
 
 .search-button {
@@ -97,8 +105,8 @@ button:hover {
   border: none;
   cursor: pointer;
   padding: 5px;
-  margin-left: -40px;
-  /* Superpone el botón en el borde del input */
+  width: 100%;
+  text-align: center;
 }
 
 .search-button img {
@@ -112,5 +120,44 @@ button:hover {
 
 .search-box:focus {
   border-color: #004668;
-  /* Cambia el color del borde al hacer foco */
+}
+
+@media (max-width: 768px) {
+  .pedidos-container {
+    padding: 10px;
+  }
+
+  .plato-info {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .precio-cantidad {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .search-box {
+    width: 100%;
+  }
+
+  .search-button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  button {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
 }
