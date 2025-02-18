@@ -1,0 +1,209 @@
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  background: white;
+  position: relative;
+  z-index: 1;
+}
+
+.titulo {
+  color: black;
+  font-size: 1.8rem;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-align: center; // Centramos el texto del título
+  margin-bottom: 1.2rem;
+}
+
+.form-control {
+  margin-bottom: 1rem;
+  position: relative;
+  /* Necesario para la correcta colocación de los mensajes de error */
+}
+
+/* Estilo del mensaje de validación */
+.mensaje {
+  position: absolute;
+  top: 100%;
+  /* Coloca el mensaje debajo del campo */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  /* Ajusta el ancho del mensaje */
+  padding: 5px;
+  margin-top: 5px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease;
+  z-index: 0;
+  /* Asegura que el mensaje se quede detrás del input */
+  font-size: 0.9rem;
+  /* Ajuste en tamaño de fuente */
+}
+
+.exito {
+  color: green;
+  background-color: #e7f9e7;
+  border: 1px solid green;
+}
+
+.error {
+  color: red;
+  background-color: #f9e7e7;
+  border: 1px solid red;
+}
+
+.register_box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  padding-top: 2rem;
+}
+
+.register {
+  width: 25rem;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Estilo para el div.contenido encima del input-validation */
+.contenido {
+  position: absolute;
+  top: -20px;
+  /* Ajusta la posición para que esté encima del campo */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  /* Asegura que esté encima de la validación */
+  background-color: rgba(255, 255, 255, 0.8);
+  /* Fondo blanco semi-transparente */
+  padding: 5px;
+  border-radius: 5px;
+}
+
+/* Media Queries para pantallas pequeñas (hasta 768px) */
+@media (max-width: 768px) {
+  .register {
+    width: 90%;
+    padding: 15px;
+  }
+
+  .titulo {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .register_box {
+    padding-top: 1.5rem;
+  }
+
+  .form-control {
+    margin-bottom: 0.8rem;
+  }
+
+  .mensaje {
+    padding: 8px;
+    width: 60%;
+    /* Un poco más grande en pantallas más pequeñas */
+  }
+}
+
+/* Media Queries específicas para dispositivos pequeños (hasta 425px) */
+@media (max-width: 425px) {
+  .register {
+    width: 90%;
+    padding: 12px;
+  }
+
+  .titulo {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .register_box {
+    padding-top: 1.2rem;
+  }
+
+  .form-control {
+    margin-bottom: 0.6rem;
+  }
+
+  .mensaje {
+    padding: 7px;
+    width: 70%;
+    /* Un poco más grande en pantallas aún más pequeñas */
+  }
+}
+
+/* Media Queries para orientación vertical en pantallas pequeñas (hasta 425px en vertical) */
+@media (max-width: 425px) and (orientation: portrait) {
+  .register {
+    width: 95%;
+    padding: 10px;
+  }
+
+  .titulo {
+    font-size: 1.3rem;
+  }
+
+  .register_box {
+    padding-top: 1rem;
+  }
+
+  .form-control {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Ajuste en el mensaje para pantallas más pequeñas */
+  .mensaje {
+    width: 90%;
+    /* Hacemos que ocupe más espacio */
+    font-size: 0.8rem;
+    /* Tamaño de fuente reducido para mejor ajuste */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Media Queries adicionales para mayor adaptabilidad en dispositivos con pantallas muy pequeñas */
+@media (max-width: 375px) {
+  .register {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .titulo {
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .form-control {
+    margin-bottom: 0.5rem;
+  }
+
+  .mensaje {
+    padding: 6px;
+    width: 80%;
+  }
+}
