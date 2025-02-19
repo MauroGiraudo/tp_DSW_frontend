@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import { UsuarioService } from './usuario.service'; // Asegúrate de que la ruta sea correcta
 
 @Injectable({
@@ -33,9 +34,36 @@ export class TarjetaService {
     return this.http.post<any>(url, tarjetaClienteData);
   }
 
+  /**
+   * Modifica una tarjeta de un cliente específico
+   * @param clienteId ID del cliente
+   * @param tarjetaId ID de la tarjeta a modificar
+   * @param tarjetaModificada Datos actualizados de la tarjeta
+   */
+  modificarTarjetaCliente(tarjetaId: number, tarjetaModificada: any): Observable<any> {
+    const clienteId = this.usuarioService.obtenerUsuarioActual().id;
+    const url = `${this.apiUrl}/${clienteId}/tarjetas/${tarjetaId}`;
+    return this.http.put<any>(url, tarjetaModificada).pipe(
+      catchError(error => {
+        console.error('Error al modificar la tarjeta:', error);
+        return throwError(() => new Error('Error al modificar la tarjeta.'));
+      })
+    );
+  }
 
+  /**
+   * Elimina una tarjeta de un cliente específico
+   * @param clienteId ID del cliente
+   * @param tarjetaId ID de la tarjeta a eliminar
+   */
   eliminarTarjeta(clienteId: number, tarjetaId: number): Observable<any> {
-    const url = `${this.apiUrl}/${clienteId}/tarjetas/${tarjetaId}`;  // URL para eliminar la tarjeta
-    return this.http.delete<any>(url);
+    const url = `${this.apiUrl}/${clienteId}/tarjetas/${tarjetaId}`;
+    return this.http.delete<any>(url).pipe(
+      catchError(error => {
+        console.error('Error al eliminar la tarjeta:', error);
+        return throwError(() => new Error('Error al eliminar la tarjeta.'));
+      })
+    );
   }
 }
+
