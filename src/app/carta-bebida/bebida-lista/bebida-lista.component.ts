@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { BebidaService } from '../../service/bebida.service.js';
+import { BebidaService } from '../../service/bebida.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { PedidoService } from '../../service/pedido.service.js';
-import { Bebida, BebidaConCantidad } from '../../models/mesa.models.js';
-import { UsuarioService } from '../../service/usuario.service.js'; 
+import { PedidoService } from '../../service/pedido.service';
+import { Bebida, BebidaConCantidad } from '../../models/mesa.models';
+import { UsuarioService } from '../../service/usuario.service';
 
 @Component({
   selector: 'app-lista-bebida',
@@ -20,7 +20,7 @@ export class BebidaListaComponent implements OnInit {
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de bebida seleccionado
   tipoUsuario: string = '';  // Tipo de usuario (empleado, cliente, etc.)
-  mensaje: string = ''; 
+  mensaje: string = '';
 
   constructor(
     private bebidaService: BebidaService,

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { NuevoTipotarjeta } from '../models/mesa.models.js';
+import { NuevoTipotarjeta } from '../models/mesa.models';
 import { Observable, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Tipotarjeta } from '../models/mesa.models.js';
-import { ResponseTipotarjeta } from '../models/mesa.models.js';
+import { Tipotarjeta } from '../models/mesa.models';
+import { ResponseTipotarjeta } from '../models/mesa.models';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +14,16 @@ export class TipoTarjetaService {
   constructor(private http: HttpClient) { }
 
     public crearTipoTarjeta(tipotarjeta: NuevoTipotarjeta ): Observable<NuevoTipotarjeta > {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<NuevoTipotarjeta >(url, {
-      descTarjeta: tipotarjeta.descTarjeta 
+      descTarjeta: tipotarjeta.descTarjeta
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Tipo de tarjeta creado:', response); 
+          console.log('Tipo de tarjeta creado:', response);
         },
         error: (error) => {
-          console.error('Error al crear el tipo de tarjeta:', error); 
+          console.error('Error al crear el tipo de tarjeta:', error);
         }
       })
     );
@@ -43,11 +43,11 @@ export class TipoTarjetaService {
     }
 
   public obtenerTipoTarjeta(idTarjeta: number): Observable<Tipotarjeta> {
-    const url = `${this.apiUrl}/${idTarjeta}`; 
+    const url = `${this.apiUrl}/${idTarjeta}`;
     return this.http.get<Tipotarjeta>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Tipo de tarjeta obtenido:', response); 
+          console.log('Tipo de tarjeta obtenido:', response);
         },
         error: (error) => {
           console.error('Error al obtener el tipo de tarjeta:', error);
@@ -60,8 +60,8 @@ export class TipoTarjetaService {
       const url = `${this.apiUrl}/${idTarjeta}`;
       return this.http.patch<Tipotarjeta>(url, {
         ...tipotarjetaActualizado,
-        idTarjeta: tipotarjetaActualizado.idTarjeta, 
-        descTarjeta: tipotarjetaActualizado.descTarjeta 
+        idTarjeta: tipotarjetaActualizado.idTarjeta,
+        descTarjeta: tipotarjetaActualizado.descTarjeta
       }).pipe(
         tap({
           next: (response) => {

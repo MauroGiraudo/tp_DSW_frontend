@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { IngredienteService } from '../../service/ingrediente.service.js';
-import { Ingrediente } from '../../models/mesa.models.js';
+import { IngredienteService } from '../../service/ingrediente.service';
+import { Ingrediente } from '../../models/mesa.models';
 import { TextInputComponent } from '../../text-input/text-input.component';
 import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
@@ -21,9 +21,9 @@ export class IngredienteCrearComponent implements OnInit {
   mensaje: string | null = null;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private ingredienteService: IngredienteService,
-    private router: Router 
+    private router: Router
   ) {
     this.ingredienteForm= this.fb.group({
       codigo: [1, [Validators.required, Validators.min(1)]],
@@ -41,13 +41,13 @@ export class IngredienteCrearComponent implements OnInit {
   ngOnInit(): void {}
 
   get fc() {
-    return this.ingredienteForm.controls; 
+    return this.ingredienteForm.controls;
   }
 
   crearIngrediente() {
     if (this.ingredienteForm.valid) {
       const nuevoIngrediente: Ingrediente = {
-        codigo: 0,  
+        codigo: 0,
         descIngre: this.ingredienteForm.value.descIngre,
         puntoDePedido: parseFloat(this.ingredienteForm.value.puntoDePedido),
         stock: parseFloat(this.ingredienteForm.value.stock),
@@ -58,26 +58,26 @@ export class IngredienteCrearComponent implements OnInit {
         proveedor:parseFloat(this.ingredienteForm.value.proveedor),
       };
       this.ingredienteService.crearIngrediente(nuevoIngrediente).subscribe({
-        next: (response: Ingrediente) => { 
+        next: (response: Ingrediente) => {
           console.log('Ingrediente creado:', response);
           this.ingredienteForm.reset();
-          this.enviado = false; 
-          this.mensaje = 'Ingrediente agregado exitosamente'; 
+          this.enviado = false;
+          this.mensaje = 'Ingrediente agregado exitosamente';
           this.router.navigate(['ingrediente/Lista']);
         },
         error: (error) => {
           console.error('Error al crear el ingrediente:', error);
           const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-          this.mensaje = `Error al crear el ingrediente: ${errorMsg}`; 
+          this.mensaje = `Error al crear el ingrediente: ${errorMsg}`;
         }
       });
     } else {
-      this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+      this.mensaje = 'Por favor, complete el formulario correctamente.';
     }
   }
 
   enviar() {
-    this.enviado = true; 
-    this.crearIngrediente(); 
+    this.enviado = true;
+    this.crearIngrediente();
   }
 }

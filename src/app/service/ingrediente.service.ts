@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Ingrediente, ResponseIngredientes } from '../models/mesa.models.js';
+import { Ingrediente, ResponseIngredientes } from '../models/mesa.models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,10 +13,10 @@ export class IngredienteService {
   constructor(private http: HttpClient) { }
 
   public crearIngrediente(ingrediente: Ingrediente): Observable<Ingrediente> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Ingrediente>(url, {
-      descIngre: ingrediente.descIngre,  
-      puntoDePedido: ingrediente.puntoDePedido, 
+      descIngre: ingrediente.descIngre,
+      puntoDePedido: ingrediente.puntoDePedido,
       stock: ingrediente.stock,
       unidadMedida: ingrediente.unidadMedida,
       aptoCeliacos: ingrediente.aptoCeliacos,
@@ -49,11 +49,11 @@ export class IngredienteService {
 }
 
   public obtenerIngrediente(codIngrediente: number): Observable<Ingrediente> {
-    const url = `${this.apiUrl}/${codIngrediente}`; 
+    const url = `${this.apiUrl}/${codIngrediente}`;
     return this.http.get<Ingrediente>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Proveedor obtenido:', response); 
+          console.log('Proveedor obtenido:', response);
         },
         error: (error) => {
           console.error('Error al obtener el proveedor:', error);
@@ -66,14 +66,14 @@ export class IngredienteService {
     const url = `${this.apiUrl}/${codIngrediente}`;
     return this.http.patch<Ingrediente>(url, {
       ...ingredienteActualizado,
-      descIngre: ingredienteActualizado.descIngre, 
-      puntoDePedido: ingredienteActualizado.puntoDePedido, 
-      stock: ingredienteActualizado.stock, 
-      unidadMedida: ingredienteActualizado.unidadMedida, 
-      aptoCeliacos: ingredienteActualizado.aptoCeliacos, 
-      aptoVegetarianos: ingredienteActualizado.aptoVegetarianos, 
-      aptoVeganos: ingredienteActualizado.aptoVeganos, 
-      proveedor: ingredienteActualizado.proveedor 
+      descIngre: ingredienteActualizado.descIngre,
+      puntoDePedido: ingredienteActualizado.puntoDePedido,
+      stock: ingredienteActualizado.stock,
+      unidadMedida: ingredienteActualizado.unidadMedida,
+      aptoCeliacos: ingredienteActualizado.aptoCeliacos,
+      aptoVegetarianos: ingredienteActualizado.aptoVegetarianos,
+      aptoVeganos: ingredienteActualizado.aptoVeganos,
+      proveedor: ingredienteActualizado.proveedor
     }).pipe(
       tap({
         next: (response) => {

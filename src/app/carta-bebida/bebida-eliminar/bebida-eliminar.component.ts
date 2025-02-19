@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { BebidaService } from '../../service/bebida.service.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { BebidaService } from '../../service/bebida.service';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-eliminar-bebida',
@@ -32,18 +32,18 @@ export class BebidaEliminarComponent implements OnInit {
   ngOnInit(): void {}
 
   get fc() {
-    return this.bebidaForm.controls;  
+    return this.bebidaForm.controls;
   }
 
   eliminarBebida() {
     if (this.bebidaForm.valid) {
-      const codBebida = this.bebidaForm.controls['codBebida'].value;  
+      const codBebida = this.bebidaForm.controls['codBebida'].value;
       this.bebidaService.eliminarBebidaConDependencias(codBebida, this.bebidaForm.controls['proveedor'].value).subscribe({
         next: () => {
           this.bebidaForm.reset();
           this.enviado = false;
           this.mensaje = 'Bebida eliminada exitosamente';
-          this.router.navigate(['cartaBebida/Lista']); 
+          this.router.navigate(['cartaBebida/Lista']);
         },
         error: (error) => {
           console.error('Error al eliminar las dependencias de la bebida:', error);

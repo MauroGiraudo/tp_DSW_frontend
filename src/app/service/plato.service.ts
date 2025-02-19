@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap, switchMap } from 'rxjs/operators';
-import { Plato } from '../models/mesa.models.js';
-import { ResponsePlato } from '../models/mesa.models.js';
-import { Plato1 } from '../models/mesa.models.js';
+import { Plato } from '../models/mesa.models';
+import { ResponsePlato } from '../models/mesa.models';
+import { Plato1 } from '../models/mesa.models';
 
 @Injectable({
   providedIn: 'root'

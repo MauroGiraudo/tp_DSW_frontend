@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TipoTarjetaService } from '../../service/tipo-tarjeta.service.js';
+import { TipoTarjetaService } from '../../service/tipo-tarjeta.service';
 import { CommonModule } from '@angular/common';
-import { Tipotarjeta } from '../../models/mesa.models.js';
-import { ResponseTipotarjeta } from '../../models/mesa.models.js';
+import { Tipotarjeta } from '../../models/mesa.models';
+import { ResponseTipotarjeta } from '../../models/mesa.models';
 import { Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -17,8 +17,8 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class TarjetaListaComponent implements OnInit, OnDestroy {
   tipotarjeta: Tipotarjeta[] = [];
-  searchTerm: string = '';  
-  private destroy$ = new Subject<void>();  
+  searchTerm: string = '';
+  private destroy$ = new Subject<void>();
 
   constructor(private tipoTarjetaService: TipoTarjetaService) {}
 
@@ -32,7 +32,7 @@ export class TarjetaListaComponent implements OnInit, OnDestroy {
     ).subscribe(
       (response: ResponseTipotarjeta) => {
         if (response && response.data && Array.isArray(response.data)) {
-          this.tipotarjeta = response.data; 
+          this.tipotarjeta = response.data;
         } else {
           console.error("La respuesta no contiene 'data' o no es un array", response);
         }
@@ -58,7 +58,7 @@ export class TarjetaListaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();  
-    this.destroy$.complete();  
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

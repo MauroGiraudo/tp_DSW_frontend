@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { TipoTarjetaService } from '../../service/tipo-tarjeta.service.js';
-import { Tipotarjeta } from '../../models/mesa.models.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { TipoTarjetaService } from '../../service/tipo-tarjeta.service';
+import { Tipotarjeta } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-tarjeta-eliminar',
@@ -22,17 +22,17 @@ export class TarjetaEliminarComponent implements OnInit{
   constructor(
     private fb: FormBuilder,
     private tipoTarjetaService: TipoTarjetaService,
-    private router: Router 
+    private router: Router
   ) {
     this.tipoTarjetaForm = this.fb.group({
-      idTarjeta: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
+      idTarjeta: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 
   ngOnInit(): void {}
 
   get fc() {
-    return this.tipoTarjetaForm.controls; 
+    return this.tipoTarjetaForm.controls;
   }
 
   eliminarTipoTarjeta() {
@@ -48,7 +48,7 @@ export class TarjetaEliminarComponent implements OnInit{
           this.tipoTarjetaForm.reset();
           this.enviado = false;
           this.mensaje = 'Tipo de tarjeta eliminado exitosamente';
-          this.router.navigate(['tarjeta/Lista']); 
+          this.router.navigate(['tarjeta/Lista']);
         },
         error: (error) => {
           console.error('Error al eliminar el tipo de tarjeta:', error);

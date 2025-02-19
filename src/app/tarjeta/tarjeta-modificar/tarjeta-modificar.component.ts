@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn  } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { TipoTarjetaService } from '../../service/tipo-tarjeta.service.js';
-import { Tipotarjeta } from '../../models/mesa.models.js';
+import { TipoTarjetaService } from '../../service/tipo-tarjeta.service';
+import { Tipotarjeta } from '../../models/mesa.models';
 import { TextInputComponent } from '../../text-input/text-input.component';
 import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
@@ -37,7 +37,7 @@ export class TarjetaModificarComponent implements OnInit{
         if (value.trim() === '') {
           return null;
         }
-        return null; 
+        return null;
       };
     }
 
@@ -49,7 +49,7 @@ export class TarjetaModificarComponent implements OnInit{
   }
 
   get fc() {
-    return this.tipoTarjetaForm.controls; 
+    return this.tipoTarjetaForm.controls;
   }
 
   obtenerTipoTarjeta(idTarjeta: number) {
@@ -59,7 +59,7 @@ export class TarjetaModificarComponent implements OnInit{
         this.tipoTarjetaForm.patchValue({
           idTarjeta: tipoTarjeta.idTarjeta,
           descTarjeta: tipoTarjeta.descTarjeta,
-          
+
         });
       },
       error: (error) => {

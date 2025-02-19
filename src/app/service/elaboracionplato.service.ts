@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable,tap,catchError,throwError,map } from 'rxjs';
-import { PlatoIngrediente } from '../models/mesa.models.js';
-import { Ingrediente } from '../models/mesa.models.js';
-import { Plato } from '../models/mesa.models.js';
+import { PlatoIngrediente } from '../models/mesa.models';
+import { Ingrediente } from '../models/mesa.models';
+import { Plato } from '../models/mesa.models';
 
 @Injectable({
   providedIn: 'root'

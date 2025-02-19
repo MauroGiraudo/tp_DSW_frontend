@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MesaService } from '../../service/mesa.service.js';
-import { Mesa } from '../../models/mesa.models.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { MesaService } from '../../service/mesa.service';
+import { Mesa } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-crear-mesa',
@@ -20,21 +20,21 @@ export class MesaCrearComponent implements OnInit {
   mensaje: string | null = null;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private mesaService: MesaService,
     private router: Router
   ) {
     this.mesaForm = this.fb.group({
-      nro_mesa: ['', [Validators.required]], 
+      nro_mesa: ['', [Validators.required]],
       cant_personas_max: ['', [Validators.required, Validators.min(1)]],
-      estado: ['Disponible', Validators.required] 
+      estado: ['Disponible', Validators.required]
     });
   }
 
   ngOnInit(): void {}
 
   get fc() {
-    return this.mesaForm.controls; 
+    return this.mesaForm.controls;
   }
 
   crearMesa() {
@@ -46,27 +46,27 @@ export class MesaCrearComponent implements OnInit {
     };
 
     this.mesaService.crearMesa(nuevaMesa).subscribe({
-      next: (response: Mesa) => { 
+      next: (response: Mesa) => {
         console.log('Mesa creada:', response);
         this.mesaForm.reset();
-        this.enviado = false; 
-        this.mensaje = 'Mesa creada con éxito'; 
-        this.router.navigate(['mesa/Lista']); 
+        this.enviado = false;
+        this.mensaje = 'Mesa creada con éxito';
+        this.router.navigate(['mesa/Lista']);
       },
       error: (error) => {
         console.error('Error al crear la mesa:', error);
         const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-        this.mensaje = `Error al crear la mesa: ${errorMsg}`; 
+        this.mensaje = `Error al crear la mesa: ${errorMsg}`;
       }
     });
   } else {
-    this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+    this.mensaje = 'Por favor, complete el formulario correctamente.';
   }
 }
 
 
   enviar() {
-    this.enviado = true; 
-    this.crearMesa(); 
+    this.enviado = true;
+    this.crearMesa();
   }
 }

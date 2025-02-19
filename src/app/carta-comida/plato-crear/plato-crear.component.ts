@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { PlatoService } from '../../service/plato.service.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
-import { Plato1 } from '../../models/mesa.models.js';
+import { PlatoService } from '../../service/plato.service';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
+import { Plato1 } from '../../models/mesa.models';
 
 @Component({
   selector: 'app-crear-plato',
@@ -13,7 +13,7 @@ import { Plato1 } from '../../models/mesa.models.js';
   imports: [CommonModule, ReactiveFormsModule, TextInputComponent, DefaultButtonComponent, RouterModule],
   templateUrl: './plato-crear.component.html',
   styleUrls: ['./plato-crear.component.scss'],
-  
+
 })
 export class PlatoCrearComponent implements OnInit {
   platoForm: FormGroup;
@@ -21,9 +21,9 @@ export class PlatoCrearComponent implements OnInit {
   mensaje: string | null = null;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private platoService: PlatoService,
-    private router: Router 
+    private router: Router
   ) {
     this.platoForm = this.fb.group({
       descripcion: ['', [Validators.required]],
@@ -33,7 +33,7 @@ export class PlatoCrearComponent implements OnInit {
       aptoCeliaco: [false],  // Se agregan valores por defecto
       aptoVegetarianos: [false],
       aptoVeganos: [false],
-      imagen: [''], 
+      imagen: [''],
       ingredientes: this.fb.array([], Validators.required) // Se asegura que tenga al menos un ingrediente
     });
   }
@@ -41,7 +41,7 @@ export class PlatoCrearComponent implements OnInit {
   ngOnInit(): void {}
 
   get fc() {
-    return this.platoForm.controls; 
+    return this.platoForm.controls;
   }
 
   get ingredientes() {
@@ -84,9 +84,9 @@ export class PlatoCrearComponent implements OnInit {
 };
 
     this.platoService.crearPlato(nuevoPlato).subscribe({
-      next: (response) => { 
+      next: (response) => {
         console.log('Plato creado:', response);
-        this.mensaje = 'Plato creado exitosamente'; 
+        this.mensaje = 'Plato creado exitosamente';
         this.platoForm.reset({
           descripcion: '',
           tiempo: null,
@@ -98,19 +98,19 @@ export class PlatoCrearComponent implements OnInit {
           imagen: '',
           ingredientes: []
         });
-        this.enviado = false; 
-        this.router.navigate(['cartaComida/Lista']); 
+        this.enviado = false;
+        this.router.navigate(['cartaComida/Lista']);
       },
       error: (error) => {
         console.error('Error al crear el plato:', error);
         const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-        this.mensaje = `Error al crear el plato: ${errorMsg}`; 
+        this.mensaje = `Error al crear el plato: ${errorMsg}`;
       }
     });
   }
 
   enviar() {
-    this.enviado = true; 
-    this.crearPlato(); 
+    this.enviado = true;
+    this.crearPlato();
   }
 }

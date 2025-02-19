@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TipoplatoService } from '../../service/tipoplato.service.js';
+import { TipoplatoService } from '../../service/tipoplato.service';
 import { CommonModule } from '@angular/common';
-import { Tipoplato } from '../../models/mesa.models.js';
-import { ResponseTipoplato } from '../../models/mesa.models.js';
+import { Tipoplato } from '../../models/mesa.models';
+import { ResponseTipoplato } from '../../models/mesa.models';
 import { Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +16,10 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./tipoplato-lista.component.scss']
 })
 export class TipoplatoListaComponent implements OnInit, OnDestroy {
-  
+
   tipoplato: Tipoplato[] = [];
-  searchTerm: string = '';  
-  private destroy$ = new Subject<void>();  
+  searchTerm: string = '';
+  private destroy$ = new Subject<void>();
 
   constructor(private tipoPlatoService: TipoplatoService) {}
 
@@ -33,7 +33,7 @@ export class TipoplatoListaComponent implements OnInit, OnDestroy {
     ).subscribe(
       (response: ResponseTipoplato) => {
         if (response && response.data && Array.isArray(response.data)) {
-          this.tipoplato = response.data; 
+          this.tipoplato = response.data;
         } else {
           console.error("La respuesta no contiene 'data' o no es un array", response);
         }
@@ -59,7 +59,7 @@ export class TipoplatoListaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();  
-    this.destroy$.complete();  
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

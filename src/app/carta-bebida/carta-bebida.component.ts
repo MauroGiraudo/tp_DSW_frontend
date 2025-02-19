@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { BebidaService } from '../service/bebida.service.js';
+import { BebidaService } from '../service/bebida.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { PedidoService } from '../service/pedido.service.js';
-import { Bebida,BebidaConCantidad } from '../models/mesa.models.js';
+import { PedidoService } from '../service/pedido.service';
+import { Bebida,BebidaConCantidad } from '../models/mesa.models';
 
 @Component({
   selector: 'app-carta-bebida',
@@ -14,7 +14,7 @@ import { Bebida,BebidaConCantidad } from '../models/mesa.models.js';
   styleUrls: ['./carta.bebida.component.scss']
 })
 export class CartaBebidaComponent implements OnInit {
-  
+
   bebidas: any[] = [];
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de bebida seleccionado

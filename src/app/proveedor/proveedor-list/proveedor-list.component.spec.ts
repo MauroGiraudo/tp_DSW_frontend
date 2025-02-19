@@ -11,13 +11,19 @@ describe('ProveedorListComponent', () => {
       imports: [ProveedorListComponent]
     })
     .compileComponents();
-    
+  });
+
+  beforeEach(() => {
     fixture = TestBed.createComponent(ProveedorListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('El listado de proveedores está vacío', () => {
+    component.getProveedores()
+    expect(component.proveedores).toEqual([]);
   });
+
+  //AVERIGUAR CÓMO LOGRAR QUE PRIMERO SE ASIGNEN LOS PROVEEDORES PROVENIENTES DEL BACK A LA VARIABLE "proveedores" PARA LUEGO
+  // TESTEAR SI FUERON RECUPERADOS O NO
 });

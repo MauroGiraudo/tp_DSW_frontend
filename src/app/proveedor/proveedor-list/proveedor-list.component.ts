@@ -1,8 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'; 
-import { ProveedorService } from '../../service/proveedor.service.js';  
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ProveedorService } from '../../service/proveedor.service';
 import { CommonModule } from '@angular/common';
-import { Proveedor } from '../../models/mesa.models.js'; 
-import { ResponseProveedores } from '../../models/mesa.models.js';  
+import { Proveedor } from '../../models/mesa.models';
+import { ResponseProveedores } from '../../models/mesa.models';
 import { Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -16,10 +16,10 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./proveedor-list.component.scss']
 })
 export class ProveedorListComponent implements OnInit, OnDestroy {
-  
+
   proveedores: Proveedor[] = [];
-  searchTerm: string = '';  
-  private destroy$ = new Subject<void>();  
+  searchTerm: string = '';
+  private destroy$ = new Subject<void>();
 
   constructor(private proveedorService: ProveedorService) {}
 
@@ -33,7 +33,7 @@ export class ProveedorListComponent implements OnInit, OnDestroy {
     ).subscribe(
       (response: ResponseProveedores) => {
         if (response && response.data && Array.isArray(response.data)) {
-          this.proveedores = response.data; 
+          this.proveedores = response.data;
         } else {
           console.error("La respuesta no contiene 'data' o no es un array", response);
         }
@@ -59,8 +59,8 @@ export class ProveedorListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();  
-    this.destroy$.complete();  
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
 

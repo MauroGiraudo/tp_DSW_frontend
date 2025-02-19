@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { TipoplatoService } from '../../service/tipoplato.service.js';
-import { Tipoplato } from '../../models/mesa.models.js';  // Asegúrate de que la ruta sea correcta
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { TipoplatoService } from '../../service/tipoplato.service';
+import { Tipoplato } from '../../models/mesa.models';  // Asegúrate de que la ruta sea correcta
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-eliminar-tipoplato',
@@ -22,17 +22,17 @@ export class TipoplatoEliminarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private tipoPlatoService: TipoplatoService,
-    private router: Router 
+    private router: Router
   ) {
     this.tipoPlatoForm = this.fb.group({
-      numPlato: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
+      numPlato: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 
   ngOnInit(): void {}
 
   get fc() {
-    return this.tipoPlatoForm.controls; 
+    return this.tipoPlatoForm.controls;
   }
 
   eliminarTipoPlato() {
@@ -48,7 +48,7 @@ export class TipoplatoEliminarComponent implements OnInit {
           this.tipoPlatoForm.reset();
           this.enviado = false;
           this.mensaje = 'Tipo de plato eliminado exitosamente';
-          this.router.navigate(['tipoplato/Lista']); 
+          this.router.navigate(['tipoplato/Lista']);
         },
         error: (error) => {
           console.error('Error al eliminar el tipo de plato:', error);

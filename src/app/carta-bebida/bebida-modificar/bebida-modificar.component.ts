@@ -2,39 +2,39 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { BebidaService } from '../../service/bebida.service.js';  
-import { Bebida } from '../../models/mesa.models.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { BebidaService } from '../../service/bebida.service';
+import { Bebida } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-modificar-bebida',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TextInputComponent, DefaultButtonComponent, RouterModule],
-  templateUrl: './bebida-modificar.component.html',  
-  styleUrls: ['./bebida-modificar.component.scss']  
+  templateUrl: './bebida-modificar.component.html',
+  styleUrls: ['./bebida-modificar.component.scss']
 })
 export class BebidaModificarComponent implements OnInit {
   bebidaForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  bebidaActual: Bebida | null = null; 
+  bebidaActual: Bebida | null = null;
 
   constructor(
-    private fb: FormBuilder, 
-    private bebidaService: BebidaService,  
-    private router: Router  
+    private fb: FormBuilder,
+    private bebidaService: BebidaService,
+    private router: Router
   ) {
     this.bebidaForm = this.fb.group({
-      codBebida: ['', [Validators.required]],  
+      codBebida: ['', [Validators.required]],
       descripcion: ['', [this.whitespaceValidator()]],
       stock:   ['', [this.numberOrWhitespaceValidator()]],
-      unidadMedida: ['', [this.whitespaceValidator()]],  
-      contenido: ['', [this.numberOrWhitespaceValidator()]],  
-      precio: ['', [this.numberOrWhitespaceValidator()]],  
-      alcohol: ['', [this.whitespaceValidator()]],  
-      imagen: ['', [this.urlValidator()]],  
-      proveedor: ['', [this.numberOrWhitespaceValidator()]]  
+      unidadMedida: ['', [this.whitespaceValidator()]],
+      contenido: ['', [this.numberOrWhitespaceValidator()]],
+      precio: ['', [this.numberOrWhitespaceValidator()]],
+      alcohol: ['', [this.whitespaceValidator()]],
+      imagen: ['', [this.urlValidator()]],
+      proveedor: ['', [this.numberOrWhitespaceValidator()]]
     });
   }
 
@@ -44,7 +44,7 @@ export class BebidaModificarComponent implements OnInit {
       if (value === '' || value.trim() === '') {
         return null;
       }
-      const valid = !isNaN(value) && value > 0; 
+      const valid = !isNaN(value) && value > 0;
       return valid ? null : { 'invalidNumber': { value } };
     };
   }
@@ -53,18 +53,18 @@ export class BebidaModificarComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value.trim() === '') {
-        return null; 
+        return null;
       }
-      return null; 
+      return null;
     };
   }
 
   urlValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (!control.value) {
-      return null;  
+      return null;
     }
-    const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;  
+    const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
     const isValid = pattern.test(control.value.trim());
     return isValid ? null : { invalidUrl: { value: control.value } };
   };
@@ -78,7 +78,7 @@ export class BebidaModificarComponent implements OnInit {
   }
 
   get fc() {
-    return this.bebidaForm.controls; 
+    return this.bebidaForm.controls;
   }
 
 
@@ -125,17 +125,17 @@ export class BebidaModificarComponent implements OnInit {
       proveedor: this.bebidaForm.value.proveedor || this.bebidaActual?.proveedor,
     };
       this.bebidaService.actualizarBebida(codBebida, bebidaActualizada).subscribe({
-        next: (response: Bebida) => { 
+        next: (response: Bebida) => {
           console.log('Bebida actualizada:', response);
           this.bebidaForm.reset();
-          this.enviado = false; 
-          this.mensaje = 'Bebida actualizada exitosamente'; 
-          this.router.navigate(['cartaBebida/Lista']);  
+          this.enviado = false;
+          this.mensaje = 'Bebida actualizada exitosamente';
+          this.router.navigate(['cartaBebida/Lista']);
         },
         error: (error) => {
           console.error('Error al actualizar la bebida:', error);
           const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-          this.mensaje = `Error al actualizar la bebida: ${errorMsg}`; 
+          this.mensaje = `Error al actualizar la bebida: ${errorMsg}`;
         }
       });
     } else {
@@ -144,7 +144,7 @@ export class BebidaModificarComponent implements OnInit {
   }
 
   enviar() {
-    this.enviado = true; 
-    this.actualizarBebida(); 
+    this.enviado = true;
+    this.actualizarBebida();
   }
 }

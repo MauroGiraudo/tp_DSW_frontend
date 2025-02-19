@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, ValidatorFn, AbstractControl  } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Ingrediente } from '../../models/mesa.models.js';
-import { IngredienteService } from '../../service/ingrediente.service.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { Ingrediente } from '../../models/mesa.models';
+import { IngredienteService } from '../../service/ingrediente.service';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-ingrediente-modificar',
@@ -18,21 +18,21 @@ export class IngredienteModificarComponent implements OnInit {
   ingredienteForm : FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  ingredienteActual: Ingrediente | null = null; 
+  ingredienteActual: Ingrediente | null = null;
 
   constructor(
     private fb: FormBuilder,
     private ingredienteService: IngredienteService,
-    private router: Router 
+    private router: Router
   ) {
     this.ingredienteForm = this.fb.group({
-    codigo: ['', [Validators.required]], 
-    descIngre: ['', [this.whitespaceValidator()]],  
+    codigo: ['', [Validators.required]],
+    descIngre: ['', [this.whitespaceValidator()]],
     puntoDePedido: ['', [this.numberOrWhitespaceValidator()]],
     stock: ['', [this.numberOrWhitespaceValidator()]],
     unidadMedida: ['', [this.whitespaceValidator()]],
-    aptoCeliacos: [false, [this.booleanValidator()]], 
-    aptoVegetarianos: [false, [this.booleanValidator()]], 
+    aptoCeliacos: [false, [this.booleanValidator()]],
+    aptoVegetarianos: [false, [this.booleanValidator()]],
     aptoVeganos: [false, [this.booleanValidator()]],
     proveedor: ['', [this.numberOrWhitespaceValidator()]]
 });
@@ -42,9 +42,9 @@ export class IngredienteModificarComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value.trim() === '') {
-        return null; 
+        return null;
       }
-      return null; 
+      return null;
     };
   }
 
@@ -54,7 +54,7 @@ export class IngredienteModificarComponent implements OnInit {
       if (value === '' || value.trim() === '') {
         return null;
       }
-      const valid = !isNaN(value) && value > 0; 
+      const valid = !isNaN(value) && value > 0;
       return valid ? null : { 'invalidNumber': { value } };
     };
   }
@@ -66,7 +66,7 @@ export class IngredienteModificarComponent implements OnInit {
       return null;
     }
     if (typeof value === 'boolean' || value === 'true' || value === 'false') {
-      return null; 
+      return null;
     }
     return { 'invalidBoolean': { value } };
   };
@@ -82,7 +82,7 @@ export class IngredienteModificarComponent implements OnInit {
   }
 
   get fc() {
-    return this.ingredienteForm.controls; 
+    return this.ingredienteForm.controls;
   }
 
   obtenerIngrediente(codigo: number) {
@@ -133,7 +133,7 @@ export class IngredienteModificarComponent implements OnInit {
           this.ingredienteForm.reset();
           this.enviado = false;
           this.mensaje = 'Ingrediente actualizado exitosamente';
-          this.router.navigate(['ingrediente/Lista']); 
+          this.router.navigate(['ingrediente/Lista']);
         },
         error: (error) => {
           console.error('Error al actualizar el ingrediente:', error);

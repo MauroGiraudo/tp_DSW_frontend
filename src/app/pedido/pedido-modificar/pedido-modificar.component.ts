@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoService } from '../../service/pedido.service.js';
-import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido } from '../../models/mesa.models.js';
+import { PedidoService } from '../../service/pedido.service';
+import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido } from '../../models/mesa.models';
 import { CommonModule } from '@angular/common';
-import { TarjetaService } from '../../service/tarjeta.service.js';
+import { TarjetaService } from '../../service/tarjeta.service';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';

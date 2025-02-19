@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PlatoService } from '../service/plato.service.js';
+import { PlatoService } from '../service/plato.service';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
@@ -11,7 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  
+
   constructor() {}
 
 }

@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ProveedorService } from '../../service/proveedor.service.js';
-import { Proveedor } from '../../models/mesa.models.js'; 
+import { ProveedorService } from '../../service/proveedor.service';
+import { Proveedor } from '../../models/mesa.models';
 import { TextInputComponent } from '../../text-input/text-input.component';
 import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
@@ -18,11 +18,12 @@ export class ProveedorCrearComponent implements OnInit {
   proveedorForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
+  nuevoProveedor: boolean = false
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private proveedorService: ProveedorService,
-    private router: Router 
+    private router: Router
   ) {
     this.proveedorForm = this.fb.group({
       cuit: ['', [Validators.required, Validators.pattern('[0-9]{11}')]],
@@ -32,20 +33,20 @@ export class ProveedorCrearComponent implements OnInit {
       provincia: ['', [Validators.required]],
       pais: ['', [Validators.required]],
       telefono: ['', [Validators.required, Validators.pattern(/^[+]{1}[0-9]{1,3}[ ]{0,1}[0-9]{1,4}[ ]{0,1}[0-9]{1,4}[ ]{0,1}[0-9]{1,4}$/)]],
-      email: ['', [Validators.required, Validators.email]] 
+      email: ['', [Validators.required, Validators.email]]
     });
   }
 
   ngOnInit(): void {}
 
   get fc() {
-    return this.proveedorForm.controls; 
+    return this.proveedorForm.controls;
   }
 
   crearProveedor() {
     if (this.proveedorForm.valid) {
       const nuevoProveedor: Proveedor = {
-        id: 0,  
+        id: 0,
         cuit: this.proveedorForm.value.cuit,
         razonSocial: this.proveedorForm.value.razonSocial,
         direccion: this.proveedorForm.value.direccion,
@@ -56,26 +57,28 @@ export class ProveedorCrearComponent implements OnInit {
         email: this.proveedorForm.value.email
       };
       this.proveedorService.crearProveedor(nuevoProveedor).subscribe({
-        next: (response: Proveedor) => { 
+        next: (response: Proveedor) => {
           console.log('Proveedor creado:', response);
           this.proveedorForm.reset();
-          this.enviado = false; 
-          this.mensaje = 'Proveedor agregado exitosamente'; 
+          this.enviado = false;
+          this.mensaje = 'Proveedor agregado exitosamente';
+          this.nuevoProveedor = true
           this.router.navigate(['proveedor/Lista']);
         },
         error: (error) => {
           console.error('Error al crear el proveedor:', error);
           const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-          this.mensaje = `Error al crear el proveedor: ${errorMsg}`; 
+          this.mensaje = `Error al crear el proveedor: ${errorMsg}`;
         }
       });
     } else {
-      this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+      this.mensaje = 'Por favor, complete el formulario correctamente.';
     }
   }
 
   enviar() {
-    this.enviado = true; 
-    this.crearProveedor(); 
+    this.nuevoProveedor = false
+    this.enviado = true;
+    this.crearProveedor();
   }
 }

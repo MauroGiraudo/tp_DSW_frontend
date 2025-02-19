@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ProveedorService } from '../../service/proveedor.service.js'; 
-import { Proveedor } from '../../models/mesa.models.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { ProveedorService } from '../../service/proveedor.service';
+import { Proveedor } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-modificar-proveedor',
@@ -18,16 +18,16 @@ export class ProveedorModificarComponent implements OnInit {
   proveedorForm: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  proveedorActual: Proveedor | null = null; 
+  proveedorActual: Proveedor | null = null;
 
   constructor(
     private fb: FormBuilder,
     private proveedorService: ProveedorService,
-    private router: Router 
+    private router: Router
   ) {
     this.proveedorForm = this.fb.group({
-      id: ['', [Validators.required]], 
-      razonSocial: [''],  
+      id: ['', [Validators.required]],
+      razonSocial: [''],
       cuit: [''],
       direccion: [''],
       ciudad: [''],
@@ -46,7 +46,7 @@ export class ProveedorModificarComponent implements OnInit {
   }
 
   get fc() {
-    return this.proveedorForm.controls; 
+    return this.proveedorForm.controls;
   }
 
   obtenerProveedor(id: number) {
@@ -96,7 +96,7 @@ export class ProveedorModificarComponent implements OnInit {
           this.proveedorForm.reset();
           this.enviado = false;
           this.mensaje = 'Proveedor actualizado exitosamente';
-          this.router.navigate(['proveedor/Lista']); 
+          this.router.navigate(['proveedor/Lista']);
         },
         error: (error) => {
           console.error('Error al actualizar el proveedor:', error);

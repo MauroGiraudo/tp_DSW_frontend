@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn  } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { TipoplatoService } from '../../service/tipoplato.service.js';
-import { Tipoplato } from '../../models/mesa.models.js';
+import { TipoplatoService } from '../../service/tipoplato.service';
+import { Tipoplato } from '../../models/mesa.models';
 import { TextInputComponent } from '../../text-input/text-input.component';
 import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
@@ -37,7 +37,7 @@ export class TipoplatoModificarComponent implements OnInit {
         if (value.trim() === '') {
           return null;
         }
-        return null; 
+        return null;
       };
     }
 
@@ -49,7 +49,7 @@ export class TipoplatoModificarComponent implements OnInit {
   }
 
   get fc() {
-    return this.tipoPlatoForm.controls; 
+    return this.tipoPlatoForm.controls;
   }
 
   obtenerTipoPlato(numPlato: number) {
@@ -59,7 +59,7 @@ export class TipoplatoModificarComponent implements OnInit {
         this.tipoPlatoForm.patchValue({
           numPlato: tipoPlato.numPlato,
           descTPlato: tipoPlato.descTPlato,
-          
+
         });
       },
       error: (error) => {

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { IngredienteService } from '../../service/ingrediente.service.js';
+import { IngredienteService } from '../../service/ingrediente.service';
 import { Router, RouterModule } from '@angular/router';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-ingrediente-eliminar',
@@ -21,17 +21,17 @@ export class IngredienteEliminarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ingredienteService: IngredienteService,
-    private router: Router 
+    private router: Router
   ) {
     this.ingredienteForm = this.fb.group({
-      codigo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
+      codigo: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 
   ngOnInit(): void {}
 
   get fc() {
-    return this.ingredienteForm.controls; 
+    return this.ingredienteForm.controls;
   }
 
   eliminarIngrediente() {
@@ -60,7 +60,7 @@ export class IngredienteEliminarComponent implements OnInit {
   }
 
   enviar() {
-    this.enviado = true; 
+    this.enviado = true;
     this.eliminarIngrediente();
   }
 }

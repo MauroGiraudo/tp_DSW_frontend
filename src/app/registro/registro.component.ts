@@ -1,17 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { UsuarioRegistro } from '../shared/usuarioInterfaces.js';
-import {
-  FormBuilder,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { UsuarioRegistro } from '../shared/usuarioInterfaces';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { validarContrasenias } from '../shared/validaciones/confirmar_contrasenia.js';
+import { validarContrasenias } from '../shared/validaciones/confirmar_contrasenia';
 import { TextInputComponent } from '../text-input/text-input.component';
 import { DefaultButtonComponent } from '../default-button/default-button.component';
-import { UsuarioService } from '../service/usuario.service.js';
+import { UsuarioService } from '../service/usuario.service';
 
 @Component({
   selector: 'app-registro',

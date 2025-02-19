@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsuarioService } from '../service/usuario.service.js';
-import { AlmacenamientoService } from '../service/almacenamiento.service.js';
+import { UsuarioService } from '../service/usuario.service';
+import { AlmacenamientoService } from '../service/almacenamiento.service';
 import { Router } from '@angular/router';
-import { Usuario } from '../shared/usuario.entity.js';
+import { Usuario } from '../shared/usuario.entity';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -35,7 +35,7 @@ export class ClienteComponent implements OnInit {
   logOut(): void {
     this.usuarioService.logOutUsuario().subscribe((response) => {
       console.log(response.message);
-      this.almacenamientoService.setItem('redirigirAHome', 'true'); 
+      this.almacenamientoService.setItem('redirigirAHome', 'true');
       window.location.reload();
     });
   }

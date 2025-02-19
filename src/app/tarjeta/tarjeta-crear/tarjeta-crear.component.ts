@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { TipoTarjetaService } from '../../service/tipo-tarjeta.service.js';
-import { NuevoTipotarjeta } from '../../models/mesa.models.js';
+import { TipoTarjetaService } from '../../service/tipo-tarjeta.service';
+import { NuevoTipotarjeta } from '../../models/mesa.models';
 import { TextInputComponent } from '../../text-input/text-input.component';
 import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
@@ -20,9 +20,9 @@ export class TarjetaCrearComponent implements OnInit{
   mensaje: string | null = null;
 
   constructor(
-    private fb: FormBuilder, 
-    private TipoTarjetaService: TipoTarjetaService, 
-    private router: Router 
+    private fb: FormBuilder,
+    private TipoTarjetaService: TipoTarjetaService,
+    private router: Router
   ) {
     this.tipoTarjetaForm = this.fb.group({
       descTarjeta: ['', [Validators.required]],
@@ -32,7 +32,7 @@ export class TarjetaCrearComponent implements OnInit{
   ngOnInit(): void {}
 
   get fc() {
-    return this.tipoTarjetaForm.controls; 
+    return this.tipoTarjetaForm.controls;
   }
 
   crearTipoTarjeta() {
@@ -42,29 +42,29 @@ export class TarjetaCrearComponent implements OnInit{
       };
 
       this.TipoTarjetaService.crearTipoTarjeta(nuevoTipoTarjeta).subscribe({
-        next: (response: NuevoTipotarjeta) => { 
+        next: (response: NuevoTipotarjeta) => {
           console.log('Tipo de tarjeta creado:', response);
           this.tipoTarjetaForm.reset();
-          this.enviado = false; 
-          this.mensaje = 'Tipo de tarjeta agregado exitosamente'; 
+          this.enviado = false;
+          this.mensaje = 'Tipo de tarjeta agregado exitosamente';
           this.router.navigate(['tarjeta/Lista']);
         },
         error: (error) => {
           console.error('Error al crear el tipo de tarjeta:', error);
           const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-          this.mensaje = `Error al crear el tipo de tarjeta: ${errorMsg}`; 
+          this.mensaje = `Error al crear el tipo de tarjeta: ${errorMsg}`;
         }
       });
     } else {
-      this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+      this.mensaje = 'Por favor, complete el formulario correctamente.';
     }
   }
 
   enviar() {
-    this.enviado = true; 
-    this.crearTipoTarjeta(); 
+    this.enviado = true;
+    this.crearTipoTarjeta();
   }
 }
 
-  
+
 

@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ProveedorService } from '../../service/proveedor.service.js'; 
-import { Proveedor } from '../../models/mesa.models.js'; 
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { ProveedorService } from '../../service/proveedor.service';
+import { Proveedor } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-eliminar-proveedor',
@@ -22,17 +22,17 @@ export class ProveedorEliminarComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private proveedorService: ProveedorService,
-    private router: Router 
+    private router: Router
   ) {
     this.proveedorForm = this.fb.group({
-      id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
+      id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 
   ngOnInit(): void {}
 
   get fc() {
-    return this.proveedorForm.controls; 
+    return this.proveedorForm.controls;
   }
 
   eliminarProveedor() {
@@ -61,7 +61,7 @@ export class ProveedorEliminarComponent implements OnInit {
   }
 
   enviar() {
-    this.enviado = true; 
+    this.enviado = true;
     this.eliminarProveedor();
   }
 }

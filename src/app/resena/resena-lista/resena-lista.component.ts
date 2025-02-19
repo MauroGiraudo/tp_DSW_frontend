@@ -4,8 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { ResenaService } from '../../service/resena.service.js';
-import { Resena } from '../../models/mesa.models.js';
+import { ResenaService } from '../../service/resena.service';
+import { Resena } from '../../models/mesa.models';
 
 @Component({
   selector: 'app-resena-lista',

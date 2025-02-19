@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Mesa } from '../models/mesa.models.js';
+import { Mesa } from '../models/mesa.models';
 import { Observable, tap } from 'rxjs';
-import { ResponseMesas } from '../models/mesa.models.js';
-import { ResponseMesa } from '../models/mesa.models.js';
+import { ResponseMesas } from '../models/mesa.models';
+import { ResponseMesa } from '../models/mesa.models';
 import { map, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -11,36 +11,36 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class MesaService {
-  private readonly apiUrl = 'http://localhost:3000/api/mesas'; 
+  private readonly apiUrl = 'http://localhost:3000/api/mesas';
 
   constructor(private http: HttpClient) {}
 
   public crearMesa(mesa: Mesa): Observable<Mesa> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Mesa>(url, {
-      estado: mesa.estado, 
-      cantPersonasMax: mesa.cant_personas_max, 
-      nro_mesa: mesa.nro_mesa 
+      estado: mesa.estado,
+      cantPersonasMax: mesa.cant_personas_max,
+      nro_mesa: mesa.nro_mesa
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa creada:', response); 
+          console.log('Mesa creada:', response);
         },
         error: (error) => {
-          console.error('Error al crear la mesa:', error); 
+          console.error('Error al crear la mesa:', error);
         }
       })
     );
   }
 
-  public getMesas(): Observable<ResponseMesas> { 
+  public getMesas(): Observable<ResponseMesas> {
     return this.http.get<ResponseMesas>(this.apiUrl).pipe(
       tap({
         next: (response) => {
           console.log('Mesas obtenidas:', response);
         },
         error: (error) => {
-          console.error('Error al obtener mesas:', error); 
+          console.error('Error al obtener mesas:', error);
         }
       })
     );
@@ -51,7 +51,7 @@ export class MesaService {
     return this.http.get<Mesa>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa obtenida:', response); 
+          console.log('Mesa obtenida:', response);
         },
         error: (error) => {
           console.error('Error al obtener la mesa:', error);
@@ -69,7 +69,7 @@ export class MesaService {
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa actualizada:', response); 
+          console.log('Mesa actualizada:', response);
         },
         error: (error) => {
           console.error('Error al actualizar la mesa:', error);
@@ -103,13 +103,13 @@ public verificarMesaDisponible(mesaId: number): Observable<boolean> {
   return this.http.get<ResponseMesa>(url).pipe(
     map(response => {
       console.log('Respuesta del servidor:', response);
-      const mesa = response?.data; 
+      const mesa = response?.data;
       console.log('Mesa encontrada:', mesa);
       return mesa ? mesa.estado === 'Disponible' : false;
     }),
     catchError((error) => {
       console.error('Error al verificar la mesa:', error);
-      return of(false); 
+      return of(false);
     })
   );
 }

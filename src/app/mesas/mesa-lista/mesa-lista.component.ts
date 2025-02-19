@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'; 
-import { MesaService } from '../../service/mesa.service.js';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { MesaService } from '../../service/mesa.service';
 import { CommonModule } from '@angular/common';
-import { ResponseMesas } from '../../models/mesa.models.js';
+import { ResponseMesas } from '../../models/mesa.models';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -13,7 +13,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./mesa-lista.component.scss']
 })
 export class MesaListaComponent implements OnInit, OnDestroy {
-  
+
   mesas: any[] = [];
   private destroy$ = new Subject<void>();
 

@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component.js';
+import { HomeComponent } from './home/home.component';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { MainComponent } from './main/main.component.js';
-import { SideNavComponent } from './side-nav/side-nav.component.js';
+import { MainComponent } from './main/main.component';
+import { SideNavComponent } from './side-nav/side-nav.component';
 
 interface SideNavToggle {
   screenWidth: number;

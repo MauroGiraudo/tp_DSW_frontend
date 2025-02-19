@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PlatoService } from '../../service/plato.service.js';
+import { PlatoService } from '../../service/plato.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { PedidoService } from '../../service/pedido.service.js';
-import { Plato } from '../../models/mesa.models.js';
-import { PlatoConCantidad } from '../../models/mesa.models.js';
+import { PedidoService } from '../../service/pedido.service';
+import { Plato } from '../../models/mesa.models';
+import { PlatoConCantidad } from '../../models/mesa.models';
 
 
 @Component({
@@ -13,14 +13,14 @@ import { PlatoConCantidad } from '../../models/mesa.models.js';
   standalone: true,
   imports: [CommonModule, HttpClientModule, FormsModule],
   templateUrl: './plato-lista.component.html',
-  styleUrls: ['./plato-lista.component.scss'] 
+  styleUrls: ['./plato-lista.component.scss']
 })
 
 export class PlatoListaComponent implements OnInit {
   platos: any[] = [];
-  searchTerm: string = ''; 
+  searchTerm: string = '';
   selectedType: string = '';
-  mensaje: string = '';  
+  mensaje: string = '';
 
 constructor(private platoService: PlatoService,private pedidoService: PedidoService) {}
 
@@ -47,7 +47,7 @@ constructor(private platoService: PlatoService,private pedidoService: PedidoServ
 
   onSearch(): void {
   console.log('Término de búsqueda:', this.searchTerm);}
-  
+
   filterByType(type: string): void {
     this.selectedType = type;
     console.log('Tipo de plato seleccionado:', this.selectedType);

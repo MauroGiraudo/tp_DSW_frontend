@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PlatoService } from '../service/plato.service.js';
+import { PlatoService } from '../service/plato.service';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { PedidoService } from '../service/pedido.service.js';
-import { Plato } from '../models/mesa.models.js';
-import { PlatoConCantidad } from '../models/mesa.models.js';
+import { PedidoService } from '../service/pedido.service';
+import { Plato } from '../models/mesa.models';
+import { PlatoConCantidad } from '../models/mesa.models';
 
 
 @Component({
@@ -17,7 +17,7 @@ import { PlatoConCantidad } from '../models/mesa.models.js';
 })
 
 export class CartaComidaComponents implements OnInit {
-  
+
   platos: any[] = [];
   searchTerm: string = ''; // Variable para almacenar el término de búsqueda
   selectedType: string = ''; // Tipo de plato seleccionado

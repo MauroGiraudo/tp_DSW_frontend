@@ -4,10 +4,10 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { TextInputComponent } from "../text-input/text-input.component";
 import { DefaultButtonComponent } from "../default-button/default-button.component";
-import { UsuarioService } from '../service/usuario.service.js';
-import { UsuarioLogIn } from '../shared/usuarioInterfaces.js';
-import { Usuario } from '../shared/usuario.entity.js';
-import { AlmacenamientoService } from '../service/almacenamiento.service.js';
+import { UsuarioService } from '../service/usuario.service';
+import { UsuarioLogIn } from '../shared/usuarioInterfaces';
+import { Usuario } from '../shared/usuario.entity';
+import { AlmacenamientoService } from '../service/almacenamiento.service';
 
 @Component({
   selector: 'app-login',
@@ -23,7 +23,7 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup
   enviado: boolean = false
   homeURL = '/home'
-  
+
   constructor (private formBuilder: FormBuilder,
     private usuarioService: UsuarioService,
     private router: Router,

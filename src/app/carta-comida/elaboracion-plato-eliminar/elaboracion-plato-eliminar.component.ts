@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { ElaboracionplatoService } from '../../service/elaboracionplato.service.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { ElaboracionplatoService } from '../../service/elaboracionplato.service';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 import { tap } from 'rxjs';
 
 @Component({
@@ -20,8 +20,8 @@ export class ElaboracionPlatoEliminarComponent implements OnInit {
   mensaje: string | null = null;
 
   constructor(
-    private fb: FormBuilder, 
-    private elaboracionplatoService: ElaboracionplatoService, 
+    private fb: FormBuilder,
+    private elaboracionplatoService: ElaboracionplatoService,
     private router: Router
   ) {
     this.elaboracionPlatoForm = this.fb.group({
@@ -33,7 +33,7 @@ export class ElaboracionPlatoEliminarComponent implements OnInit {
   ngOnInit(): void {}
 
   get fc() {
-    return this.elaboracionPlatoForm.controls; 
+    return this.elaboracionPlatoForm.controls;
   }
 
   eliminarIngrediente() {
@@ -45,24 +45,24 @@ export class ElaboracionPlatoEliminarComponent implements OnInit {
           next: () => {
             console.log(`Ingrediente ${ingrediente} del plato ${numPlato} eliminado exitosamente.`);
             this.elaboracionPlatoForm.reset();
-            this.enviado = false; 
-            this.mensaje = 'Ingrediente eliminado exitosamente'; 
+            this.enviado = false;
+            this.mensaje = 'Ingrediente eliminado exitosamente';
             this.router.navigate([`platos/${numPlato}/detalle`]);
           },
           error: (error) => {
             console.error(`Error al eliminar ingrediente: ${ingrediente}`, error);
             const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-            this.mensaje = `Error al eliminar ingrediente: ${errorMsg}`; 
+            this.mensaje = `Error al eliminar ingrediente: ${errorMsg}`;
           }
         })
       ).subscribe();
     } else {
-      this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+      this.mensaje = 'Por favor, complete el formulario correctamente.';
     }
   }
 
   enviar() {
-    this.enviado = true; 
-    this.eliminarIngrediente(); 
+    this.enviado = true;
+    this.eliminarIngrediente();
   }
 }

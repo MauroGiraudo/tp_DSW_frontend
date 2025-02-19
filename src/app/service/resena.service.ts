@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ResponseResenas } from '../models/mesa.models.js';
-import { UsuarioService } from './usuario.service.js';
+import { ResponseResenas } from '../models/mesa.models';
+import { UsuarioService } from './usuario.service';
 
 @Injectable({
   providedIn: 'root'

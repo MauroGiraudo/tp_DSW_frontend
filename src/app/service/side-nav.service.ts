@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { navData, navDataImport } from '../side-nav/navData.js';
+import { navData, navDataImport } from '../side-nav/navData';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +14,7 @@ export class SideNavService {
   filtrarFunciones(userType: string): void {
     this.clearNavData()
     this.navDataImport.forEach((item) => {
-      if(item.tipoUsuario.includes(userType) || item.tipoUsuario.includes('')) { 
+      if(item.tipoUsuario.includes(userType) || item.tipoUsuario.includes('')) {
         if(item.logueado) {
           if(item.logueado === this.isLogged(userType)) {
             this.navData.push(item)
@@ -22,7 +22,7 @@ export class SideNavService {
         } else {
           this.navData.push(item)
         }
-        
+
       }
     })
   }

@@ -2,8 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { navData } from './navData.js';
-import { UsuarioService } from '../service/usuario.service.js';
+import { navData } from './navData';
+import { UsuarioService } from '../service/usuario.service';
 
 @Component({
   selector: 'app-sublevel-menu',
@@ -12,12 +12,12 @@ import { UsuarioService } from '../service/usuario.service.js';
   template: `
 <ul *ngIf="collapsed && data.items && data.items.length > 0"
    [@submenu]="expanded
-    ? {value: 'visible', 
+    ? {value: 'visible',
         params: {transitionParams: '400ms cubic-bezier(0.86,0,0.07,1)', height:'*'}}
     : {value: 'hidden',
         params: {transitionParams: '400ms cubic-bezier(0.86,0,0.07,1)', height: '0'}}"
     class="sublevel-nav">
-  
+
   <ng-container *ngFor="let item of data.items">
     <li *ngIf="isVisible(item)" class="sublevel-nav-item">
       <a class="sublevel-nav-link"
@@ -31,7 +31,7 @@ import { UsuarioService } from '../service/usuario.service.js';
       </a>
       <a class="sublevel-nav-link"
          *ngIf="!item.items || (item.items && item.items.length === 0)"
-         [routerLink]="[item.routeLink]" 
+         [routerLink]="[item.routeLink]"
          routerLinkActive="active-sublevel"
          [routerLinkActiveOptions]="{exact: true}">
         <i class="sublevel-link-icon fa fa-circle"></i>
@@ -78,7 +78,7 @@ export class SublevelMenuComponent implements OnInit {
   @Input() expanded: boolean | undefined;
   @Input() multiple: boolean = false;
 
-  userType: string = ''; 
+  userType: string = '';
 
   constructor(
     public router: Router,

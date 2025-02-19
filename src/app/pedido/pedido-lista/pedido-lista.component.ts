@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'; 
-import { PedidoService } from '../../service/pedido.service.js';  // El servicio de pedidos
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { PedidoService } from '../../service/pedido.service';  // El servicio de pedidos
 import { CommonModule } from '@angular/common';
-import { Pedido } from '../../models/mesa.models.js';
-import { ResponsePedido } from '../../models/mesa.models.js';
+import { Pedido } from '../../models/mesa.models';
+import { ResponsePedido } from '../../models/mesa.models';
 import { Subject } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { takeUntil } from 'rxjs/operators';
-import { PedidosLis } from '../../models/mesa.models.js';
-import { ResponsePedidosLis } from '../../models/mesa.models.js';
+import { PedidosLis } from '../../models/mesa.models';
+import { ResponsePedidosLis } from '../../models/mesa.models';
 
 @Component({
   selector: 'app-lista-pedido',
@@ -18,12 +18,12 @@ import { ResponsePedidosLis } from '../../models/mesa.models.js';
   styleUrls: ['./pedido-lista.component.scss']
 })
 export class PedidoListaComponent implements OnInit, OnDestroy {
-  
+
   pedidos: Pedido[] = [];
   pedidosLis: PedidosLis[] = [];
   searchTerm: string = '';
-  selectedType: string = '';   
-  private destroy$ = new Subject<void>();  
+  selectedType: string = '';
+  private destroy$ = new Subject<void>();
 
   constructor(private pedidoService: PedidoService) {}
 
@@ -35,8 +35,8 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
     this.pedidoService.obtenerPedidos().pipe(
       takeUntil(this.destroy$)
     ).subscribe(
-      (pedidosLis: PedidosLis[]) => {  
-        this.pedidosLis = pedidosLis; 
+      (pedidosLis: PedidosLis[]) => {
+        this.pedidosLis = pedidosLis;
       },
       (error) => {
         console.error("Error al obtener los pedidos:", error);
@@ -49,7 +49,7 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
       pedidosLis.nroPed.toString().includes(this.searchTerm.toLowerCase()) &&
       (this.selectedType === '' || pedidosLis.estado === this.selectedType)
     );
-    
+
   }
 
   onSearch(): void {
@@ -71,7 +71,7 @@ export class PedidoListaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();  
-    this.destroy$.complete();  
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

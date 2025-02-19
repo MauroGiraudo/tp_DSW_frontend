@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { PedidoService } from '../service/pedido.service.js';
-import { Plato } from '../models/mesa.models.js';
-import { Bebida } from '../models/mesa.models.js';
+import { PedidoService } from '../service/pedido.service';
+import { Plato } from '../models/mesa.models';
+import { Bebida } from '../models/mesa.models';
 import { CommonModule } from '@angular/common';
 
 @Component({

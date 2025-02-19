@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Bebida } from '../models/mesa.models.js';
-import { ResponseBebidas } from '../models/mesa.models.js';
+import { Bebida } from '../models/mesa.models';
+import { ResponseBebidas } from '../models/mesa.models';
 
 @Injectable({
   providedIn: 'root'

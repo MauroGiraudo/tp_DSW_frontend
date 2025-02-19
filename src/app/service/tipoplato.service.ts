@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Tipoplato } from '../models/mesa.models.js';
+import { Tipoplato } from '../models/mesa.models';
 import { Observable, tap } from 'rxjs';
-import { ResponseTipoplato } from '../models/mesa.models.js';
+import { ResponseTipoplato } from '../models/mesa.models';
 
 @Injectable({
   providedIn: 'root'
@@ -13,17 +13,17 @@ export class TipoplatoService {
   constructor(private http: HttpClient) {}
 
   public crearTipoPlato(tipoPlato: Tipoplato): Observable<Tipoplato> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Tipoplato>(url, {
-      numPlato: tipoPlato.numPlato,  
-      descTPlato: tipoPlato.descTPlato  
+      numPlato: tipoPlato.numPlato,
+      descTPlato: tipoPlato.descTPlato
     }).pipe(
       tap({
         next: (response) => {
-          console.log('Tipo de plato creado:', response); 
+          console.log('Tipo de plato creado:', response);
         },
         error: (error) => {
-          console.error('Error al crear el tipo de plato:', error); 
+          console.error('Error al crear el tipo de plato:', error);
         }
       })
     );
@@ -43,11 +43,11 @@ export class TipoplatoService {
   }
 
   public obtenerTipoPlato(numPlato: number): Observable<Tipoplato> {
-    const url = `${this.apiUrl}/${numPlato}`; 
+    const url = `${this.apiUrl}/${numPlato}`;
     return this.http.get<Tipoplato>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Tipo de plato obtenido:', response); 
+          console.log('Tipo de plato obtenido:', response);
         },
         error: (error) => {
           console.error('Error al obtener el tipo de plato:', error);
@@ -60,8 +60,8 @@ export class TipoplatoService {
     const url = `${this.apiUrl}/${numPlato}`;
     return this.http.patch<Tipoplato>(url, {
       ...tipoPlatoActualizado,
-      numPlato: tipoPlatoActualizado.numPlato, 
-      descTPlato: tipoPlatoActualizado.descTPlato 
+      numPlato: tipoPlatoActualizado.numPlato,
+      descTPlato: tipoPlatoActualizado.descTPlato
     }).pipe(
       tap({
         next: (response) => {

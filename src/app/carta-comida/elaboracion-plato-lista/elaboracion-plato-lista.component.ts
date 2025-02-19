@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Subject, forkJoin, of } from 'rxjs';
 import { takeUntil, switchMap, catchError } from 'rxjs/operators';
-import { ElaboracionplatoService } from '../../service/elaboracionplato.service.js';
-import { PlatoService } from '../../service/plato.service.js';
+import { ElaboracionplatoService } from '../../service/elaboracionplato.service';
+import { PlatoService } from '../../service/plato.service';
 
 @Component({
   selector: 'app-elaboracion-plato-lista',

@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
-import { Ingrediente, ResponseIngredientes } from '../../models/mesa.models.js';
+import { Ingrediente, ResponseIngredientes } from '../../models/mesa.models';
 import { Subject } from 'rxjs';
-import { IngredienteService } from '../../service/ingrediente.service.js';
+import { IngredienteService } from '../../service/ingrediente.service';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -32,7 +32,7 @@ export class IngredienteListaComponent implements OnInit, OnDestroy {
     ).subscribe(
       (response: ResponseIngredientes) => {
         if (response && response.data && Array.isArray(response.data)) {
-          this.ingredientes = response.data; 
+          this.ingredientes = response.data;
         } else {
           console.error("La respuesta no contiene 'data' o no es un array", response);
         }
@@ -80,7 +80,7 @@ export class IngredienteListaComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.destroy$.next();  
-    this.destroy$.complete();  
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

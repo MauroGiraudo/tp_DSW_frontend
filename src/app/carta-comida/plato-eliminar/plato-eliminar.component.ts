@@ -2,9 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { PlatoService } from '../../service/plato.service.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { PlatoService } from '../../service/plato.service';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-plato-eliminar',
@@ -24,12 +24,12 @@ export class PlatoEliminarComponent {
     private router: Router
   ) {
     this.platoForm = this.fb.group({
-      numPlato: ['', [Validators.required, Validators.pattern('^[0-9]+$')]], 
+      numPlato: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
     });
   }
 
   get fc() {
-    return this.platoForm.controls; 
+    return this.platoForm.controls;
   }
 
   eliminarPlato() {

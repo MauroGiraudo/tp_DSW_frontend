@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { MesaService } from '../../service/mesa.service.js';
-import { Mesa } from '../../models/mesa.models.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { MesaService } from '../../service/mesa.service';
+import { Mesa } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-modificar-mesa',
@@ -21,13 +21,13 @@ export class MesaModificarComponent implements OnInit {
   mesaActual: Mesa | null = null;
 
   constructor(
-    private fb: FormBuilder, 
+    private fb: FormBuilder,
     private mesaService: MesaService,
     private router: Router
   ) {
     this.mesaForm = this.fb.group({
-      nro_mesa: ['', [Validators.required]], 
-      cant_personas_max: ['', [this.numberOrWhitespaceValidator()]], 
+      nro_mesa: ['', [Validators.required]],
+      cant_personas_max: ['', [this.numberOrWhitespaceValidator()]],
       estado: ['', [this.whitespaceValidator()]]
     });
   }
@@ -40,7 +40,7 @@ export class MesaModificarComponent implements OnInit {
   }
 
   get fc() {
-    return this.mesaForm.controls; 
+    return this.mesaForm.controls;
   }
 
   numberOrWhitespaceValidator(): ValidatorFn {
@@ -49,7 +49,7 @@ export class MesaModificarComponent implements OnInit {
       if (value === '' || value.trim() === '') {
         return null;
       }
-      const valid = !isNaN(value) && value > 0; 
+      const valid = !isNaN(value) && value > 0;
       return valid ? null : { 'invalidNumber': { value } };
     };
   }
@@ -58,9 +58,9 @@ export class MesaModificarComponent implements OnInit {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const value = control.value;
       if (value.trim() === '') {
-        return null; 
+        return null;
       }
-      return null; 
+      return null;
     };
   }
 
@@ -87,34 +87,34 @@ export class MesaModificarComponent implements OnInit {
 
     if (isNaN(nroMesa)) {
       this.mensaje = 'Número de mesa inválido. Debe ser un número.';
-      return; 
+      return;
     }
     const mesaActualizada: Partial<Mesa> = {
-      nro_mesa: nroMesa, 
+      nro_mesa: nroMesa,
       cant_personas_max: this.mesaForm.value.cant_personas_max ? parseInt(this.mesaForm.value.cant_personas_max, 10) : this.mesaActual?.cant_personas_max,
       estado: this.mesaForm.value.estado ? this.mesaForm.value.estado : this.mesaActual?.estado
     };
     this.mesaService.actualizarMesa(nroMesa, mesaActualizada).subscribe({
-      next: (response: Mesa) => { 
+      next: (response: Mesa) => {
         console.log('Mesa actualizada:', response);
         this.mesaForm.reset();
-        this.enviado = false; 
-        this.mensaje = 'Mesa actualizada con éxito'; 
+        this.enviado = false;
+        this.mensaje = 'Mesa actualizada con éxito';
         this.router.navigate(['mesa/Lista']);
       },
       error: (error) => {
         console.error('Error al actualizar la mesa:', error);
         const errorMsg = error.error?.message || error.message || 'Ocurrió un error desconocido';
-        this.mensaje = `Error al actualizar la mesa: ${errorMsg}`; 
+        this.mensaje = `Error al actualizar la mesa: ${errorMsg}`;
       }
     });
   } else {
-    this.mensaje = 'Por favor, complete el formulario correctamente.'; 
+    this.mensaje = 'Por favor, complete el formulario correctamente.';
   }
 }
 
   enviar() {
-    this.enviado = true; 
-    this.actualizarMesa(); 
+    this.enviado = true;
+    this.actualizarMesa();
   }
 }

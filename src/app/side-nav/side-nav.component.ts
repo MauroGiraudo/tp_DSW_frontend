@@ -1,10 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, HostListener, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { UsuarioService } from '../service/usuario.service.js';
-import { navData } from './navData.js';
-import { SideNavService } from '../service/side-nav.service.js';
-import { AlmacenamientoService } from '../service/almacenamiento.service.js';
+import { UsuarioService } from '../service/usuario.service';
+import { navData } from './navData';
+import { SideNavService } from '../service/side-nav.service';
+import { AlmacenamientoService } from '../service/almacenamiento.service';
 import { SublevelMenuComponent } from "./sublevel-menu.component";
 
 interface SideNavToggle {
@@ -29,7 +29,7 @@ export class SideNavComponent implements OnInit {
   ) {}
 
   @Output() onToggleSideNav: EventEmitter<SideNavToggle> = new EventEmitter();
-  
+
   collapsed: boolean = false;
   screenWidth: number = 0;
   multiple: boolean = false;
@@ -61,7 +61,7 @@ export class SideNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userType = this.usuarioService.showTipoUsuario() || ''; 
+    this.userType = this.usuarioService.showTipoUsuario() || '';
     this.sideNavService.filtrarFunciones(this.userType);
     this.updateNavData();
     if (typeof window !== 'undefined') {

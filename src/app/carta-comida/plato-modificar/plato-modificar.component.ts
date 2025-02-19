@@ -2,28 +2,28 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { PlatoService } from '../../service/plato.service.js';  
-import { Plato1 } from '../../models/mesa.models.js';
-import { TextInputComponent } from '../../text-input/text-input.component.js';
-import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
+import { PlatoService } from '../../service/plato.service';
+import { Plato1 } from '../../models/mesa.models';
+import { TextInputComponent } from '../../text-input/text-input.component';
+import { DefaultButtonComponent } from '../../default-button/default-button.component';
 
 @Component({
   selector: 'app-modificar-plato',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, TextInputComponent, DefaultButtonComponent, RouterModule],
-  templateUrl: './plato-modificar.component.html',  
-  styleUrls: ['./plato-modificar.component.scss']  
+  templateUrl: './plato-modificar.component.html',
+  styleUrls: ['./plato-modificar.component.scss']
 })
 export class PlatoModificarComponent implements OnInit {
   platoForm!: FormGroup;
   enviado = false;
   mensaje: string | null = null;
-  platoActual: Plato1 | null = null; 
+  platoActual: Plato1 | null = null;
 
   constructor(
-    private fb: FormBuilder, 
-    private platoService: PlatoService,  
-    private router: Router  
+    private fb: FormBuilder,
+    private platoService: PlatoService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,11 +36,11 @@ export class PlatoModificarComponent implements OnInit {
 
   inicializarFormulario(): void {
     this.platoForm = this.fb.group({
-      numPlato: ['', [Validators.required]],  
+      numPlato: ['', [Validators.required]],
       descripcion: [''],
       tiempo: [''],
-      precio: [''],  
-      tipoPlato: [''],  
+      precio: [''],
+      tipoPlato: [''],
       aptoCeliaco: [false],
       aptoVegetarianos: [false],
       aptoVeganos: [false],
@@ -50,7 +50,7 @@ export class PlatoModificarComponent implements OnInit {
   }
 
   get fc() {
-    return this.platoForm.controls; 
+    return this.platoForm.controls;
   }
 
   get ingredientes(): FormArray {
@@ -84,9 +84,9 @@ export class PlatoModificarComponent implements OnInit {
     urlValidator(): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null => {
     if (!control.value) {
-      return null;  
+      return null;
     }
-    const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;  
+    const pattern = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
     const isValid = pattern.test(control.value.trim());
     return isValid ? null : { invalidUrl: { value: control.value } };
   };
