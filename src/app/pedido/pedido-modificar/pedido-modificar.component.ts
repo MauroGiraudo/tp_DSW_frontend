@@ -26,7 +26,7 @@ export class PedidoModificarComponent implements OnInit {
   constructor(
     private pedidoService: PedidoService,
     private tarjetaService: TarjetaService) {}
-
+    
   ngOnInit(): void {
     this.pedidoService.obtenerPedidoEnCurso().subscribe(
       (pedidoId) => {
@@ -165,6 +165,78 @@ export class PedidoModificarComponent implements OnInit {
       }
     );
   }
+eliminarPlatoDelPedido(plato: PlatoConCantidad): void {
+  this.pedidoService.obtenerPedidoEnCurso().subscribe(
+    (nroPed) => {
+      if (nroPed) {
+        // Usar la fecha y hora del plato para la URL
+
+
+        // Llamar al servicio para eliminar el plato del pedido
+        this.pedidoService.eliminarPlatoDelPedido(nroPed, plato.numPlato).subscribe(
+          (response) => {
+            console.log('Plato eliminado del pedido', response);
+            this.mensaje = `Plato ${plato.descripcion} eliminado del pedido.`;
+
+            // Eliminar el plato de la lista local
+            this.pedidoPlatos = this.pedidoPlatos.filter(p => p.numPlato !== plato.numPlato);
+          },
+          (error) => {
+            console.error('Error al eliminar el plato', error);
+            this.mensaje = `Error al eliminar el plato ${plato.descripcion}.`;
+          }
+        );
+      } else {
+        console.log('No hay un pedido en curso para eliminar el plato');
+        this.mensaje = 'No hay un pedido en curso para eliminar el plato.';
+      }
+    },
+    (error) => {
+      console.error('Error al obtener el pedido en curso', error);
+      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+    }
+  );
+}
+
+
+
+
+
+eliminarBebida(bebida: any): void {
+  this.pedidoService.obtenerPedidoEnCurso().subscribe(
+    (nroPed) => {
+      if (nroPed) {
+        // Usar la fecha y hora de la bebida para la URL
+        const fecha = bebida.fechaSolicitud; // Obtener la fecha de solicitud
+        const hora = bebida.horaSolicitud; // Obtener la hora de solicitud
+
+        // Llamar al servicio para eliminar la bebida del pedido
+        this.pedidoService.eliminarBebidaDelPedido(nroPed, bebida.codBebida).subscribe(
+          (response) => {
+            console.log('Bebida eliminada del pedido', response);
+            this.mensaje = `Bebida ${bebida.descripcion} eliminada del pedido.`;
+
+            // Eliminar la bebida de la lista local
+            this.pedidoBebidas = this.pedidoBebidas.filter(b => b.codBebida !== bebida.codBebida);
+          },
+          (error) => {
+            console.error('Error al eliminar la bebida', error);
+            this.mensaje = `Error al eliminar la bebida ${bebida.descripcion}.`;
+          }
+        );
+      } else {
+        console.log('No hay un pedido en curso para eliminar la bebida');
+        this.mensaje = 'No hay un pedido en curso para eliminar la bebida.';
+      }
+    },
+    (error) => {
+      console.error('Error al obtener el pedido en curso', error);
+      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+    }
+  );
+}
+
+
 
   marcarBebidaComoRecibida(bebida: BebidaConCantidad): void {
     this.pedidoService.obtenerPedidoEnCurso().subscribe(

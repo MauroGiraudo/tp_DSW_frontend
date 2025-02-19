@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido, PlatoPedidosEst, BebidaPedidoEst, PedidosLis } from '../models/mesa.models';
+import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido, PlatoPedidosEst, BebidaPedidoEst, PedidosLis, Plato } from '../models/mesa.models';
 import { Observable, of, throwError, forkJoin, catchError } from 'rxjs'; 
 import { map, switchMap } from 'rxjs/operators';
 import { UsuarioService } from './usuario.service';
@@ -133,18 +133,14 @@ export class PedidoService {
     );
   }
 
-  marcarPlatoComoRecibido(nroPed: number, numPlato: number): Observable<any> {
+marcarPlatoComoRecibido(nroPed: number, numPlato: number): Observable<any> {
   return this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`).pipe(
     switchMap(ResponsePlatoEst => {
       const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato); // Buscar el plato específico
       if (plato) {
-        const platoData = {
-          fechaSolicitud: plato.fechaSolicitud,
-          horaSolicitud: plato.horaSolicitud,
-          cantidad: plato.cantidad,
-          recibido: true // Marcamos el plato como recibido
-        };
-        return this.http.put(`http://localhost:3000/api/pedidos/${nroPed}/platos/${numPlato}`, platoData);
+        const url = `http://localhost:3000/api/pedidos/${nroPed}/platos/${numPlato}/fecha/${plato.fechaSolicitud}/hora/${plato.horaSolicitud}`;
+        const platoData = { cantidad: plato.cantidad, recibido: true }; // Marcamos el plato como recibido
+        return this.http.put(url, platoData);
       } else {
         return of(null); // Si no se encuentra el plato, retornamos null
       }
@@ -157,18 +153,20 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
     switchMap(ResponseBebidaEst => {
       const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida); // Buscar la bebida específica
       if (bebida) {
-        const bebidaData = {
-          fechaSolicitud: bebida.fechaSolicitud,
-          horaSolicitud: bebida.horaSolicitud,
-          cantidad: bebida.cantidad,
-          recibido: true // Marcamos la bebida como recibida
-        };
-        return this.http.put(`http://localhost:3000/api/pedidos/${nroPed}/bebidas/${codBebida}`, bebidaData);
+        const fechaSolicitud = bebida.fechaSolicitud;
+        const horaSolicitud = bebida.horaSolicitud;
+        
+        return this.http.put(
+          `http://localhost:3000/api/pedidos/${nroPed}/bebidas/${codBebida}/fecha/${fechaSolicitud}/hora/${horaSolicitud}`, 
+          {}
+        );
       } else {
         return of(null); // Si no se encuentra la bebida, retornamos null
       }
     })
   );
+
+
 }
 
   finalizarPedido(nroPed: number,platos: PlatoPedido[],bebidas: BebidaPedido[],totalImporte: number,tarjetaSeleccionada: any): Observable<any> { 
@@ -225,13 +223,50 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
     }
   }
 
-  eliminarPlatoDelPedido(numPlato: number): void {
-    this.platosPedido = this.platosPedido.filter(p => p.numPlato !== numPlato);
+// Eliminar plato de un pedido
+eliminarPlatoDelPedido(nroPed: number, numPlato: number): Observable<any> {
+  return this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`).pipe(
+    switchMap(ResponsePlatoEst => {
+      const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato); // Buscar el plato específico
+      if (plato) {
+        const fecha = plato.fechaSolicitud; // Obtener la fecha de solicitud
+        const hora = plato.horaSolicitud; // Obtener la hora de solicitud
+        const url = `http://localhost:3000/api/pedidos/${nroPed}/platos/${numPlato}/fecha/${fecha}/hora/${hora}`;
+        return this.http.delete(url).pipe(
+          catchError(error => {
+            console.error('Error al eliminar el plato', error);
+            return throwError(() => new Error('Error al eliminar el plato del pedido.'));
+          })
+        );
+      } else {
+        return of(null); // Si no se encuentra el plato, retornamos null
+      }
+    })
+  );
   }
 
-  eliminarBebidaDelPedido(codBebida: number): void {
-    this.bebidasPedido = this.bebidasPedido.filter(b => b.codBebida !== codBebida);
-  }
+
+
+eliminarBebidaDelPedido(nroPed: number, codBebida: number): Observable<any> {
+  return this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`).pipe(
+    switchMap(ResponseBebidaEst => {
+      const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida); // Buscar la bebida específica
+      if (bebida) {
+        const fecha = bebida.fechaSolicitud; // Obtener la fecha de solicitud
+        const hora = bebida.horaSolicitud; // Obtener la hora de solicitud
+        const url = `http://localhost:3000/api/pedidos/${nroPed}/bebidas/${codBebida}/fecha/${fecha}/hora/${hora}`;
+        return this.http.delete(url).pipe(
+          catchError(error => {
+            console.error('Error al eliminar la bebida', error);
+            return throwError(() => new Error('Error al eliminar la bebida del pedido.'));
+          })
+        );
+      } else {
+        return of(null); // Si no se encuentra la bebida, retornamos null
+      }
+    })
+  );
+}
 
   // Método para cancelar el pedido
   cancelarPedido(pedidoId: number): Observable<any> {
