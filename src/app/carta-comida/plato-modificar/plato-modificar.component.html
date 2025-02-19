@@ -31,9 +31,11 @@
           <text-input [control]="ingrediente.get('cantidadNecesaria')!" [mostrarErrores]="enviado"
             label="Cantidad Necesaria"></text-input>
 
-          <button type="button" (click)="eliminarIngrediente(i)">Eliminar</button>
-        </div>
-        <button type="button" (click)="agregarIngrediente()">Agregar Ingrediente</button>
+          <default-button tipo="button" (click)="eliminarIngrediente(i)" texto="Eliminar"
+            class="small-left-button"></default-button>
+          </div>
+      <default-button tipo="button" (click)="agregarIngrediente()" texto="Agregar Ingrediente"
+        class="small-left-button"></default-button>
       </div>
 
       <default-button texto="Actualizar Plato"></default-button>
