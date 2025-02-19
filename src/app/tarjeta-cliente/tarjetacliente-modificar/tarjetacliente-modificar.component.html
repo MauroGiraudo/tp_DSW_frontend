@@ -1,1 +1,25 @@
-<p>tarjetacliente-modificar works!</p>
+<div class="register_box">
+  <div class="register">
+    <p class="titulo">Modificar Tarjeta</p>
+
+    <div *ngIf="mensaje" class="mensaje"
+      [ngClass]="{'exito': mensaje.includes('éxito'), 'error': mensaje.includes('Error')}">
+      {{ mensaje }}
+    </div>
+
+    <form [formGroup]="tarjetaClienteForm" (ngSubmit)="enviar()">
+      <text-input [control]="fc['idTarjeta']" [mostrarErrores]="enviado" label="Código de la Tarjeta"></text-input>
+      <text-input [control]="fc['nroTarjeta']" [mostrarErrores]="enviado" label="Número de Tarjeta"></text-input>
+      <text-input [control]="fc['tipoTarjeta']" [mostrarErrores]="enviado"
+        label="Tipo de Tarjeta (Débito/Crédito)"></text-input>
+      <text-input [control]="fc['bancoTarjeta']" [mostrarErrores]="enviado" label="Banco"></text-input>
+      <text-input [control]="fc['titular']" [mostrarErrores]="enviado" label="Titular"></text-input>
+      <text-input [control]="fc['vencimiento']" [mostrarErrores]="enviado"
+        label="Fecha de Vencimiento (AAAA-MM-DD)"></text-input>
+      <text-input [control]="fc['codSeguridad']" [mostrarErrores]="enviado" label="Código de Seguridad"></text-input>
+      <text-input [control]="fc['tarjeta']" [mostrarErrores]="enviado" label="ID de Tarjeta"></text-input>
+
+      <default-button texto="Guardar Cambios"></default-button>
+    </form>
+  </div>
+</div>
