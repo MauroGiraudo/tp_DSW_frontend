@@ -3,6 +3,7 @@
 <div class="pedidos-container">
   <div *ngFor="let plato of pedidoPlatos" class="plato-item">
     <div class="card">
+      <span class="btn-eliminar" (click)="eliminarPlatoDelPedido(plato)">&#10060;</span>
       <img *ngIf="plato.imagen" [src]="plato.imagen" alt="{{ plato.descripcion }}" class="plato-imagen">
       <div class="plato-info">
         <span>{{ plato.descripcion }}</span>
@@ -16,6 +17,7 @@
 
   <div *ngFor="let bebida of pedidoBebidas" class="bebida-item">
     <div class="card">
+      <span class="btn-eliminar" (click)="eliminarBebida(bebida)">&#10060;</span>
       <img *ngIf="bebida.imagen" [src]="bebida.imagen" alt="{{ bebida.descripcion }}" class="bebida-imagen">
       <div class="bebida-info">
         <span>{{ bebida.descripcion }}</span>
@@ -44,6 +46,7 @@
 
 <select [(ngModel)]="tarjetaSeleccionada">
   <option *ngFor="let tarjeta of filteredTarjetas" [ngValue]="tarjeta">
-    {{ tarjeta.tarjeta.descTarjeta }} | {{ tarjeta.nroTarjeta }} | ({{ tarjeta.tipoTarjeta }}) | {{ tarjeta.bancoTarjeta }}
+    {{ tarjeta.tarjeta.descTarjeta }} | {{ tarjeta.nroTarjeta }} | ({{ tarjeta.tipoTarjeta }}) | {{ tarjeta.bancoTarjeta
+    }}
   </option>
 </select>

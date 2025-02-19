@@ -181,3 +181,16 @@ button[disabled] {
   color: #721c24;
   border: 1px solid #f5c6cb;
 }
+.btn-eliminar {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  color: red;
+}
+
+.card {
+  position: relative;
+  padding: 10px;
+}
