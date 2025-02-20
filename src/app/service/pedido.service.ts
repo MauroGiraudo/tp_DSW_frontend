@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido, PlatoPedidosEst, BebidaPedidoEst, PedidosLis, Plato } from '../models/mesa.models';
+import { PlatoConCantidad, BebidaConCantidad, PlatoPedido, BebidaPedido, PlatoPedidosEst, BebidaPedidoEst, PedidosLis} from '../models/mesa.models';
 import { Observable, of, throwError, forkJoin, catchError } from 'rxjs'; 
 import { map, switchMap } from 'rxjs/operators';
 import { UsuarioService } from './usuario.service';
@@ -98,7 +98,7 @@ export class PedidoService {
 
   // Obtener información de platos y bebidas por pedido
   obtenerPlatosBebidasPorPedido(pedidoId: number): Observable<{ platos: PlatoConCantidad[], bebidas: BebidaConCantidad[] }> {
-    const obtenerPlatos = this.http.get<{ data: any[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/platos`);
+    const obtenerPlatos = this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/platos`);
     const obtenerBebidas = this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/bebidas`);
 
     return forkJoin([obtenerPlatos, obtenerBebidas]).pipe(

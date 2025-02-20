@@ -28,4 +28,37 @@ form {
   display: flex;
   justify-content: center;
   align-items: center;
-} 
+}
+
+/* Adaptación para móviles */
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 1.4rem;
+    padding-left: 2rem;
+    /* Reducido para adaptarse a pantallas más pequeñas */
+  }
+
+  .contenedor {
+    flex-direction: column;
+    /* Los elementos se apilan en lugar de alinearse en una fila */
+    padding-top: 1rem;
+    /* Menos espacio arriba */
+  }
+
+  .detalles {
+    width: 100%;
+    /* Hace que el contenedor de detalles ocupe el 100% en pantallas pequeñas */
+    padding: 0 1rem;
+    /* Añade algo de relleno a los lados */
+  }
+
+  form {
+    width: 100%;
+    /* Hace que el formulario ocupe el 100% del ancho */
+  }
+
+  .registro {
+    flex-direction: column;
+    /* Alinea los elementos de registro verticalmente */
+  }
+}

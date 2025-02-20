@@ -13,7 +13,6 @@ import { Plato1 } from '../../models/mesa.models.js';
   imports: [CommonModule, ReactiveFormsModule, TextInputComponent, DefaultButtonComponent, RouterModule],
   templateUrl: './plato-crear.component.html',
   styleUrls: ['./plato-crear.component.scss'],
-  
 })
 export class PlatoCrearComponent implements OnInit {
   platoForm: FormGroup;
@@ -30,11 +29,11 @@ export class PlatoCrearComponent implements OnInit {
       tiempo: [null, [Validators.required, Validators.min(1)]],
       precio: [null, [Validators.required, Validators.min(0)]],
       tipoPlato: [null, Validators.required],
-      aptoCeliaco: [false],  // Se agregan valores por defecto
+      aptoCeliaco: [false],
       aptoVegetarianos: [false],
       aptoVeganos: [false],
       imagen: [''], 
-      ingredientes: this.fb.array([], Validators.required) // Se asegura que tenga al menos un ingrediente
+      ingredientes: this.fb.array([], Validators.required) 
     });
   }
 
@@ -48,7 +47,9 @@ export class PlatoCrearComponent implements OnInit {
     return this.platoForm.get('ingredientes') as FormArray;
   }
 
+  // Método específico para agregar ingrediente
   agregarIngrediente() {
+    // Añadir ingrediente sin validar el formulario
     this.ingredientes.push(this.fb.group({
       ingrediente: [null, Validators.required],
       cantidadNecesaria: [null, [Validators.required, Validators.min(1)]]
@@ -62,26 +63,21 @@ export class PlatoCrearComponent implements OnInit {
   }
 
   crearPlato() {
-    if (this.platoForm.invalid) {
-      this.mensaje = 'Por favor, complete el formulario correctamente.';
-      return;
-    }
-
     const nuevoPlato: Plato1 = {
-  numPlato: 0,
-  descripcion: this.platoForm.value.descripcion,
-  tiempo: Number(this.platoForm.value.tiempo),
-  precio: Number(this.platoForm.value.precio),
-  tipoPlato: Number(this.platoForm.value.tipoPlato),
-  aptoCeliaco: false,
-  aptoVegetarianos: false,
-  aptoVeganos: false,
-  imagen: this.platoForm.value.imagen,
-  ingredientes: this.platoForm.value.ingredientes.map((ing: any) => ({
-    ingrediente: ing.ingrediente, // Código del ingrediente
-    cantidadNecesaria: Number(ing.cantidadNecesaria)
-  }))
-};
+      numPlato: 0,
+      descripcion: this.platoForm.value.descripcion,
+      tiempo: Number(this.platoForm.value.tiempo),
+      precio: Number(this.platoForm.value.precio),
+      tipoPlato: Number(this.platoForm.value.tipoPlato),
+      aptoCeliaco: false,
+      aptoVegetarianos: false,
+      aptoVeganos: false,
+      imagen: this.platoForm.value.imagen,
+      ingredientes: this.platoForm.value.ingredientes.map((ing: any) => ({
+        ingrediente: ing.ingrediente,
+        cantidadNecesaria: Number(ing.cantidadNecesaria)
+      }))
+    };
 
     this.platoService.crearPlato(nuevoPlato).subscribe({
       next: (response) => { 
@@ -109,8 +105,16 @@ export class PlatoCrearComponent implements OnInit {
     });
   }
 
+  // Método para manejar el envío del formulario y validar
   enviar() {
-    this.enviado = true; 
-    this.crearPlato(); 
+    this.enviado = true;  // Indica que se intentó enviar el formulario
+    if (this.platoForm.invalid) {
+      /*// Si el formulario es inválido, muestra el mensaje de error
+      this.mensaje = 'Por favor, complete el formulario correctamente.';*/
+    } else {
+      // Si el formulario es válido, llama a la función para crear el plato
+      this.crearPlato(); 
+    }
   }
 }
+

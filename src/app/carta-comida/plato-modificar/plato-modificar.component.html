@@ -2,13 +2,14 @@
   <div class="register">
     <p class="titulo">Modificar Plato</p>
 
+    <!-- Mensajes de error debajo del título -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
     </div>
 
     <form [formGroup]="platoForm" (ngSubmit)="enviar()">
-      <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Numero de Plato"></text-input>
+      <text-input [control]="fc['numPlato']" [mostrarErrores]="enviado" label="Número de Plato"></text-input>
       <text-input [control]="fc['descripcion']" [mostrarErrores]="enviado" label="Descripción"></text-input>
       <text-input [control]="fc['tiempo']" [mostrarErrores]="enviado"
         label="Tiempo de Preparación (minutos)"></text-input>
@@ -31,13 +32,19 @@
           <text-input [control]="ingrediente.get('cantidadNecesaria')!" [mostrarErrores]="enviado"
             label="Cantidad Necesaria"></text-input>
 
-          <default-button tipo="button" (click)="eliminarIngrediente(i)" texto="Eliminar"
-            class="small-left-button"></default-button>
-          </div>
-      <default-button tipo="button" (click)="agregarIngrediente()" texto="Agregar Ingrediente"
-        class="small-left-button"></default-button>
+          <!-- Botón de Eliminar Ingrediente -->
+          <button type="button" (click)="eliminarIngrediente(i)" class="agregar-ingrediente-button">
+            Eliminar Ingrediente
+          </button>
+        </div>
+
+        <!-- Botón de Agregar Ingrediente -->
+        <button type="button" (click)="agregarIngrediente()" class="agregar-ingrediente-button">
+          Agregar Ingrediente
+        </button>
       </div>
 
+      <!-- Botón de Actualizar Plato -->
       <default-button texto="Actualizar Plato"></default-button>
     </form>
   </div>
