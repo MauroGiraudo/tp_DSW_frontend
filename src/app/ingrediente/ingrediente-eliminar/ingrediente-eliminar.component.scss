@@ -17,43 +17,37 @@ select {
   font-size: 1.8rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   text-align: center; // Centramos el texto del título
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.8rem; // Reducimos el margen inferior
 }
 
 .form-control {
   margin-bottom: 1rem;
   position: relative;
-  /* Necesario para la correcta colocación de los mensajes de error */
 }
 
 /* Estilo del mensaje de validación */
 .mensaje {
-  position: absolute;
-  top: 100%;
-  /* Coloca el mensaje debajo del campo */
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50%;
-  /* Ajusta el ancho del mensaje */
-  padding: 5px;
-  margin-top: 5px;
+  width: 100%;
+  /* Hace que ocupe todo el ancho */
+  padding: 10px;
+  margin-top: 0.5rem;
+  /* Ajustamos el margen para colocarlo justo debajo */
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   transition: opacity 0.3s ease;
-  z-index: 0;
-  /* Asegura que el mensaje se quede detrás del input */
   font-size: 0.9rem;
-  /* Ajuste en tamaño de fuente */
 }
 
+/* Estilos para el mensaje de éxito */
 .exito {
   color: green;
   background-color: #e7f9e7;
   border: 1px solid green;
 }
 
+/* Estilos para el mensaje de error */
 .error {
   color: red;
   background-color: #f9e7e7;
@@ -87,21 +81,6 @@ form {
   width: 100%;
 }
 
-/* Estilo para el div.contenido encima del input-validation */
-.contenido {
-  position: absolute;
-  top: -20px;
-  /* Ajusta la posición para que esté encima del campo */
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  /* Asegura que esté encima de la validación */
-  background-color: rgba(255, 255, 255, 0.8);
-  /* Fondo blanco semi-transparente */
-  padding: 5px;
-  border-radius: 5px;
-}
-
 /* Media Queries para pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
   .register {
@@ -125,7 +104,6 @@ form {
   .mensaje {
     padding: 8px;
     width: 60%;
-    /* Un poco más grande en pantallas más pequeñas */
   }
 }
 
@@ -152,7 +130,6 @@ form {
   .mensaje {
     padding: 7px;
     width: 70%;
-    /* Un poco más grande en pantallas aún más pequeñas */
   }
 }
 
@@ -175,14 +152,9 @@ form {
     margin-bottom: 0.5rem;
   }
 
-  /* Ajuste en el mensaje para pantallas más pequeñas */
   .mensaje {
     width: 90%;
-    /* Hacemos que ocupe más espacio */
     font-size: 0.8rem;
-    /* Tamaño de fuente reducido para mejor ajuste */
-    left: 50%;
-    transform: translateX(-50%);
   }
 }
 

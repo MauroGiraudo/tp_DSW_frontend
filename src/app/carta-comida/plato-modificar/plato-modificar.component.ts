@@ -93,10 +93,10 @@ export class PlatoModificarComponent implements OnInit {
     }
 
   actualizarPlato(): void {
-    if (this.platoForm.invalid) {
+    /*if (this.platoForm.invalid) {
       this.mensaje = 'Por favor, complete el formulario correctamente.';
       return;
-    }
+    }*/
 
     const numPlato = Number(this.platoForm.value.numPlato);
     if (isNaN(numPlato)) {

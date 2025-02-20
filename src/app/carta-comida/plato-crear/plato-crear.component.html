@@ -2,6 +2,7 @@
   <div class="register">
     <p class="titulo">Crear Plato</p>
 
+    <!-- Mensaje de éxito o error debajo del título -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
@@ -31,17 +32,19 @@
             label="Cantidad Necesaria"></text-input>
 
           <!-- Botón de Eliminar Ingrediente -->
-          <default-button tipo="button" (click)="eliminarIngrediente(i)" texto="Eliminar"
-            class="small-left-button"></default-button>
-        </div>
-
-        <!-- Botón de Agregar Ingrediente -->
-        <default-button tipo="button" (click)="agregarIngrediente()" texto="Agregar Ingrediente"
-          class="small-left-button"></default-button>
-      </div>
+          <button type="button" (click)="eliminarIngrediente(i)" class="agregar-ingrediente-button">
+            Eliminar Ingrediente
+          </button>
+          </div>
+          
+          <!-- Botón de Agregar Ingrediente -->
+          <button type="button" (click)="agregarIngrediente()" class="agregar-ingrediente-button">
+            Agregar Ingrediente
+          </button>
+          </div>
 
       <!-- Botón de Crear Plato -->
-      <default-button tipo="submit" texto="Crear Plato"></default-button>
+      <default-button texto="Crear Plato"></default-button>
     </form>
   </div>
 </div>

@@ -27,30 +27,37 @@ export class PedidoModificarComponent implements OnInit {
     private pedidoService: PedidoService,
     private tarjetaService: TarjetaService) {}
     
-  ngOnInit(): void {
-    this.pedidoService.obtenerPedidoEnCurso().subscribe(
-      (pedidoId) => {
-        if (pedidoId) {
-          this.pedidoService.obtenerPlatosBebidasPorPedido(pedidoId).subscribe(
-            (response) => {
-              this.pedidoPlatos = response.platos ? response.platos.map(plato => ({ ...plato, cantidad: plato.cantidad || 1 })) : [];
-              this.pedidoBebidas = response.bebidas ? response.bebidas.map(bebida => ({ ...bebida, cantidad: bebida.cantidad || 1 })) : [];
-              this.mensaje = (this.pedidoPlatos.length === 0 && this.pedidoBebidas.length === 0) ? 'No se han encontrado platos ni bebidas para el pedido en curso.' : '';
-            },
-            (error) => {
-              console.error('Error al obtener los platos y bebidas del pedido', error);
-              this.mensaje = 'Error al obtener los platos y bebidas del pedido. Intenta nuevamente.';
+ngOnInit(): void {
+  this.pedidoService.obtenerPedidoEnCurso().subscribe(
+    (pedidoId) => {
+      if (pedidoId) {
+        this.pedidoService.obtenerPlatosBebidasPorPedido(pedidoId).subscribe(
+          (response) => {
+            this.pedidoPlatos = response.platos && response.platos.length > 0 ? response.platos.map(plato => ({ ...plato, cantidad: plato.cantidad || 1 })) : [];
+            this.pedidoBebidas = response.bebidas && response.bebidas.length > 0 ? response.bebidas.map(bebida => ({ ...bebida, cantidad: bebida.cantidad || 1 })) : [];
+
+            if (this.pedidoPlatos.length === 0 && this.pedidoBebidas.length === 0) {
+              this.mensaje = 'No se han encontrado platos ni bebidas para el pedido en curso.';
+            } else {
+              this.mensaje = '';
             }
-          );
-        } else {
-          this.mensaje = 'No hay un pedido en curso para mostrar.';
-        }
-      },
-      (error) => {
-        console.error('Error al obtener el pedido en curso', error);
-        this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+          },
+          (error) => {
+            console.error('Error al obtener los platos y bebidas del pedido', error);
+            this.mensaje = 'Error al obtener los platos y bebidas del pedido. Intenta nuevamente.';
+          }
+        );
+      } else {
+        this.mensaje = 'No hay un pedido en curso para mostrar.';
       }
-    );
+    },
+    (error) => {
+      console.error('Error al obtener el pedido en curso', error);
+      this.mensaje = 'Error al obtener el pedido en curso. Intenta nuevamente.';
+    }
+  );
+
+
 
     // Obtener tarjetas del cliente
     this.tarjetaService.obtenerTarjetaCliente()
@@ -146,8 +153,8 @@ export class PedidoModificarComponent implements OnInit {
         if (nroPed) {
           this.pedidoService.marcarPlatoComoRecibido(nroPed, plato.numPlato).subscribe(
             (response) => {
-              console.log('Plato marcado como recibido', response);
-              this.mensaje = `Plato ${plato.descripcion} marcado como recibido.`;
+              console.log('Plato marcado como recibido exitosamente', response);
+              this.mensaje = `Plato ${plato.descripcion} marcado como recibido exitosamente.`;
             },
             (error) => {
               console.error('Error al marcar el plato como recibido', error);
@@ -175,8 +182,8 @@ eliminarPlatoDelPedido(plato: PlatoConCantidad): void {
         // Llamar al servicio para eliminar el plato del pedido
         this.pedidoService.eliminarPlatoDelPedido(nroPed, plato.numPlato).subscribe(
           (response) => {
-            console.log('Plato eliminado del pedido', response);
-            this.mensaje = `Plato ${plato.descripcion} eliminado del pedido.`;
+            console.log('Plato eliminado del pedido exitosamente', response);
+            this.mensaje = `Plato ${plato.descripcion} eliminado del pedido exitosamente.`;
 
             // Eliminar el plato de la lista local
             this.pedidoPlatos = this.pedidoPlatos.filter(p => p.numPlato !== plato.numPlato);
@@ -199,9 +206,6 @@ eliminarPlatoDelPedido(plato: PlatoConCantidad): void {
 }
 
 
-
-
-
 eliminarBebida(bebida: any): void {
   this.pedidoService.obtenerPedidoEnCurso().subscribe(
     (nroPed) => {
@@ -213,8 +217,8 @@ eliminarBebida(bebida: any): void {
         // Llamar al servicio para eliminar la bebida del pedido
         this.pedidoService.eliminarBebidaDelPedido(nroPed, bebida.codBebida).subscribe(
           (response) => {
-            console.log('Bebida eliminada del pedido', response);
-            this.mensaje = `Bebida ${bebida.descripcion} eliminada del pedido.`;
+            console.log('Bebida eliminada del pedido exitosamente', response);
+            this.mensaje = `Bebida ${bebida.descripcion} eliminada del pedido exitosamente.`;
 
             // Eliminar la bebida de la lista local
             this.pedidoBebidas = this.pedidoBebidas.filter(b => b.codBebida !== bebida.codBebida);
@@ -236,16 +240,14 @@ eliminarBebida(bebida: any): void {
   );
 }
 
-
-
   marcarBebidaComoRecibida(bebida: BebidaConCantidad): void {
     this.pedidoService.obtenerPedidoEnCurso().subscribe(
       (nroPed) => {
         if (nroPed) {
           this.pedidoService.marcarBebidaComoRecibida(nroPed, bebida.codBebida).subscribe(
             (response) => {
-              console.log('Bebida marcada como recibida', response);
-              this.mensaje = `Bebida ${bebida.descripcion} marcada como recibida.`;
+              console.log('Bebida marcada como recibida exitosamente', response);
+              this.mensaje = `Bebida ${bebida.descripcion} marcada como recibida exitosamente.`;
             },
             (error) => {
               console.error('Error al marcar la bebida como recibida', error);

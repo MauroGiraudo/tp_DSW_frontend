@@ -1,7 +1,7 @@
 .titulo {
   color: black;
   font-size: 1.8rem;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   padding-left: 3.5rem;
   margin-bottom: 1.2rem;
 }
@@ -22,4 +22,32 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+/* Adaptación para móviles */
+@media (max-width: 768px) {
+  .titulo {
+    font-size: 1.4rem;
+    padding-left: 2rem;
+    /* Ajuste el relleno izquierdo para pantallas pequeñas */
+    text-align: center;
+    /* Centra el título en pantallas más pequeñas */
+  }
+
+  .register_box {
+    margin-top: 1.5rem;
+    /* Menos margen en pantallas más pequeñas */
+  }
+
+  .register {
+    width: 100%;
+    /* Hace que el contenedor de registro ocupe el 100% del ancho en pantallas pequeñas */
+    padding: 0 1rem;
+    /* Añade algo de relleno a los lados */
+  }
+
+  .login {
+    flex-direction: column;
+    /* Alinea los elementos de login verticalmente en pantallas pequeñas */
+  }
 }
