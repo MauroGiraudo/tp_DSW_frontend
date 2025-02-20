@@ -15,7 +15,7 @@ describe('Proveedor', () => {
 
     //Nos movemos a la página Pedido  =>  Nuevo Pedido
     cy.contains('AC').click()
-    cy.contains('Pedido').click()
+    cy.contains('Pedidos').click()
     cy.contains('Nuevo pedido').click()
     cy.contains('AC').click()
 
@@ -31,7 +31,7 @@ describe('Proveedor', () => {
 
     //Posicionamos el mouse sobre el plato que queremos agregar al pedido ("Hamburguesa") y presionamos el botón "Agregar al pedido"
     //NO FUNCIONA
-    cy.contains('Hamburguesa').trigger('mouseover')
-    cy.contains('Agregar al pedido').should('be.visible').click()
+    cy.get('.flip-card-inner:first').trigger('mouseover').invoke('show')
+    cy.contains('Agregar al pedido').click()
   })
 })
