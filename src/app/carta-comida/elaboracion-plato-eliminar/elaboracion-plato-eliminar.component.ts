@@ -47,7 +47,7 @@ export class ElaboracionPlatoEliminarComponent implements OnInit {
             this.elaboracionPlatoForm.reset();
             this.enviado = false; 
             this.mensaje = 'Ingrediente eliminado exitosamente'; 
-            this.router.navigate([`platos/${numPlato}/detalle`]);
+            this.router.navigate([`cartaComida/ElaboracionLista`]);
           },
           error: (error) => {
             console.error(`Error al eliminar ingrediente: ${ingrediente}`, error);

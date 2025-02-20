@@ -39,7 +39,7 @@ export class PlatoEliminarComponent {
         next: () => {
           this.platoForm.reset();
           this.mensaje = 'Plato eliminado exitosamente';
-          this.router.navigate(['plato/Lista']);
+          this.router.navigate(['cartaComida/Lista']);
         },
         error: (error) => {
           console.error('Error al eliminar el plato:', error);

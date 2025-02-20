@@ -48,7 +48,7 @@ export class TarjetaclienteEliminarComponent implements OnInit {
           this.tarjetaEliminarForm.reset();
           this.enviado = false;
           this.mensaje = 'Tarjeta eliminada exitosamente';
-          this.router.navigate(['tarjeta/lista']);  // Redirigir a la lista de tarjetas
+          this.router.navigate(['tarjetaCliente/Lista']);  // Redirigir a la lista de tarjetas
         },
         error: (error) => {
           console.error('Error al eliminar la tarjeta:', error);

@@ -68,7 +68,7 @@ export class TarjetaclienteModificarComponent implements OnInit {
       this.tarjetaService.modificarTarjetaCliente(tarjetaModificada.idTarjeta, tarjetaModificada).subscribe({
         next: () => {
           this.mensaje = 'Tarjeta modificada con éxito';
-          this.router.navigate(['tarjeta/lista']);
+          this.router.navigate(['tarjetaCliente/Lista']);
         },
         error: (error) => {
           console.error('Error al modificar la tarjeta:', error);

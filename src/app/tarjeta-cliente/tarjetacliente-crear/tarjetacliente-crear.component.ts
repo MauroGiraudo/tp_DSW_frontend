@@ -52,7 +52,7 @@ export class TarjetaclienteCrearComponent implements OnInit {
           this.tarjetaClienteForm.reset();
           this.enviado = false; 
           this.mensaje = 'Tarjeta registrada con éxito'; 
-          this.router.navigate(['tarjeta/lista']); 
+          this.router.navigate(['tarjetaCliente/Lista']); 
         },
         error: (error) => {
           console.error('Error al registrar la tarjeta:', error);
