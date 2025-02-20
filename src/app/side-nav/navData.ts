@@ -8,7 +8,7 @@ export type navData = {
   logueado?: string;
 }
 
-//La idea es que, cada vez que se incorpore una nueva funcionalidad, de ser necesario, 
+//La idea es que, cada vez que se incorpore una nueva funcionalidad, de ser necesario,
 //se asignará el tipo de usuario que tiene permitido ejecutarla.
 //Si cualquier usuario, incluso sin loguearse, puede utilizar la funcionalidad,
 //se asignará el tipo de usuario como ['']
@@ -24,7 +24,7 @@ export const navDataImport: navData[] = [
   {
     routeLink: "cartaComida",
     icon: "fa-solid fa-utensils",
-    label: "Carta de comidas",
+    label: "Carta de comida",
     tipoUsuario: [''],
 items: [
     {
@@ -35,7 +35,7 @@ items: [
     {
       routeLink: "cartaComida/Crear",
       label: "Agregar comida",
-      tipoUsuario: ['empleado'],  
+      tipoUsuario: ['empleado'],
     },
     {
       routeLink: "cartaComida/Modificar",
@@ -50,7 +50,7 @@ items: [
         {
       routeLink: "cartaComida/ElaboracionLista",
       label: "Lista de elaboraciones",
-      tipoUsuario: ['empleado'],  
+      tipoUsuario: ['empleado'],
     },
     {
       routeLink: "cartaComida/ElaboracionModificar",
@@ -79,7 +79,7 @@ items: [
     {
       routeLink: "cartaBebida/Crear",
       label: "Agregar bebida",
-      tipoUsuario: ['empleado'],  
+      tipoUsuario: ['empleado'],
     },
     {
       routeLink: "cartaBebida/Modificar",
@@ -99,7 +99,7 @@ items: [
     icon: "fa-regular fa-bookmark",
     label: "Pedidos",
     tipoUsuario: ['cliente'],
-    //Por ahora queda de esta manera, pero la idea es crear una funcionalidad de pedido 
+    //Por ahora queda de esta manera, pero la idea es crear una funcionalidad de pedido
     //distinta para cada tipo de usuario
     items: [
       {

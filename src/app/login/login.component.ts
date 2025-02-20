@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit{
       this.router.navigateByUrl(this.homeURL)
     }
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]], // Cambiado aquí
+      email: ['', [Validators.required, Validators.email]],
       contrasenia: ['', Validators.required]
     })
   }

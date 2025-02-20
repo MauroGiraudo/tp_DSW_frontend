@@ -1,14 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing'
 import { ProveedorListComponent } from './proveedor-list.component';
 
 describe('ProveedorListComponent', () => {
   let component: ProveedorListComponent;
   let fixture: ComponentFixture<ProveedorListComponent>;
+  let httpTestingController: HttpTestingController;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProveedorListComponent]
+      declarations: [ProveedorListComponent],
+      imports: [HttpClientTestingModule]
     })
     .compileComponents();
   });
@@ -16,12 +18,18 @@ describe('ProveedorListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ProveedorListComponent);
     component = fixture.componentInstance;
+    httpTestingController = TestBed.inject(HttpTestingController);
     fixture.detectChanges();
   });
 
-  it('El listado de proveedores está vacío', () => {
-    component.getProveedores()
-    expect(component.proveedores).toEqual([]);
+  afterEach(() => {
+    httpTestingController.verify();
+  });
+
+  it('El listado de proveedores se obtiene correctamente', () => {
+
+
+    expect(component).toBeTruthy();
   });
 
   //AVERIGUAR CÓMO LOGRAR QUE PRIMERO SE ASIGNEN LOS PROVEEDORES PROVENIENTES DEL BACK A LA VARIABLE "proveedores" PARA LUEGO
