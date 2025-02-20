@@ -48,7 +48,7 @@ export class ResenaEliminarComponent implements OnInit {
           this.resenaForm.reset();
           this.enviado = false;
           this.mensaje = 'Reseña eliminada exitosamente';
-          this.router.navigate(['resena/lista']);
+          this.router.navigate(['resena/Lista']);
         },
         error: (error) => {
           console.error('Error al eliminar la reseña:', error);

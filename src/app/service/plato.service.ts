@@ -46,11 +46,12 @@ export class PlatoService {
   }
 
   /** Actualiza los datos de un plato */
-  public actualizarPlato(numPlato: number, platoActualizado: Partial<Plato1>): Observable<Plato1> {
-    return this.http.patch<Plato1>(`${this.apiUrl}/${numPlato}`, platoActualizado).pipe(
-      tap(response => console.log('Plato actualizado:', response))
-    );
-  }
+public actualizarPlato(numPlato: number, platoActualizado: Partial<Plato1>): Observable<Plato1> {
+  return this.http.patch<Plato1>(`${this.apiUrl}/${numPlato}`, platoActualizado).pipe(
+    tap(response => console.log('Plato actualizado:', response))
+  );
+}
+
 
   /** Elimina dependencias de un plato antes de eliminarlo */
   private eliminarDependenciasDePlato(numPlato: number, tipoPlato: number): Observable<void> {

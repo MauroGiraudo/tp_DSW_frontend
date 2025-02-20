@@ -52,7 +52,7 @@ export class ElaboracionPlatoModificarComponent implements OnInit {
               this.elaboracionPlatoForm.reset();
               this.enviado = false; 
               this.mensaje = 'Ingrediente modificado exitosamente'; 
-              this.router.navigate([`platos/${numPlato}/detalle`]);
+              this.router.navigate([`cartaComida/ElaboracionLista`]);
             },
             error: (error) => {
               console.error('Error al modificar ingrediente:', error);
