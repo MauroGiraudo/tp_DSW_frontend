@@ -4,24 +4,33 @@ import { BebidaCrearComponent } from './bebida-crear/bebida-crear.component.js';
 import { BebidaListaComponent } from './bebida-lista/bebida-lista.component.js';
 import { BebidaModificarComponent } from './bebida-modificar/bebida-modificar.component.js';
 import { BebidaEliminarComponent } from './bebida-eliminar/bebida-eliminar.component.js';
+import { authGuard } from '../guards/auth.guard.js';
 
 const routes: Routes = [
   {
     path: 'Crear',
-    component: BebidaCrearComponent
+    component: BebidaCrearComponent,
+    canActivate: [authGuard], 
+    data: { expectedRole: ['empleado'] }
   },
   {
     path: 'Lista',
-    component: BebidaListaComponent
+    component: BebidaListaComponent,
+    canActivate: [authGuard], 
+    data: { expectedRole: [] }
   },
   {
     path: 'Modificar',
-    component: BebidaModificarComponent
+    component: BebidaModificarComponent,
+    canActivate: [authGuard], 
+    data: { expectedRole: ['empleado'] }
   },
   {
     //ng g c bebida-Eliminar  --module bebida
     path: 'Eliminar',
-    component: BebidaEliminarComponent
+    component: BebidaEliminarComponent,
+    canActivate: [authGuard], 
+    data: { expectedRole: ['empleado'] }
   }
 ];
 

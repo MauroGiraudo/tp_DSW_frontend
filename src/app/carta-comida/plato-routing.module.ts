@@ -7,36 +7,50 @@ import { PlatoEliminarComponent } from './plato-eliminar/plato-eliminar.componen
 import { ElaboracionPlatoListaComponent } from './elaboracion-plato-lista/elaboracion-plato-lista.component.js';
 import { ElaboracionPlatoModificarComponent } from './elaboracion-plato-modificar/elaboracion-plato-modificar.component.js';
 import { ElaboracionPlatoEliminarComponent } from './elaboracion-plato-eliminar/elaboracion-plato-eliminar.component.js';
+import { authGuard } from '../guards/auth.guard';
+
 const routes: Routes = [
   {
-    path: 'Crear',
-    component: PlatoCrearComponent
+    path: 'Lista',
+    component: PlatoListaComponent,
+    canActivate: [authGuard], // Asegúrate de que no esté protegido si es para todos
+    data: { expectedRole: [] } // Accesible por todos
   },
   {
-    path: 'Lista',
-    component: PlatoListaComponent
+    path: 'Crear',
+    component: PlatoCrearComponent,
+    canActivate: [authGuard], // Solo accesible para empleados
+    data: { expectedRole: ['empleado'] }
   },
   {
     path: 'Modificar',
-    component: PlatoModificarComponent
+    component: PlatoModificarComponent,
+    canActivate: [authGuard], // Solo accesible para empleados
+    data: { expectedRole: ['empleado'] }
   },
   {
-    //ng g c bebida-Eliminar  --module bebida
     path: 'Eliminar',
-    component: PlatoEliminarComponent
+    component: PlatoEliminarComponent,
+    canActivate: [authGuard], // Solo accesible para empleados
+    data: { expectedRole: ['empleado'] }
   },
-    {
+  {
     path: 'ElaboracionLista',
-    component: ElaboracionPlatoListaComponent
+    component: ElaboracionPlatoListaComponent,
+    canActivate: [authGuard], // Solo accesible para empleados
+    data: { expectedRole: ['empleado'] }
   },
   {
     path: 'ElaboracionModificar',
-    component: ElaboracionPlatoModificarComponent
+    component: ElaboracionPlatoModificarComponent,
+    canActivate: [authGuard], // Solo accesible para empleados
+    data: { expectedRole: ['empleado'] }
   },
   {
-    //ng g c bebida-Eliminar  --module bebida
     path: 'ElaboracionEliminar',
-    component: ElaboracionPlatoEliminarComponent
+    component: ElaboracionPlatoEliminarComponent,
+    canActivate: [authGuard], // Solo accesible para empleados
+    data: { expectedRole: ['empleado'] }
   }
 ];
 
@@ -45,3 +59,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class PlatoRoutingModule { }
+
