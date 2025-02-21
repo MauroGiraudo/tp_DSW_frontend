@@ -16,8 +16,8 @@ select {
   color: black;
   font-size: 1.8rem;
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  text-align: center; // Centramos el texto del título
-  margin-bottom: 0.8rem; // Reducimos el margen inferior
+  text-align: center;
+  margin-bottom: 0.8rem;
 }
 
 .form-control {
@@ -25,13 +25,10 @@ select {
   position: relative;
 }
 
-/* Estilo del mensaje de validación */
 .mensaje {
   width: 100%;
-  /* Hace que ocupe todo el ancho */
   padding: 10px;
   margin-top: 0.5rem;
-  /* Ajustamos el margen para colocarlo justo debajo */
   border-radius: 5px;
   font-weight: bold;
   text-align: center;
@@ -42,13 +39,9 @@ select {
 
 .agregar-ingrediente-button {
   background-color: #4CAF50;
-  /* Color de fondo verde */
   color: white;
-  /* Color de texto blanco */
   border: none;
-  /* Eliminar borde por defecto */
   padding: 10px 20px;
-  /* Espaciado interno */
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -60,17 +53,14 @@ select {
 
 .agregar-ingrediente-button:hover {
   background-color: #45a049;
-  /* Color de fondo cuando el mouse está sobre el botón */
 }
 
-/* Estilos para el mensaje de éxito */
 .exito {
   color: green;
   background-color: #e7f9e7;
   border: 1px solid green;
 }
 
-/* Estilos para el mensaje de error */
 .error {
   color: red;
   background-color: #f9e7e7;
@@ -104,7 +94,6 @@ form {
   width: 100%;
 }
 
-/* Media Queries para pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
   .register {
     width: 90%;
@@ -130,7 +119,6 @@ form {
   }
 }
 
-/* Media Queries específicas para dispositivos pequeños (hasta 425px) */
 @media (max-width: 425px) {
   .register {
     width: 90%;
@@ -156,7 +144,6 @@ form {
   }
 }
 
-/* Media Queries para orientación vertical en pantallas pequeñas (hasta 425px en vertical) */
 @media (max-width: 425px) and (orientation: portrait) {
   .register {
     width: 95%;
@@ -181,7 +168,6 @@ form {
   }
 }
 
-/* Media Queries adicionales para mayor adaptabilidad en dispositivos con pantallas muy pequeñas */
 @media (max-width: 375px) {
   .register {
     width: 90%;

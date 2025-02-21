@@ -1,0 +1,28 @@
+h1 {
+  font-size: 2rem;
+  color: #d9534f; 
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #5bc0de; 
+  color: white;
+  font-size: 1rem;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #31b0d5; 
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  display: block;
+  margin: 0 auto;
+}
