@@ -119,7 +119,6 @@ button:hover {
   margin: 10px 0;
   justify-content: center;
   flex-wrap: wrap;
-  /* Permite que los botones se ajusten a nuevas líneas en pantallas pequeñas */
 }
 
 .tag {
@@ -131,7 +130,6 @@ button:hover {
   transition: background-color 0.3s;
   color: black;
   margin-bottom: 10px;
-  /* Añadido margen inferior para separar los botones cuando están en la fila siguiente */
 }
 
 .tag:hover {
@@ -141,7 +139,6 @@ button:hover {
 
 .tag.reset {
   background-color: #9ecde5;
-  /* Igual al formato de los otros botones */
   color: black;
   border: 1px solid #000;
 }
@@ -158,7 +155,6 @@ button:hover {
   .tag {
     padding: 8px 15px;
     width: 48%;
-    /* Los botones ocuparán el 48% del ancho, permitiendo dos en cada fila */
   }
 }
 
@@ -170,6 +166,5 @@ button:hover {
   .tag {
     padding: 7px 12px;
     width: 48%;
-    /* Los botones se distribuyen en dos por fila también en pantallas más pequeñas */
   }
 }

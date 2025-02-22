@@ -25,9 +25,9 @@ export class ElaboracionPlatoModificarComponent implements OnInit {
     private router: Router
   ) {
     this.elaboracionPlatoForm = this.fb.group({
-      numPlato: [null, [Validators.required, Validators.min(1)]],  // Número del plato
-      ingrediente: ['', [Validators.required]],  // Ingrediente a modificar
-      cantidadNecesaria: [null, [Validators.required, Validators.min(0)]],  // Cantidad necesaria
+      numPlato: [null, [Validators.required, Validators.min(1)]],
+      ingrediente: ['', [Validators.required]],
+      cantidadNecesaria: [null, [Validators.required, Validators.min(0)]],
     });
   }
 
@@ -40,8 +40,6 @@ export class ElaboracionPlatoModificarComponent implements OnInit {
   modificarIngrediente() {
     if (this.elaboracionPlatoForm.valid) {
       const { numPlato, ingrediente, cantidadNecesaria } = this.elaboracionPlatoForm.value;
-
-      // Asegurarse de que la cantidad sea un número
       const cantidad = Number(cantidadNecesaria);
 
       if (!isNaN(cantidad) && cantidad > 0) {

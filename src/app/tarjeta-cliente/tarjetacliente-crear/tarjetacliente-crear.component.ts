@@ -30,7 +30,7 @@ export class TarjetaclienteCrearComponent implements OnInit {
       titular: ['', [Validators.required]],
       vencimiento: ['', [Validators.required, Validators.pattern(/^\d{4}-\d{2}-\d{2}$/)]], 
       codSeguridad: ['', [Validators.required, Validators.min(100), Validators.max(999)]],
-      tarjeta: ['', [Validators.required, Validators.min(1)]] // Campo tarjeta agregado
+      tarjeta: ['', [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -43,8 +43,6 @@ export class TarjetaclienteCrearComponent implements OnInit {
   crearTarjeta() {
     if (this.tarjetaClienteForm.valid) {
       const nuevaTarjeta = this.tarjetaClienteForm.value;
-
-      // Convertir codSeguridad a número explícitamente
       nuevaTarjeta.codSeguridad = Number(nuevaTarjeta.codSeguridad);
 
       this.tarjetaService.crearTarjetaCliente(nuevaTarjeta).subscribe({

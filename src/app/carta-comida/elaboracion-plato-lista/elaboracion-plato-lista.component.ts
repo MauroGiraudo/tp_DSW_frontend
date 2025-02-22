@@ -39,14 +39,14 @@ export class ElaboracionPlatoListaComponent implements OnInit, OnDestroy {
         this.elaboracionPlatoService.getElaboraciones(plato.numPlato).pipe(
           catchError(error => {
             console.error("Error al obtener los ingredientes del plato", plato.numPlato, error);
-            return of([]); // Devuelve un array vacío en caso de error
+            return of([]);
           }),
-          switchMap(ingredientes => of({ ...plato, ingredientes } as any)) // Asegura la estructura correcta
+          switchMap(ingredientes => of({ ...plato, ingredientes } as any))
         )
       ));
     })
   ).subscribe(
-    (platosConIngredientes: any[]) => { // Usa 'any' para evitar errores de tipo
+    (platosConIngredientes: any[]) => {
       this.platos = platosConIngredientes.map(plato => ({
         ...plato,
         mostrarDetalles: false

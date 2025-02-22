@@ -16,8 +16,8 @@ import { Bebida,BebidaConCantidad } from '../models/mesa.models.js';
 export class CartaBebidaComponent implements OnInit {
   
   bebidas: any[] = [];
-  searchTerm: string = ''; // Variable para almacenar el término de búsqueda
-  selectedType: string = ''; // Tipo de bebida seleccionado
+  searchTerm: string = '';
+  selectedType: string = '';
 
   constructor(private bebidaService: BebidaService, private pedidoService: PedidoService) {}
 
@@ -36,7 +36,6 @@ export class CartaBebidaComponent implements OnInit {
     });
   }
 
-  // Getter para bebidas filtradas
   get filteredBebidas() {
     return this.bebidas.filter(bebida =>
       bebida.descripcion.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
@@ -48,13 +47,11 @@ export class CartaBebidaComponent implements OnInit {
     console.log('Término de búsqueda:', this.searchTerm);
   }
 
-  // Método para filtrar por tipo de bebida (con o sin alcohol)
   filterByType(type: string): void {
     this.selectedType = type;
     console.log('Tipo de bebida seleccionado:', this.selectedType);
   }
 
-  // Método para mostrar todas las bebidas sin aplicar filtro de tipo
   resetFilter(): void {
     this.selectedType = '';
     console.log('Filtro de tipo de bebida restablecido. Mostrando todas las bebidas.');

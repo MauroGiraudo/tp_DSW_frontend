@@ -1,6 +1,5 @@
 <h2>Tu Pedido</h2>
 
-<!-- Contenedor para los platos -->
 <div class="pedidos-container">
   <div *ngFor="let plato of pedidoPlatos" class="plato-item">
     <div class="card">
@@ -19,7 +18,6 @@
     </div>
   </div>
 
-  <!-- Contenedor para las bebidas -->
   <div *ngFor="let bebida of pedidoBebidas" class="bebida-item">
     <div class="card">
       <img *ngIf="bebida.imagen" [src]="bebida.imagen" alt="{{ bebida.descripcion }}" class="bebida-imagen">

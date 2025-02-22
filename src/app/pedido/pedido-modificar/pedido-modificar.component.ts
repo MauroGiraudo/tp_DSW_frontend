@@ -19,7 +19,7 @@ export class PedidoModificarComponent implements OnInit {
   pedidoBebidas: BebidaConCantidad[] = [];
   tarjetasCliente: any[] = [];
   tarjetaSeleccionada: any | undefined;
-  filteredTarjetas: any[] = []; // Definir la propiedad
+  filteredTarjetas: any[] = [];
   mensaje: string | undefined;
   private destroy$ = new Subject<void>();
 
@@ -57,15 +57,12 @@ ngOnInit(): void {
     }
   );
 
-
-
-    // Obtener tarjetas del cliente
     this.tarjetaService.obtenerTarjetaCliente()
       .pipe(takeUntil(this.destroy$))
       .subscribe(
         (tarjetaResponse) => {
           this.tarjetasCliente = tarjetaResponse.data;
-          this.filteredTarjetas = tarjetaResponse.data; // Inicializa filteredTarjetas con todas las tarjetas
+          this.filteredTarjetas = tarjetaResponse.data;
           if (this.tarjetasCliente.length === 0) {
             this.mensaje = 'No se han encontrado tarjetas asociadas a este cliente.';
           }
@@ -79,7 +76,7 @@ ngOnInit(): void {
 
   seleccionarTarjeta(tarjeta: any): void {
     this.tarjetaSeleccionada = tarjeta;
-    console.log('Tarjeta seleccionada:', this.tarjetaSeleccionada); // Verifica la tarjeta seleccionada
+    console.log('Tarjeta seleccionada:', this.tarjetaSeleccionada);
   }
 
   calcularTotal(): number {
@@ -176,16 +173,11 @@ eliminarPlatoDelPedido(plato: PlatoConCantidad): void {
   this.pedidoService.obtenerPedidoEnCurso().subscribe(
     (nroPed) => {
       if (nroPed) {
-        // Usar la fecha y hora del plato para la URL
-
-
-        // Llamar al servicio para eliminar el plato del pedido
         this.pedidoService.eliminarPlatoDelPedido(nroPed, plato.numPlato).subscribe(
           (response) => {
             console.log('Plato eliminado del pedido exitosamente', response);
             this.mensaje = `Plato ${plato.descripcion} eliminado del pedido exitosamente.`;
 
-            // Eliminar el plato de la lista local
             this.pedidoPlatos = this.pedidoPlatos.filter(p => p.numPlato !== plato.numPlato);
           },
           (error) => {
@@ -210,17 +202,14 @@ eliminarBebida(bebida: any): void {
   this.pedidoService.obtenerPedidoEnCurso().subscribe(
     (nroPed) => {
       if (nroPed) {
-        // Usar la fecha y hora de la bebida para la URL
-        const fecha = bebida.fechaSolicitud; // Obtener la fecha de solicitud
-        const hora = bebida.horaSolicitud; // Obtener la hora de solicitud
+        const fecha = bebida.fechaSolicitud;
+        const hora = bebida.horaSolicitud;
 
-        // Llamar al servicio para eliminar la bebida del pedido
         this.pedidoService.eliminarBebidaDelPedido(nroPed, bebida.codBebida).subscribe(
           (response) => {
             console.log('Bebida eliminada del pedido exitosamente', response);
             this.mensaje = `Bebida ${bebida.descripcion} eliminada del pedido exitosamente.`;
 
-            // Eliminar la bebida de la lista local
             this.pedidoBebidas = this.pedidoBebidas.filter(b => b.codBebida !== bebida.codBebida);
           },
           (error) => {

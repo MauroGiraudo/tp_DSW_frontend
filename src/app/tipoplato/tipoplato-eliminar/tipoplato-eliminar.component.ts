@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { TipoplatoService } from '../../service/tipoplato.service.js';
-import { Tipoplato } from '../../models/mesa.models.js';  // Asegúrate de que la ruta sea correcta
+import { Tipoplato } from '../../models/mesa.models.js';
 import { TextInputComponent } from '../../text-input/text-input.component.js';
 import { DefaultButtonComponent } from '../../default-button/default-button.component.js';
 

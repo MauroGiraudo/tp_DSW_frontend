@@ -19,7 +19,6 @@ const routes: Routes = [
     component: MesaModificarComponent
   },
   {
-    //ng g c mesa-Eliminar  --module mesa
     path: 'Eliminar',
     component: MesaEliminarComponent
   }

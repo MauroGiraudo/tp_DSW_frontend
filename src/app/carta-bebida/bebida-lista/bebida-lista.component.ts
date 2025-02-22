@@ -17,9 +17,9 @@ import { UsuarioService } from '../../service/usuario.service.js';
 export class BebidaListaComponent implements OnInit {
 
   bebidas: any[] = [];
-  searchTerm: string = ''; // Variable para almacenar el término de búsqueda
-  selectedType: string = ''; // Tipo de bebida seleccionado
-  tipoUsuario: string = '';  // Tipo de usuario (empleado, cliente, etc.)
+  searchTerm: string = ''; 
+  selectedType: string = '';
+  tipoUsuario: string = '';
   mensaje: string = ''; 
 
   constructor(
@@ -66,7 +66,6 @@ export class BebidaListaComponent implements OnInit {
   }
 
   agregarAlPedido(bebida: Bebida): void {
-  // Crear el objeto BebidaPedido con la bebida recibida como parámetro
   const bebidaPedido: BebidaConCantidad = {
     codBebida: bebida.codBebida,
     descripcion: bebida.descripcion,
@@ -77,14 +76,12 @@ export class BebidaListaComponent implements OnInit {
     alcohol: bebida.alcohol,
     imagen: bebida.imagen,
     proveedor: bebida.proveedor,
-    cantidad: 1,  // Cantidad inicial de 1 (puedes ajustarlo si es necesario)
+    cantidad: 1,
   };
 
-  // Obtener el pedido en curso
   this.pedidoService.obtenerPedidoEnCurso().subscribe(
     (pedidoId) => {
       if (pedidoId) {
-        // Agregar la bebida al pedido en curso
         this.pedidoService.actualizarPedidoEnCurso(pedidoId, [], [bebidaPedido]).subscribe(
           (response) => {
             console.log('Pedido actualizado con la bebida agregada con éxito', response);

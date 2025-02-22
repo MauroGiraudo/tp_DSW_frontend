@@ -17,7 +17,7 @@ import { takeUntil } from 'rxjs/operators';
 export class IngredienteListaComponent implements OnInit, OnDestroy {
   ingredientes: Ingrediente[] = [];
   searchTerm: string = '';
-  selectedStock: string = ''; // Para manejar el estado del filtro por stock
+  selectedStock: string = '';
   private destroy$ = new Subject<void>();
 
   constructor(private ingredienteService: IngredienteService) {}

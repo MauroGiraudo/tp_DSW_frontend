@@ -74,26 +74,18 @@ actualizarPedido(plato: Plato): void {
 
       this.pedidoService.obtenerPlatosDelPedido(pedidoId).subscribe(
         (platosExistentes: any[] | null) => {
-          // Verifica la estructura exacta de la respuesta
           console.log('Platos existentes en el pedido:', platosExistentes);
-
-          // Asegúrate de que platosExistentes sea un array
           const platos = Array.isArray(platosExistentes) ? platosExistentes : [];
-
-          // Verificar si el plato ya está en el pedido
           const platoExistente = platos.find(p => p.plato.numPlato === plato.numPlato);
 
           if (platoExistente) {
-            // Si el plato ya existe, aumentamos la cantidad
             console.log(`El plato con numPlato ${plato.numPlato} ya existe en el pedido. Cantidad actual: ${platoExistente.cantidad}`);
             platoExistente.cantidad += 1;
           } else {
-            // Si el plato no existe, lo agregamos con cantidad 1
             console.log(`El plato con numPlato ${plato.numPlato} no está en el pedido, lo agregamos con cantidad 1`);
             platos.push({ plato: { numPlato: plato.numPlato }, cantidad: 1 });
           }
 
-          // Asegúrate de que solo se envíen numPlato y cantidad
           const platosActualizados = platos.map(p => ({
             numPlato: p.plato.numPlato,
             cantidad: p.cantidad
@@ -101,7 +93,6 @@ actualizarPedido(plato: Plato): void {
 
           console.log('Platos después de actualización:', platosActualizados);
 
-          // Actualizar el pedido con la nueva lista de platos
           this.pedidoService.actualizarPedidoEnCurso(pedidoId, platosActualizados, []).subscribe(
             () => {
               console.log('Pedido actualizado con el plato agregado con éxito');

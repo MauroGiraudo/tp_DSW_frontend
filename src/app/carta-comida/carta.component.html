@@ -1,15 +1,12 @@
 <h1>Carta de comidas</h1>
 
-<!-- Search box -->
 <div class="search-container">
   <input [(ngModel)]="searchTerm" (keyup.enter)="onSearch()" placeholder="Buscar por nombre de plato"
     class="search-box" type="text">
   <button (click)="onSearch()" class="search-button">
-    <img src="https://cdn.icon-icons.com/icons2/2796/PNG/512/magnifier_search_magnifyng_glass_icon_178198.png" alt="Buscar">
   </button>
 </div>
 
-<!-- Tags para filtrar por tipo de plato -->
 <div class="tags-container">
   <button (click)="resetFilter()" class="tag reset">Todos</button>
   <button (click)="filterByType('Entrada')" class="tag">Entrada</button>
@@ -17,7 +14,6 @@
   <button (click)="filterByType('Postre')" class="tag">Postre</button>
 </div>
 
-<!-- Platos filtrados -->
 <div class="platos-container">
   <div *ngFor="let plato of filteredPlatos" class="flip-card">
     <div class="flip-card-inner">

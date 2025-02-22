@@ -38,7 +38,6 @@ export class ResenaListaComponent implements OnInit, OnDestroy {
   }
 
   get filteredResenas() {
-    // Filtramos tanto por el término de búsqueda como por el puntaje seleccionado
     return this.resenas.filter(resena =>
       resena.cuerpo.toLowerCase().includes(this.searchTerm.toLowerCase()) &&
       (this.selectedPuntaje === null || resena.puntaje === this.selectedPuntaje)
@@ -51,7 +50,7 @@ export class ResenaListaComponent implements OnInit, OnDestroy {
 
   resetFilter(): void {
     this.selectedPuntaje = null;
-    this.searchTerm = '';  // Restablecer el término de búsqueda
+    this.searchTerm = '';
     console.log('Filtro de puntaje restablecido. Mostrando todas las reseñas.');
   }
 
