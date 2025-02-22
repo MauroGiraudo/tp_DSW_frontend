@@ -7,7 +7,6 @@
   border-radius: 8px;
 }
 
-/* Estilo para la selección de tarjeta */
 h2 {
   font-size: 1.5em;
   font-weight: bold;
@@ -35,7 +34,6 @@ option {
   font-size: 1em;
 }
 
-/* Estilo para el resto de los elementos de la UI */
 .mesa-container {
   margin-bottom: 20px;
   display: flex;
@@ -195,7 +193,6 @@ button[disabled] {
   padding: 10px;
 }
 
-/* Media Queries para pantallas pequeñas (hasta 768px) */
 @media (max-width: 768px) {
   select {
     width: 70%;
@@ -248,7 +245,6 @@ button[disabled] {
   }
 }
 
-/* Media Queries para dispositivos más pequeños (hasta 425px) */
 @media (max-width: 425px) {
   select {
     width: 100%;

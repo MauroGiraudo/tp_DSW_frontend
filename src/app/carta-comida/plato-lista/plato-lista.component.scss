@@ -135,7 +135,6 @@ h2 {
   background-color: #e0e0e0;
 }
 
-/* Media Queries para pantallas pequeñas */
 @media (max-width: 768px) {
   .platos-container {
     justify-content: center;
@@ -145,7 +144,6 @@ h2 {
     width: 100%;
     max-width: 200px;
     height: 250px;
-    /* Ajusté la altura */
   }
 
   h1 {
@@ -154,7 +152,6 @@ h2 {
 
   h2 {
     font-size: 1rem;
-    /* Reduje más en pantallas pequeñas */
   }
 
   .search-box {
@@ -174,7 +171,6 @@ h2 {
 
   h2 {
     font-size: 0.9rem;
-    /* Más pequeño aún para pantallas muy pequeñas */
   }
 
   .search-box {

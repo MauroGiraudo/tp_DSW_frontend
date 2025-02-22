@@ -47,9 +47,7 @@ export class PlatoCrearComponent implements OnInit {
     return this.platoForm.get('ingredientes') as FormArray;
   }
 
-  // Método específico para agregar ingrediente
   agregarIngrediente() {
-    // Añadir ingrediente sin validar el formulario
     this.ingredientes.push(this.fb.group({
       ingrediente: [null, Validators.required],
       cantidadNecesaria: [null, [Validators.required, Validators.min(1)]]
@@ -105,14 +103,12 @@ export class PlatoCrearComponent implements OnInit {
     });
   }
 
-  // Método para manejar el envío del formulario y validar
+
   enviar() {
-    this.enviado = true;  // Indica que se intentó enviar el formulario
+    this.enviado = true;
     if (this.platoForm.invalid) {
-      /*// Si el formulario es inválido, muestra el mensaje de error
-      this.mensaje = 'Por favor, complete el formulario correctamente.';*/
+      this.mensaje = 'Por favor, complete el formulario correctamente.';
     } else {
-      // Si el formulario es válido, llama a la función para crear el plato
       this.crearPlato(); 
     }
   }

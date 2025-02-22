@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'; 
-import { PedidoService } from '../../service/pedido.service.js';  // El servicio de pedidos
+import { PedidoService } from '../../service/pedido.service.js';
 import { CommonModule } from '@angular/common';
 import { Pedido } from '../../models/mesa.models.js';
 import { ResponsePedido } from '../../models/mesa.models.js';

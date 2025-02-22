@@ -25,8 +25,8 @@ export class ElaboracionPlatoEliminarComponent implements OnInit {
     private router: Router
   ) {
     this.elaboracionPlatoForm = this.fb.group({
-      numPlato: [null, [Validators.required, Validators.min(1)]],  // Número del plato
-      ingrediente: ['', [Validators.required]],  // Ingrediente a eliminar
+      numPlato: [null, [Validators.required, Validators.min(1)]],
+      ingrediente: ['', [Validators.required]],
     });
   }
 

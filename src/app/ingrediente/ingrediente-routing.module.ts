@@ -19,7 +19,6 @@ const routes: Routes = [
     component: IngredienteModificarComponent
   },
   {
-    //ng g c ingrediente-Eliminar  --module ingrediente
     path: 'Eliminar',
     component: IngredienteEliminarComponent
   }

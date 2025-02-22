@@ -48,7 +48,6 @@ describe('MesaListaComponent', () => {
     component.getMesas();
     
     expect(component.mesas.length).toBe(0);
-    // Aquí podrías también verificar si se llamaron las alertas o si se registró el error
   });
 });
 

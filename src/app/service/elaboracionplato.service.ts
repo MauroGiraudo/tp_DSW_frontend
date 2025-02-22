@@ -13,13 +13,11 @@ export class ElaboracionplatoService {
 
   constructor(private http: HttpClient) {}
 
-  // Obtener los detalles del ingrediente por numPlato e ingrediente
   obtenerIngrediente(numPlato: number, ingrediente: string): Observable<any> {
     const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
     return this.http.get<any>(url);
   }
 
-  // Actualizar el ingrediente con la cantidad necesaria
 public actualizarIngrediente(numPlato: number, ingrediente: string, cantidadNecesaria: number): Observable<any> {
   const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
   return this.http.patch<any>(url, {
@@ -36,7 +34,6 @@ public actualizarIngrediente(numPlato: number, ingrediente: string, cantidadNece
   );
 }
 
-  // Agregar un ingrediente al plato
   agregarIngrediente(numPlato: number, ingrediente: number, cantidadNecesaria: number): Observable<any> {
     const url = `${this.apiUrl}/${numPlato}/ingredientes`;
     return this.http.post(url, { ingrediente, cantidadNecesaria });

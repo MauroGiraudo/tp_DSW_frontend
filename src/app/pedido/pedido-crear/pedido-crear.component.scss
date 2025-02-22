@@ -63,10 +63,8 @@
 .precio-cantidad {
   display: flex;
   justify-content: flex-end;
-  /* Alinea los elementos a la derecha */
   align-items: center;
   gap: 10px;
-  /* Puedes ajustar el espacio entre los elementos */
   width: 100%;
 }
 
@@ -74,7 +72,6 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  /* Ajusta el espacio entre los botones de sumar/restar */
 }
 
 button {
@@ -123,7 +120,6 @@ button[disabled] {
   cursor: not-allowed;
 }
 
-/* Estilos para el mensaje de éxito o error */
 .mensaje {
   margin: 10px 0;
   padding: 10px;
@@ -131,23 +127,18 @@ button[disabled] {
   font-weight: bold;
   text-align: center;
   width: 100%;
-  /* Ocupa el 100% del ancho del contenedor */
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  /* Sombra para los mensajes */
   transition: opacity 0.3s ease;
-  /* Transición para el efecto de aparición/desaparición */
 }
 
 .exito {
   color: green;
   background-color: #e7f9e7;
-  /* Color de fondo claro para el mensaje de éxito */
   border: 1px solid green;
 }
 
 .error {
   color: red;
   background-color: #f9e7e7;
-  /* Color de fondo claro para el mensaje de error */
   border: 1px solid red;
 }

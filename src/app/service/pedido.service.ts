@@ -22,7 +22,6 @@ export class PedidoService {
     private tarjetaService: TarjetaService
   ) {}
 
-  // Agregar platos y bebidas al pedido
   agregarPlatoAlPedido(plato: PlatoConCantidad): void {
     const platoExistente = this.platosPedido.find(p => p.numPlato === plato.numPlato);
     if (platoExistente) {
@@ -61,21 +60,18 @@ export class PedidoService {
     );
   }
 
-  // Crear un nuevo pedido
   crearPedido(pedidoData: any): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
     const url = `${this.apiUrl}/${clienteId}/pedidos`;
     return this.http.post(url, pedidoData);
   }
 
-  // Confirmar pedido
   confirmarPedido(pedidoData: any, nroPed: number): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
     const url = `${this.apiUrl}/${clienteId}/pedidos/${nroPed}`;
     return this.http.patch(url, pedidoData);
   }
 
-  // Actualizar el pedido en curso con platos y bebidas
   actualizarPedidoEnCurso(nroPed: number, platos: PlatoPedido[], bebidas: BebidaPedido[]): Observable<any> {
     const bebidasData = bebidas.map(bebida => ({
       bebida: bebida.codBebida,
@@ -96,7 +92,6 @@ export class PedidoService {
     return requests.length > 0 ? forkJoin(requests) : of(null);
   }
 
-  // Obtener información de platos y bebidas por pedido
   obtenerPlatosBebidasPorPedido(pedidoId: number): Observable<{ platos: PlatoConCantidad[], bebidas: BebidaConCantidad[] }> {
     const obtenerPlatos = this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/platos`);
     const obtenerBebidas = this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${pedidoId}/bebidas`);
@@ -125,7 +120,7 @@ export class PedidoService {
         alcohol: bebida.bebida.alcohol,
         imagen: bebida.bebida.imagen,
         proveedor: bebida.bebida.proveedor,
-        cantidad: bebida.cantidad || 1,  // Asignar la cantidad, con valor por defecto si es undefined
+        cantidad: bebida.cantidad || 1,
         }));
 
         return { platos: platosAdaptados, bebidas: bebidasAdaptadas };
@@ -136,13 +131,13 @@ export class PedidoService {
 marcarPlatoComoRecibido(nroPed: number, numPlato: number): Observable<any> {
   return this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`).pipe(
     switchMap(ResponsePlatoEst => {
-      const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato); // Buscar el plato específico
+      const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato);
       if (plato) {
         const url = `http://localhost:3000/api/pedidos/${nroPed}/platos/${numPlato}/fecha/${plato.fechaSolicitud}/hora/${plato.horaSolicitud}`;
-        const platoData = { cantidad: plato.cantidad, recibido: true }; // Marcamos el plato como recibido
+        const platoData = { cantidad: plato.cantidad, recibido: true };
         return this.http.put(url, platoData);
       } else {
-        return of(null); // Si no se encuentra el plato, retornamos null
+        return of(null);
       }
     })
   );
@@ -151,7 +146,7 @@ marcarPlatoComoRecibido(nroPed: number, numPlato: number): Observable<any> {
 marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
   return this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`).pipe(
     switchMap(ResponseBebidaEst => {
-      const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida); // Buscar la bebida específica
+      const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida);
       if (bebida) {
         const fechaSolicitud = bebida.fechaSolicitud;
         const horaSolicitud = bebida.horaSolicitud;
@@ -161,23 +156,20 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
           {}
         );
       } else {
-        return of(null); // Si no se encuentra la bebida, retornamos null
+        return of(null);
       }
     })
   );
-
-
 }
 
   finalizarPedido(nroPed: number,platos: PlatoPedido[],bebidas: BebidaPedido[],totalImporte: number,tarjetaSeleccionada: any): Observable<any> { 
-  console.log('Tarjeta seleccionada:', tarjetaSeleccionada); // Agregar log para verificar los datos
+  console.log('Tarjeta seleccionada:', tarjetaSeleccionada);
 
   const clientePedidoUrl = `${this.apiUrl}/pedidos/${nroPed}`;
 
   return this.http.get(`${this.apiUrl}/pedidos/${nroPed}`).pipe(
     switchMap((pedidoActualizado: any) => {
       if (!pedidoActualizado.pago) {
-        // Verificar que la tarjeta seleccionada existe
         if (!tarjetaSeleccionada?.idTarjeta) {
           return throwError(() => new Error('Debe seleccionar una tarjeta para finalizar el pedido.'));
         }
@@ -202,7 +194,6 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
   );
 }
 
-  // Métodos para gestionar el pedido: agregar, actualizar y eliminar platos y bebidas
   actualizarCantidadPlato(numPlato: number, nuevaCantidad: number): void {
     const plato = this.platosPedido.find(p => p.numPlato === numPlato);
     if (plato) {
@@ -223,14 +214,13 @@ marcarBebidaComoRecibida(nroPed: number, codBebida: number): Observable<any> {
     }
   }
 
-// Eliminar plato de un pedido
 eliminarPlatoDelPedido(nroPed: number, numPlato: number): Observable<any> {
   return this.http.get<{ data: PlatoPedidosEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/platos`).pipe(
     switchMap(ResponsePlatoEst => {
-      const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato); // Buscar el plato específico
+      const plato = ResponsePlatoEst.data.find(p => p.plato.numPlato === numPlato);
       if (plato) {
-        const fecha = plato.fechaSolicitud; // Obtener la fecha de solicitud
-        const hora = plato.horaSolicitud; // Obtener la hora de solicitud
+        const fecha = plato.fechaSolicitud;
+        const hora = plato.horaSolicitud;
         const url = `http://localhost:3000/api/pedidos/${nroPed}/platos/${numPlato}/fecha/${fecha}/hora/${hora}`;
         return this.http.delete(url).pipe(
           catchError(error => {
@@ -239,7 +229,7 @@ eliminarPlatoDelPedido(nroPed: number, numPlato: number): Observable<any> {
           })
         );
       } else {
-        return of(null); // Si no se encuentra el plato, retornamos null
+        return of(null);
       }
     })
   );
@@ -250,10 +240,10 @@ eliminarPlatoDelPedido(nroPed: number, numPlato: number): Observable<any> {
 eliminarBebidaDelPedido(nroPed: number, codBebida: number): Observable<any> {
   return this.http.get<{ data: BebidaPedidoEst[] }>(`http://localhost:3000/api/pedidos/${nroPed}/bebidas`).pipe(
     switchMap(ResponseBebidaEst => {
-      const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida); // Buscar la bebida específica
+      const bebida = ResponseBebidaEst.data.find(b => b.bebida.codBebida === codBebida);
       if (bebida) {
-        const fecha = bebida.fechaSolicitud; // Obtener la fecha de solicitud
-        const hora = bebida.horaSolicitud; // Obtener la hora de solicitud
+        const fecha = bebida.fechaSolicitud;
+        const hora = bebida.horaSolicitud;
         const url = `http://localhost:3000/api/pedidos/${nroPed}/bebidas/${codBebida}/fecha/${fecha}/hora/${hora}`;
         return this.http.delete(url).pipe(
           catchError(error => {
@@ -262,20 +252,18 @@ eliminarBebidaDelPedido(nroPed: number, codBebida: number): Observable<any> {
           })
         );
       } else {
-        return of(null); // Si no se encuentra la bebida, retornamos null
+        return of(null);
       }
     })
   );
 }
 
-  // Método para cancelar el pedido
   cancelarPedido(pedidoId: number): Observable<any> {
     const url = `${this.apiUrl}/pedidos/${pedidoId}/cancelar`;
     const body = { estado: 'cancelado' };
     return this.http.put(url, body);
   }
 
-  // Obtener lista de pedidos del cliente
   obtenerPedidos(): Observable<PedidosLis[]> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id; 
     const url = `${this.apiUrl}/${clienteId}/pedidos`;  

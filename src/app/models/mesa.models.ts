@@ -1,17 +1,17 @@
 export interface Mesa {
-  nro_mesa: number; // o number, dependiendo de tu implementación
+  nro_mesa: number;
   cant_personas_max: number;
   estado: string;
 }
 
 export interface ResponseMesas {
-  message: string; // Mensaje de respuesta del backend
+  message: string;
   data: Mesa[]; 
 }
 
 export interface ResponseMesa {
   message: string;
-  data: Mesa;  // Aquí ahora es un objeto de tipo Mesa, no un arreglo
+  data: Mesa;
 }
 
 export interface Proveedor{
@@ -28,7 +28,7 @@ export interface Proveedor{
 }
 
 export interface ResponseProveedores {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Proveedor[]; 
 }
 
@@ -46,7 +46,7 @@ export interface Bebida{
 export type BebidaConCantidad = Bebida & { cantidad: number };
 
 export interface ResponseBebidas {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Bebida[];
 }
 
@@ -57,7 +57,7 @@ export interface Tipoplato{
 }
 
 export interface ResponseTipoplato {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Tipoplato[]; 
 }
 
@@ -70,7 +70,7 @@ export interface Pedido{
 
 
 export interface ResponsePedido {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Pedido[]; 
 }
 
@@ -96,12 +96,12 @@ export interface Plato1 {
   aptoVeganos: boolean;
   imagen: string;
   tipoPlato?: number;
-  ingredientes: Ingrediente[]; // Se agregó la lista de ingredientes
+  ingredientes: Ingrediente[];
 }
 export type PlatoConCantidad = Plato & { cantidad: number };
 
 export interface ResponsePlato {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Plato[]; 
 }
 
@@ -117,9 +117,9 @@ export interface BebidaPedido {
 
 export interface PedidoActualiza {
   nroPed: number;
-  platos: PlatoPedido[];  // Arreglo de platos con su cantidad
-  bebidas: BebidaPedido[];  // Arreglo de bebidas con su cantidad
-  enCurso: boolean;  // Indica si el pedido está en curso
+  platos: PlatoPedido[];
+  bebidas: BebidaPedido[];
+  enCurso: boolean;
 }
 
 export interface BebidaPedidoEst {
@@ -144,12 +144,12 @@ export interface PlatoPedidosEst {
   entregado: boolean;
 }
 export interface ResponsePlatoEst {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: PlatoPedidosEst[]; 
 }
 
 export interface ResponseBebidaEst {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: BebidaPedidoEst[]; 
 }
 
@@ -170,7 +170,7 @@ export interface PedidosLis {
 }
 
 export interface ResponsePedidosLis {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: PedidosLis[]; 
 }
 
@@ -188,7 +188,7 @@ export interface Ingrediente{
 }
 
 export interface ResponseIngredientes {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Ingrediente[]; 
 }
 
@@ -202,7 +202,7 @@ export interface Tipotarjeta{
 }
 
 export interface ResponseTipotarjeta {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Tipotarjeta[]; 
 }
 
@@ -224,8 +224,6 @@ export interface ResponseResenas {
   data: Resena[];
 }
 
-
-
 export interface Tarjeta{
   idTarjeta: number;
   nroTarjeta: string;
@@ -237,6 +235,6 @@ export interface Tarjeta{
 }
 
 export interface ResponseTarjetas {
-  message: string;  // Mensaje de respuesta del backend
+  message: string;
   data: Tarjeta[]; 
 }

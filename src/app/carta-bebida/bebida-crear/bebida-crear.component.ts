@@ -24,7 +24,6 @@ export class BebidaCrearComponent implements OnInit {
     private bebidaService: BebidaService,
     private router: Router
   ) {
-    // Formulario para crear una bebida
     this.bebidaForm = this.fb.group({
       descripcion: ['', [Validators.required]],
       stock: [null, [Validators.required, Validators.min(0)]],

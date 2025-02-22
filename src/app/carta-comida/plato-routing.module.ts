@@ -13,43 +13,43 @@ const routes: Routes = [
   {
     path: 'Lista',
     component: PlatoListaComponent,
-    canActivate: [authGuard], // Asegúrate de que no esté protegido si es para todos
-    data: { expectedRole: [] } // Accesible por todos
+    canActivate: [authGuard],
+    data: { expectedRole: [] }
   },
   {
     path: 'Crear',
     component: PlatoCrearComponent,
-    canActivate: [authGuard], // Solo accesible para empleados
+    canActivate: [authGuard],
     data: { expectedRole: ['empleado'] }
   },
   {
     path: 'Modificar',
     component: PlatoModificarComponent,
-    canActivate: [authGuard], // Solo accesible para empleados
+    canActivate: [authGuard],
     data: { expectedRole: ['empleado'] }
   },
   {
     path: 'Eliminar',
     component: PlatoEliminarComponent,
-    canActivate: [authGuard], // Solo accesible para empleados
+    canActivate: [authGuard],
     data: { expectedRole: ['empleado'] }
   },
   {
     path: 'ElaboracionLista',
     component: ElaboracionPlatoListaComponent,
-    canActivate: [authGuard], // Solo accesible para empleados
+    canActivate: [authGuard],
     data: { expectedRole: ['empleado'] }
   },
   {
     path: 'ElaboracionModificar',
     component: ElaboracionPlatoModificarComponent,
-    canActivate: [authGuard], // Solo accesible para empleados
+    canActivate: [authGuard],
     data: { expectedRole: ['empleado'] }
   },
   {
     path: 'ElaboracionEliminar',
     component: ElaboracionPlatoEliminarComponent,
-    canActivate: [authGuard], // Solo accesible para empleados
+    canActivate: [authGuard],
     data: { expectedRole: ['empleado'] }
   }
 ];

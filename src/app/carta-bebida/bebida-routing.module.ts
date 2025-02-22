@@ -26,7 +26,6 @@ const routes: Routes = [
     data: { expectedRole: ['empleado'] }
   },
   {
-    //ng g c bebida-Eliminar  --module bebida
     path: 'Eliminar',
     component: BebidaEliminarComponent,
     canActivate: [authGuard], 

@@ -2,7 +2,6 @@
   <div class="register">
     <p class="titulo">Modificar Plato</p>
 
-    <!-- Mensajes de error debajo del título -->
     <div *ngIf="mensaje" class="mensaje"
       [ngClass]="{'exito': mensaje.includes('exitosamente'), 'error': mensaje.includes('Error')}">
       {{ mensaje }}
@@ -17,7 +16,6 @@
       <text-input [control]="fc['imagen']" [mostrarErrores]="enviado" label="URL de Imagen"></text-input>
       <text-input [control]="fc['tipoPlato']" [mostrarErrores]="enviado" label="ID del Tipo de Plato"></text-input>
 
-      <!-- Sección de Ingredientes -->
       <div class="ingredientes-container">
         <p class="subtitulo">Ingredientes</p>
         <div *ngFor="let ingrediente of ingredientes.controls; let i = index" class="ingrediente">
@@ -26,19 +24,16 @@
           <text-input [control]="ingrediente.get('cantidadNecesaria')!" [mostrarErrores]="enviado"
             label="Cantidad Necesaria"></text-input>
 
-          <!-- Botón de Eliminar Ingrediente -->
           <button type="button" (click)="eliminarIngrediente(i)" class="agregar-ingrediente-button">
             Eliminar Ingrediente
           </button>
         </div>
 
-        <!-- Botón de Agregar Ingrediente -->
         <button type="button" (click)="agregarIngrediente()" class="agregar-ingrediente-button">
           Agregar Ingrediente
         </button>
       </div>
 
-      <!-- Botón de Actualizar Plato -->
       <default-button texto="Actualizar Plato"></default-button>
     </form>
   </div>
