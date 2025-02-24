@@ -12,7 +12,6 @@ export class AlmacenamientoService {
       localStorage.setItem(key, value);
     } else {
       this.almacenamientoEnMemoria[key] = value;
-      console.warn('localStorage no está disponible, usando almacenamiento en memoria');
     }
   }
 
@@ -20,7 +19,6 @@ export class AlmacenamientoService {
     if (typeof localStorage !== 'undefined') {
       return localStorage.getItem(key);
     } else {
-      console.warn('localStorage no está disponible, usando almacenamiento en memoria');
       return this.almacenamientoEnMemoria[key] || null;
     }
   }
@@ -30,7 +28,6 @@ export class AlmacenamientoService {
       localStorage.removeItem(key);
     } else {
       delete this.almacenamientoEnMemoria[key];
-      console.warn('localStorage no está disponible, usando almacenamiento en memoria');
     }
   }
 }

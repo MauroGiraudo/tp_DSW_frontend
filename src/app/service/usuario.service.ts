@@ -14,10 +14,10 @@ const USER_KEY = 'Usuario';
 export class UsuarioService {
 
   private usuarioSubject = new BehaviorSubject<Usuario>(this.getUsuarioFromLocalStorage());
-  public usuarioObservable: Observable<Usuario> = this.usuarioSubject.asObservable(); 
+  public usuarioObservable: Observable<Usuario> = this.usuarioSubject.asObservable();
 
   constructor(
-    private http: HttpClient, 
+    private http: HttpClient,
     private almacenamientoService: AlmacenamientoService,
     private sideNavService: SideNavService
   ) {}
@@ -31,12 +31,12 @@ export class UsuarioService {
 
   public loginUsuario(usuario: UsuarioLogIn) {
     const url = this.urlUsuario + '/login';
-    return this.http.post<UsuarioResponse>(url, usuario).pipe(
+    return this.http.post<UsuarioResponse>(url, usuario, {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           const usuario: Usuario = response.data;
           this.setUsuarioToLocalStorage(usuario);
-          this.usuarioSubject.next(usuario); 
+          this.usuarioSubject.next(usuario);
           this.sideNavService.filtrarFunciones(usuario.tipoUsuario);
         }
       })
@@ -48,7 +48,7 @@ export class UsuarioService {
     return this.http.post<UsuarioLogOut>(url, null).pipe(
       tap({
         next: () => {
-          this.usuarioSubject.next(new Usuario()); 
+          this.usuarioSubject.next(new Usuario());
           this.removeUsuarioFromLocalStorage();
         }
       })
@@ -64,7 +64,7 @@ export class UsuarioService {
     if (usuario) {
       return JSON.parse(usuario);
     } else {
-      return new Usuario(); 
+      return new Usuario();
     }
   }
 
@@ -78,7 +78,7 @@ export class UsuarioService {
 
   public actualizarUsuario(usuario: Usuario): void {
     this.setUsuarioToLocalStorage(usuario);
-    this.usuarioSubject.next(usuario); 
+    this.usuarioSubject.next(usuario);
   }
 
   public showTipoUsuario(): string {

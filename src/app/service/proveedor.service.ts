@@ -13,16 +13,16 @@ export class ProveedorService {
   constructor(private http: HttpClient) {}
 
   public crearProveedor(proveedor: Proveedor): Observable<Proveedor> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Proveedor>(url, {
-      cuit: proveedor.cuit,  
-      razonSocial: proveedor.razonSocial, 
-      direccion: proveedor.direccion, 
-      ciudad: proveedor.ciudad, 
-      provincia: proveedor.provincia, 
-      pais: proveedor.pais, 
-      telefono: proveedor.telefono, 
-      email: proveedor.email 
+      cuit: proveedor.cuit,
+      razonSocial: proveedor.razonSocial,
+      direccion: proveedor.direccion,
+      ciudad: proveedor.ciudad,
+      provincia: proveedor.provincia,
+      pais: proveedor.pais,
+      telefono: proveedor.telefono,
+      email: proveedor.email
     }).pipe(
       tap({
         next: (response) => {
@@ -36,7 +36,7 @@ export class ProveedorService {
   }
 
   getProveedores(): Observable<ResponseProveedores> {
-  return this.http.get<ResponseProveedores>(this.apiUrl).pipe(
+  return this.http.get<ResponseProveedores>(this.apiUrl, {withCredentials: true}).pipe(
     tap({
       next: (response) => {
         console.log('Proveedores obtenidos:', response);
@@ -49,11 +49,11 @@ export class ProveedorService {
 }
 
   public obtenerProveedor(proveedorId: number): Observable<Proveedor> {
-    const url = `${this.apiUrl}/${proveedorId}`; 
+    const url = `${this.apiUrl}/${proveedorId}`;
     return this.http.get<Proveedor>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Proveedor obtenido:', response); 
+          console.log('Proveedor obtenido:', response);
         },
         error: (error) => {
           console.error('Error al obtener el proveedor:', error);
@@ -66,14 +66,14 @@ export class ProveedorService {
     const url = `${this.apiUrl}/${proveedorId}`;
     return this.http.patch<Proveedor>(url, {
       ...proveedorActualizado,
-      cuit: proveedorActualizado.cuit, 
-      razonSocial: proveedorActualizado.razonSocial, 
-      direccion: proveedorActualizado.direccion, 
-      ciudad: proveedorActualizado.ciudad, 
-      provincia: proveedorActualizado.provincia, 
-      pais: proveedorActualizado.pais, 
-      telefono: proveedorActualizado.telefono, 
-      email: proveedorActualizado.email 
+      cuit: proveedorActualizado.cuit,
+      razonSocial: proveedorActualizado.razonSocial,
+      direccion: proveedorActualizado.direccion,
+      ciudad: proveedorActualizado.ciudad,
+      provincia: proveedorActualizado.provincia,
+      pais: proveedorActualizado.pais,
+      telefono: proveedorActualizado.telefono,
+      email: proveedorActualizado.email
     }).pipe(
       tap({
         next: (response) => {
