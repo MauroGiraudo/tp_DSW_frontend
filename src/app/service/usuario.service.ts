@@ -45,7 +45,7 @@ export class UsuarioService {
 
   public logOutUsuario() {
     const url = this.urlUsuario + '/logout';
-    return this.http.post<UsuarioLogOut>(url, null).pipe(
+    return this.http.post<UsuarioLogOut>(url, null, {withCredentials: true}).pipe(
       tap({
         next: () => {
           this.usuarioSubject.next(new Usuario());
