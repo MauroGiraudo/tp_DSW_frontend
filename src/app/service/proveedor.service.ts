@@ -23,7 +23,8 @@ export class ProveedorService {
       pais: proveedor.pais,
       telefono: proveedor.telefono,
       email: proveedor.email
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Proveedor creado:', response);
@@ -36,7 +37,7 @@ export class ProveedorService {
   }
 
   getProveedores(): Observable<ResponseProveedores> {
-  return this.http.get<ResponseProveedores>(this.apiUrl, {withCredentials: true}).pipe(
+  return this.http.get<ResponseProveedores>(this.apiUrl).pipe(
     tap({
       next: (response) => {
         console.log('Proveedores obtenidos:', response);
@@ -50,7 +51,7 @@ export class ProveedorService {
 
   public obtenerProveedor(proveedorId: number): Observable<Proveedor> {
     const url = `${this.apiUrl}/${proveedorId}`;
-    return this.http.get<Proveedor>(url).pipe(
+    return this.http.get<Proveedor>(url, {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Proveedor obtenido:', response);
@@ -74,7 +75,8 @@ export class ProveedorService {
       pais: proveedorActualizado.pais,
       telefono: proveedorActualizado.telefono,
       email: proveedorActualizado.email
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Proveedor actualizado:', response);
@@ -88,7 +90,7 @@ export class ProveedorService {
 
   public eliminarProveedor(proveedorId: number): Observable<void> {
     const url = `${this.apiUrl}/${proveedorId}`;
-    return this.http.delete<void>(url).pipe(
+    return this.http.delete<void>(url, {withCredentials: true}).pipe(
       tap({
         next: () => {
           console.log(`Proveedor con ID ${proveedorId} eliminado exitosamente.`);

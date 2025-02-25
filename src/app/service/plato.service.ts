@@ -25,7 +25,8 @@ export class PlatoService {
       imagen: plato.imagen,
       tipoPlato: plato.tipoPlato,
       ingredientes: plato.ingredientes
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap(response => console.log('Plato creado:', response))
     );
   }
@@ -43,13 +44,13 @@ export class PlatoService {
   }
 
 public actualizarPlato(numPlato: number, platoActualizado: Partial<Plato1>): Observable<Plato1> {
-  return this.http.patch<Plato1>(`${this.apiUrl}/${numPlato}`, platoActualizado).pipe(
+  return this.http.patch<Plato1>(`${this.apiUrl}/${numPlato}`, platoActualizado, {withCredentials: true}).pipe(
     tap(response => console.log('Plato actualizado:', response))
   );
 }
 
   private eliminarDependenciasDePlato(numPlato: number, tipoPlato: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${numPlato}/tipo/${tipoPlato}`).pipe(
+    return this.http.delete<void>(`${this.apiUrl}/${numPlato}/tipo/${tipoPlato}`, {withCredentials: true}).pipe(
       tap(() => console.log(`Dependencias del plato ${numPlato} eliminadas.`))
     );
   }
@@ -62,7 +63,7 @@ public actualizarPlato(numPlato: number, platoActualizado: Partial<Plato1>): Obs
   }
 
   public eliminarPlato(numPlato: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${numPlato}`).pipe(
+    return this.http.delete<void>(`${this.apiUrl}/${numPlato}`, {withCredentials: true}).pipe(
       tap(() => console.log(`Plato ${numPlato} eliminado.`))
     );
   }

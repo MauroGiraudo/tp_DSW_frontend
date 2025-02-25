@@ -11,36 +11,37 @@ import { of } from 'rxjs';
   providedIn: 'root'
 })
 export class MesaService {
-  private readonly apiUrl = 'http://localhost:3000/api/mesas'; 
+  private readonly apiUrl = 'http://localhost:3000/api/mesas';
 
   constructor(private http: HttpClient) {}
 
   public crearMesa(mesa: Mesa): Observable<Mesa> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Mesa>(url, {
-      estado: mesa.estado, 
-      cantPersonasMax: mesa.cant_personas_max, 
-      nro_mesa: mesa.nro_mesa 
-    }).pipe(
+      estado: mesa.estado,
+      cantPersonasMax: mesa.cant_personas_max,
+      nro_mesa: mesa.nro_mesa
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa creada:', response); 
+          console.log('Mesa creada:', response);
         },
         error: (error) => {
-          console.error('Error al crear la mesa:', error); 
+          console.error('Error al crear la mesa:', error);
         }
       })
     );
   }
 
-  public getMesas(): Observable<ResponseMesas> { 
-    return this.http.get<ResponseMesas>(this.apiUrl).pipe(
+  public getMesas(): Observable<ResponseMesas> {
+    return this.http.get<ResponseMesas>(this.apiUrl, {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Mesas obtenidas:', response);
         },
         error: (error) => {
-          console.error('Error al obtener mesas:', error); 
+          console.error('Error al obtener mesas:', error);
         }
       })
     );
@@ -48,10 +49,10 @@ export class MesaService {
 
   public obtenerMesa(mesaId: number): Observable<Mesa> {
     const url = `${this.apiUrl}/${mesaId}`;
-    return this.http.get<Mesa>(url).pipe(
+    return this.http.get<Mesa>(url, {withCredentials: true}).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa obtenida:', response); 
+          console.log('Mesa obtenida:', response);
         },
         error: (error) => {
           console.error('Error al obtener la mesa:', error);
@@ -66,10 +67,11 @@ export class MesaService {
       ...mesaActualizada,
       cantPersonasMax: mesaActualizada.cant_personas_max,
       nro_mesa: mesaActualizada.nro_mesa
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
-          console.log('Mesa actualizada:', response); 
+          console.log('Mesa actualizada:', response);
         },
         error: (error) => {
           console.error('Error al actualizar la mesa:', error);
@@ -81,12 +83,12 @@ export class MesaService {
   public actualizarEstadoMesa(mesaId: number, nuevoEstado: string): Observable<any> {
     const url = `${this.apiUrl}/${mesaId}`;
     const body = { estado: nuevoEstado };
-    return this.http.patch(url, body);
+    return this.http.patch(url, body, {withCredentials: true});
   }
 
   public eliminarMesa(mesaId: number): Observable<void> {
     const url = `${this.apiUrl}/${mesaId}`;
-    return this.http.delete<void>(url).pipe(
+    return this.http.delete<void>(url, {withCredentials: true}).pipe(
       tap({
         next: () => {
           console.log(`Mesa con ID ${mesaId} eliminada exitosamente.`);
@@ -100,16 +102,16 @@ export class MesaService {
 
 public verificarMesaDisponible(mesaId: number): Observable<boolean> {
   const url = `${this.apiUrl}/${mesaId}`;
-  return this.http.get<ResponseMesa>(url).pipe(
+  return this.http.get<ResponseMesa>(url, {withCredentials: true}).pipe(
     map(response => {
       console.log('Respuesta del servidor:', response);
-      const mesa = response?.data; 
+      const mesa = response?.data;
       console.log('Mesa encontrada:', mesa);
       return mesa ? mesa.estado === 'Disponible' : false;
     }),
     catchError((error) => {
       console.error('Error al verificar la mesa:', error);
-      return of(false); 
+      return of(false);
     })
   );
 }

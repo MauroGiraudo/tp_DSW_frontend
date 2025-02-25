@@ -13,17 +13,18 @@ export class TipoplatoService {
   constructor(private http: HttpClient) {}
 
   public crearTipoPlato(tipoPlato: Tipoplato): Observable<Tipoplato> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Tipoplato>(url, {
-      numPlato: tipoPlato.numPlato,  
-      descTPlato: tipoPlato.descTPlato  
-    }).pipe(
+      numPlato: tipoPlato.numPlato,
+      descTPlato: tipoPlato.descTPlato
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
-          console.log('Tipo de plato creado:', response); 
+          console.log('Tipo de plato creado:', response);
         },
         error: (error) => {
-          console.error('Error al crear el tipo de plato:', error); 
+          console.error('Error al crear el tipo de plato:', error);
         }
       })
     );
@@ -43,11 +44,11 @@ export class TipoplatoService {
   }
 
   public obtenerTipoPlato(numPlato: number): Observable<Tipoplato> {
-    const url = `${this.apiUrl}/${numPlato}`; 
+    const url = `${this.apiUrl}/${numPlato}`;
     return this.http.get<Tipoplato>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Tipo de plato obtenido:', response); 
+          console.log('Tipo de plato obtenido:', response);
         },
         error: (error) => {
           console.error('Error al obtener el tipo de plato:', error);
@@ -60,9 +61,10 @@ export class TipoplatoService {
     const url = `${this.apiUrl}/${numPlato}`;
     return this.http.patch<Tipoplato>(url, {
       ...tipoPlatoActualizado,
-      numPlato: tipoPlatoActualizado.numPlato, 
-      descTPlato: tipoPlatoActualizado.descTPlato 
-    }).pipe(
+      numPlato: tipoPlatoActualizado.numPlato,
+      descTPlato: tipoPlatoActualizado.descTPlato
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Tipo de plato actualizado:', response);
@@ -76,7 +78,7 @@ export class TipoplatoService {
 
   public eliminarTipoPlato(numPlato: number): Observable<void> {
     const url = `${this.apiUrl}/${numPlato}`;
-    return this.http.delete<void>(url).pipe(
+    return this.http.delete<void>(url, {withCredentials: true}).pipe(
       tap({
         next: () => {
           console.log(`Tipo de plato con ID ${numPlato} eliminado exitosamente.`);

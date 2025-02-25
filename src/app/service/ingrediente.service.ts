@@ -13,17 +13,18 @@ export class IngredienteService {
   constructor(private http: HttpClient) { }
 
   public crearIngrediente(ingrediente: Ingrediente): Observable<Ingrediente> {
-    const url = this.apiUrl; 
+    const url = this.apiUrl;
     return this.http.post<Ingrediente>(url, {
-      descIngre: ingrediente.descIngre,  
-      puntoDePedido: ingrediente.puntoDePedido, 
+      descIngre: ingrediente.descIngre,
+      puntoDePedido: ingrediente.puntoDePedido,
       stock: ingrediente.stock,
       unidadMedida: ingrediente.unidadMedida,
       aptoCeliacos: ingrediente.aptoCeliacos,
       aptoVegetarianos: ingrediente.aptoVegetarianos,
       aptoVeganos: ingrediente.aptoVeganos,
       proveedor: ingrediente.proveedor,
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Ingrediente creado:', response);
@@ -36,7 +37,7 @@ export class IngredienteService {
   }
 
   getIngredientes(): Observable<ResponseIngredientes> {
-  return this.http.get<ResponseIngredientes>(this.apiUrl).pipe(
+  return this.http.get<ResponseIngredientes>(this.apiUrl, {withCredentials: true}).pipe(
     tap({
       next: (response) => {
         console.log('Proveedores obtenidos:', response);
@@ -49,11 +50,11 @@ export class IngredienteService {
 }
 
   public obtenerIngrediente(codIngrediente: number): Observable<Ingrediente> {
-    const url = `${this.apiUrl}/${codIngrediente}`; 
+    const url = `${this.apiUrl}/${codIngrediente}`;
     return this.http.get<Ingrediente>(url).pipe(
       tap({
         next: (response) => {
-          console.log('Proveedor obtenido:', response); 
+          console.log('Proveedor obtenido:', response);
         },
         error: (error) => {
           console.error('Error al obtener el proveedor:', error);
@@ -66,15 +67,16 @@ export class IngredienteService {
     const url = `${this.apiUrl}/${codIngrediente}`;
     return this.http.patch<Ingrediente>(url, {
       ...ingredienteActualizado,
-      descIngre: ingredienteActualizado.descIngre, 
-      puntoDePedido: ingredienteActualizado.puntoDePedido, 
-      stock: ingredienteActualizado.stock, 
-      unidadMedida: ingredienteActualizado.unidadMedida, 
-      aptoCeliacos: ingredienteActualizado.aptoCeliacos, 
-      aptoVegetarianos: ingredienteActualizado.aptoVegetarianos, 
-      aptoVeganos: ingredienteActualizado.aptoVeganos, 
-      proveedor: ingredienteActualizado.proveedor 
-    }).pipe(
+      descIngre: ingredienteActualizado.descIngre,
+      puntoDePedido: ingredienteActualizado.puntoDePedido,
+      stock: ingredienteActualizado.stock,
+      unidadMedida: ingredienteActualizado.unidadMedida,
+      aptoCeliacos: ingredienteActualizado.aptoCeliacos,
+      aptoVegetarianos: ingredienteActualizado.aptoVegetarianos,
+      aptoVeganos: ingredienteActualizado.aptoVeganos,
+      proveedor: ingredienteActualizado.proveedor
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Proveedor actualizado:', response);
@@ -88,7 +90,7 @@ export class IngredienteService {
 
     public eliminarIngrediente(codIngrediente: number): Observable<void> {
     const url = `${this.apiUrl}/${codIngrediente}`;
-    return this.http.delete<void>(url).pipe(
+    return this.http.delete<void>(url, {withCredentials: true}).pipe(
       tap({
         next: () => {
           console.log(`Ingrediente con codigo ${codIngrediente} eliminado exitosamente.`);

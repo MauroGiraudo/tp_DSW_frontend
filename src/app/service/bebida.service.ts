@@ -22,7 +22,8 @@ export class BebidaService {
       alcohol: bebida.alcohol,
       imagen: bebida.imagen,
       proveedor: bebida.proveedor
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Bebida creada:', response);
@@ -65,7 +66,8 @@ export class BebidaService {
     const url = `${this.apiUrl}/${bebidaId}`;
     return this.http.patch<Bebida>(url, {
       ...bebidaActualizada
-    }).pipe(
+    },
+  {withCredentials: true}).pipe(
       tap({
         next: (response) => {
           console.log('Bebida actualizada:', response);
@@ -79,7 +81,7 @@ export class BebidaService {
 
   private eliminarDependenciasDeBebida(codBebida: number, proveedor: number): Observable<void> {
     const url = `${this.apiUrl}/${codBebida}/proveedores/${proveedor}`;
-    return this.http.delete<void>(url).pipe(
+    return this.http.delete<void>(url, {withCredentials: true}).pipe(
       tap({
         next: () => {
           console.log(`Dependencias de la bebida con código ${codBebida} eliminadas.`);
@@ -113,7 +115,7 @@ export class BebidaService {
 
   public eliminarBebida(codBebida: number): Observable<void> {
     const url = `${this.apiUrl}/${codBebida}`;
-    return this.http.delete<void>(url).pipe(
+    return this.http.delete<void>(url, {withCredentials: true}).pipe(
       tap({
         next: () => {
           console.log(`Bebida con código ${codBebida} eliminada exitosamente.`);

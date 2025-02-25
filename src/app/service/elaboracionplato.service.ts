@@ -22,7 +22,8 @@ public actualizarIngrediente(numPlato: number, ingrediente: string, cantidadNece
   const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
   return this.http.patch<any>(url, {
     cantidadNecesaria
-  }).pipe(
+  },
+{withCredentials: true}).pipe(
     tap({
       next: (response) => {
         console.log('Ingrediente actualizado en el plato:', response);
@@ -36,12 +37,12 @@ public actualizarIngrediente(numPlato: number, ingrediente: string, cantidadNece
 
   agregarIngrediente(numPlato: number, ingrediente: number, cantidadNecesaria: number): Observable<any> {
     const url = `${this.apiUrl}/${numPlato}/ingredientes`;
-    return this.http.post(url, { ingrediente, cantidadNecesaria });
+    return this.http.post(url, { ingrediente, cantidadNecesaria }, {withCredentials: true});
   }
 
   public eliminarIngrediente(numPlato: number, ingrediente: string): Observable<void> {
   const url = `${this.apiUrl}/${numPlato}/ingredientes/${ingrediente}`;
-  return this.http.delete<void>(url).pipe(
+  return this.http.delete<void>(url, {withCredentials: true}).pipe(
     tap({
       next: () => {
         console.log(`Ingrediente ${ingrediente} del plato ${numPlato} eliminado exitosamente.`);

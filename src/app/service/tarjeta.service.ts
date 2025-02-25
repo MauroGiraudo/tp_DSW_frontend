@@ -17,8 +17,8 @@ export class TarjetaService {
 
   obtenerTarjetaCliente(): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    const url = `${this.apiUrl}/${clienteId}/tarjetas`;  
-    return this.http.get<any>(url);
+    const url = `${this.apiUrl}/${clienteId}/tarjetas`;
+    return this.http.get<any>(url, {withCredentials: true});
   }
 
   /**
@@ -26,8 +26,8 @@ export class TarjetaService {
    */
   crearTarjetaCliente(tarjetaClienteData: any): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    const url = `${this.apiUrl}/${clienteId}/tarjetas`; 
-    return this.http.post<any>(url, tarjetaClienteData);
+    const url = `${this.apiUrl}/${clienteId}/tarjetas`;
+    return this.http.post<any>(url, tarjetaClienteData, {withCredentials: true});
   }
 
   /**
@@ -38,7 +38,7 @@ export class TarjetaService {
   modificarTarjetaCliente(tarjetaId: number, tarjetaModificada: any): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
     const url = `${this.apiUrl}/${clienteId}/tarjetas/${tarjetaId}`;
-    return this.http.put<any>(url, tarjetaModificada).pipe(
+    return this.http.put<any>(url, tarjetaModificada, {withCredentials: true}).pipe(
       catchError(error => {
         console.error('Error al modificar la tarjeta:', error);
         return throwError(() => new Error('Error al modificar la tarjeta.'));
@@ -52,7 +52,7 @@ export class TarjetaService {
    */
   eliminarTarjeta(clienteId: number, tarjetaId: number): Observable<any> {
     const url = `${this.apiUrl}/${clienteId}/tarjetas/${tarjetaId}`;
-    return this.http.delete<any>(url).pipe(
+    return this.http.delete<any>(url, {withCredentials: true}).pipe(
       catchError(error => {
         console.error('Error al eliminar la tarjeta:', error);
         return throwError(() => new Error('Error al eliminar la tarjeta.'));

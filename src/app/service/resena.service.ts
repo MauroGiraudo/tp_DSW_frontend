@@ -21,17 +21,17 @@ export class ResenaService {
 
   crearResena(nroPed: number, resena: { cuerpo: string; puntaje: number }): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    return this.http.post(`${this.apiUrl}/${clienteId}/pedidos/${nroPed}/resena`, resena);
+    return this.http.post(`${this.apiUrl}/${clienteId}/pedidos/${nroPed}/resena`, resena, {withCredentials: true});
   }
 
   modificarResena(nroPed: number, resena: { cuerpo: string; puntaje: number }): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    return this.http.put(`${this.apiUrl}/${clienteId}/pedidos/${nroPed}/resena`, resena);
+    return this.http.put(`${this.apiUrl}/${clienteId}/pedidos/${nroPed}/resena`, resena, {withCredentials: true});
   }
 
   eliminarResena(nroPed: number): Observable<any> {
     const clienteId = this.usuarioService.obtenerUsuarioActual().id;
-    return this.http.delete(`${this.apiUrl}/${clienteId}/pedidos/${nroPed}/resena`);
+    return this.http.delete(`${this.apiUrl}/${clienteId}/pedidos/${nroPed}/resena`, {withCredentials: true});
   }
 }
 
