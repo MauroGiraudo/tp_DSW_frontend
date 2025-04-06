@@ -15,8 +15,8 @@
 </div>
 
 <div class="bebidas-container">
-  <div *ngFor="let bebida of filteredBebidas" class="flip-card">
-    <div class="flip-card-inner">
+  <div *ngFor="let bebida of filteredBebidas" class="flip-card" (click)="toggleFlip(bebida)">
+    <div class="flip-card-inner" [class.flipped]="bebida.flipped">
       <div class="flip-card-front">
         <img *ngIf="bebida.imagen" [src]="bebida.imagen" alt="{{ bebida.descripcion }}">
         <h2>{{ bebida.descripcion }}</h2>
@@ -28,7 +28,9 @@
         <p>Precio: ${{ bebida.precio }}</p>
         <p>Alcohol: {{ bebida.alcohol }}</p>
         <p *ngIf="tipoUsuario === 'empleado'">Stock: {{ bebida.stock }}</p>
-        <button (click)="agregarAlPedido(bebida)" class="agregar">Agregar al pedido</button>
+        <button (click)="agregarAlPedido(bebida); $event.stopPropagation()" class="agregar">
+          Agregar al pedido
+        </button>
       </div>
     </div>
   </div>

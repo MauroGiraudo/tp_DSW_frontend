@@ -33,6 +33,11 @@ export class BebidaListaComponent implements OnInit {
     this.tipoUsuario = this.usuarioService.showTipoUsuario() || '';
   }
 
+  toggleFlip(bebida: any) {
+  bebida.flipped = !bebida.flipped;
+}
+
+
   getBebidas() {
     this.bebidaService.getBebidas().subscribe((response) => {
       if (response && response.data) {

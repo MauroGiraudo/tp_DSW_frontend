@@ -20,6 +20,7 @@
   height: 280px;
   perspective: 1000px;
   margin: 5px;
+  cursor: pointer; // importante para que el usuario sepa que puede hacer clic
 }
 
 .flip-card-inner {
@@ -30,7 +31,8 @@
   transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-card-inner {
+// Esta es la nueva regla: si la carta está "flipped", la giramos
+.flip-card-inner.flipped {
   transform: rotateY(180deg);
 }
 
@@ -95,7 +97,6 @@ h2 {
   border: none;
   cursor: pointer;
   padding: 5px;
-  margin-left: -40px;
 }
 
 .tags-container {
