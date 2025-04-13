@@ -7,6 +7,7 @@ import { AlmacenamientoService } from './almacenamiento.service.js';
 import { SideNavService } from './side-nav.service.js';
 
 const USER_KEY = 'Usuario';
+const TOKEN_KEY = 'token'; // Definir la clave para el token
 
 @Injectable({
   providedIn: 'root'
@@ -31,11 +32,13 @@ export class UsuarioService {
 
   public loginUsuario(usuario: UsuarioLogIn) {
     const url = this.urlUsuario + '/login';
-    return this.http.post<UsuarioResponse>(url, usuario, {withCredentials: true}).pipe(
+    return this.http.post<UsuarioResponse>(url, usuario, { withCredentials: true }).pipe(
       tap({
         next: (response) => {
           const usuario: Usuario = response.data;
+          const token = response.token;  // Asegurarse de que el token se obtiene correctamente
           this.setUsuarioToLocalStorage(usuario);
+          this.setTokenToLocalStorage(token); // Guardar el token en el localStorage
           this.usuarioSubject.next(usuario);
           this.sideNavService.filtrarFunciones(usuario.tipoUsuario);
         }
@@ -43,13 +46,20 @@ export class UsuarioService {
     );
   }
 
+  getToken(): string | null {
+    const token = localStorage.getItem(TOKEN_KEY);  // Obtener el token desde 'token'
+    console.log('Token obtenido:', token);
+    return token;
+  }
+
   public logOutUsuario() {
     const url = this.urlUsuario + '/logout';
-    return this.http.post<UsuarioLogOut>(url, null, {withCredentials: true}).pipe(
+    return this.http.post<UsuarioLogOut>(url, null, { withCredentials: true }).pipe(
       tap({
         next: () => {
           this.usuarioSubject.next(new Usuario());
           this.removeUsuarioFromLocalStorage();
+          this.removeTokenFromLocalStorage(); // Eliminar el token al hacer logout
         }
       })
     );
@@ -72,6 +82,14 @@ export class UsuarioService {
     this.almacenamientoService.removeItem(USER_KEY);
   }
 
+  private setTokenToLocalStorage(token: string): void {
+    localStorage.setItem(TOKEN_KEY, token);  // Guardar el token en localStorage
+  }
+
+  private removeTokenFromLocalStorage(): void {
+    localStorage.removeItem(TOKEN_KEY);  // Eliminar el token al hacer logout
+  }
+
   public obtenerUsuarioActual(): Usuario {
     return this.usuarioSubject.value;
   }
@@ -85,3 +103,4 @@ export class UsuarioService {
     return this.usuarioSubject.value.tipoUsuario;
   }
 }
+

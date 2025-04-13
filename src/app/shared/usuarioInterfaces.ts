@@ -17,6 +17,7 @@ export interface UsuarioLogIn {
 export interface UsuarioResponse {
   message: string
   data: Usuario
+  token: string;
 }
 
 export interface UsuarioLogOut {
